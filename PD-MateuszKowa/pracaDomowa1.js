@@ -1,26 +1,26 @@
 //  DANE WEJŚCIOWE
-// const people = [
-//   {
-//     firstName: "Bartolomeo",
-//     lastName: "Lozano",
-//   },
-//   {
-//     firstName: "Mateo",
-//     lastName: "Loza",
-//   },
-//   {
-//     firstName: "Ma",
-//     lastName: "Lo",
-//   },
-//   {
-//     firstName: "T",
-//     lastName: "K",
-//   },
-//   {
-//     firstName: "Thomas",
-//     lastName: "Moore",
-//   },
-// ];
+const people = [
+  {
+    firstName: "Bartolomeo",
+    lastName: "Lozano",
+  },
+  {
+    firstName: "Mateo",
+    lastName: "Loza",
+  },
+  {
+    firstName: "Ma",
+    lastName: "Lo",
+  },
+  {
+    firstName: "T",
+    lastName: "K",
+  },
+  {
+    firstName: "Thomas",
+    lastName: "Moore",
+  },
+];
 /* 
     1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
     a) pobierze 3 pierwsze litery imienia, odwróci ich kolejność i zapisze do zmiennej
@@ -49,39 +49,39 @@
     - Na tablicy możemy użyć metody reverse()
     - Na stringach czy pojedynczych literkach możemy używać metod toLowerCase(), toUpperCase()
 */
-// function reverseString(string) {
-//   const splitStr = string.split("");
-//   const revSplitStr = splitStr.reverse().join("");
-//   return revSplitStr;
-// }
-// function giveNickname(value, index) {
-//   const splittedFirstName =
-//     (value.firstName[0] || "") +
-//     (value.firstName[1] || "") +
-//     (value.firstName[2] || "");
-//   const revFirstName = reverseString(splittedFirstName);
-//   const revLastNameArr = reverseString(value.lastName);
-//   const revLastName =
-//     (revLastNameArr[0] || "") +
-//     (revLastNameArr[1] || "") +
-//     (revLastNameArr[2] || "");
-//   let nickName = (revFirstName + revLastName).toLowerCase();
-//   nickName = nickName.replace(nickName[0], nickName[0].toUpperCase());
-//   const result = {
-//     ...people[index],
-//     nickname: nickName,
-//   };
-//   return result;
-// }
-// console.log(people.map(giveNickname));
-//  DANE WEJŚCIOWE
-const people = [
-  {
-    firstName: "Bartolomeo",
-    lastName: "Lozano",
-    nickname: "Rabona",
-  },
-];
+function reverseString(string) {
+  const splitStr = string.split("");
+  const revSplitStr = splitStr.reverse().join("");
+  return revSplitStr;
+}
+function giveNickname(value, index) {
+  const splittedFirstName =
+    (value.firstName[0] || "") +
+    (value.firstName[1] || "") +
+    (value.firstName[2] || "");
+  const revFirstName = reverseString(splittedFirstName);
+  const revLastNameArr = reverseString(value.lastName);
+  const revLastName =
+    (revLastNameArr[0] || "") +
+    (revLastNameArr[1] || "") +
+    (revLastNameArr[2] || "");
+  let nickName = (revFirstName + revLastName).toLowerCase();
+  nickName = nickName.replace(nickName[0], nickName[0].toUpperCase());
+  const result = {
+    ...people[index],
+    nickname: nickName,
+  };
+  return result;
+}
+console.log(people.map(giveNickname));
+// //  DANE WEJŚCIOWE
+// const people = [
+//   {
+//     firstName: "Bartolomeo",
+//     lastName: "Lozano",
+//     nickname: "Rabona",
+//   },
+// ];
 
 /* 
     2. 
@@ -108,16 +108,6 @@ const people = [
     - postaraj się zdefiniować funkcję powitalną tylko raz (nie rób tego w pętli, ani funkcji map)
     
 */
-function introduceYourself() {
-  const text = `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie [${this.nickname}]`;
-  console.log(text);
-}
-const newPeople = people.map((value) => ({
-  ...value,
-  introduceYourself: introduceYourself,
-}));
-console.log(newPeople[0]);
-newPeople.forEach((value) => value.introduceYourself());
 
 //  DANE WEJŚCIOWE
 // const people = [
