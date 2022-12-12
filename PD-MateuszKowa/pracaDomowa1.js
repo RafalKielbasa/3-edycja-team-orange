@@ -170,7 +170,9 @@ function getFavouriteColor(number) {
     this.firstName.length + this.lastName.length + this.nickname.length;
   const result = Math.abs(charSum - number);
   const resultWithMod = result % colors.length;
-  console.log(colors[resultWithMod]);
+  console.log(
+    `${this.firstName} your favourite color is ${colors[resultWithMod]}`
+  );
 }
 const people_3 = people_2.map((value) => ({ ...value, getFavouriteColor }));
 people_3.forEach((value) => value.getFavouriteColor());
@@ -181,7 +183,26 @@ people_3.forEach((value) => value.getFavouriteColor());
     b) funkcja powinna wykonać dokładnie takie samo działanie jak poprzednia
     c) Za pomocą pętli for of przeiteruj po wszystkich osobach z tablicy i wyświetl ich ulubione kolory
 */
-
+function getFavouriteColorNoObject(object, number) {
+  const typeNumber = typeof number;
+  if (typeNumber === "undefined") {
+    number = 5;
+  } else if (number < 1) {
+    console.log("podałeś za małą liczbę, liczba nie może być mniejsza niż 1");
+  } else if (number > 30) {
+    console.log("podałeś za dużą liczbę, liczba nie może być większa niż 30");
+  }
+  const charSum =
+    object.firstName.length + object.lastName.length + object.nickname.length;
+  const result = Math.abs(charSum - number);
+  const resultWithMod = result % colors.length;
+  console.log(
+    `${object.firstName} your favourite color is ${colors[resultWithMod]}- forloop`
+  );
+}
+for (value of people_2) {
+  getFavouriteColorNoObject(value);
+}
 /*
     5. Zadanie polega na użyciu .filter() .map() .reduce w wersji łańcuchowej,
     czyli nie twórz nowych tablic w momencie wykonanie jednej z powyższych metod, połącz wykonanie ze sobą w jeden 
