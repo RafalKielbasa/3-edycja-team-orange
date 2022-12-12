@@ -1,26 +1,28 @@
 //  DANE WEJŚCIOWE
-const people = [
-  {
-    firstName: "Bartolomeo",
-    lastName: "Lozano",
-  },
-  {
-    firstName: "Mateo",
-    lastName: "Loza",
-  },
-  {
-    firstName: "Ma",
-    lastName: "Lo",
-  },
-  {
-    firstName: "T",
-    lastName: "K",
-  },
-  {
-    firstName: "Thomas",
-    lastName: "Moore",
-  },
-];
+
+// const people = [
+//   {
+//     firstName: "Bartolomeo",
+//     lastName: "Lozano",
+//   },
+//   {
+//     firstName: "Mateo",
+//     lastName: "Loza",
+//   },
+//   {
+//     firstName: "Ma",
+//     lastName: "Lo",
+//   },
+//   {
+//     firstName: "T",
+//     lastName: "K",
+//   },
+//   {
+//     firstName: "Thomas",
+//     lastName: "Moore",
+//   },
+// ];
+
 /* 
     1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
     a) pobierze 3 pierwsze litery imienia, odwróci ich kolejność i zapisze do zmiennej
@@ -73,15 +75,16 @@ function giveNickname(value, index) {
   };
   return result;
 }
-console.log(people.map(giveNickname));
+// console.log(people.map(giveNickname));
+
 // //  DANE WEJŚCIOWE
-// const people = [
-//   {
-//     firstName: "Bartolomeo",
-//     lastName: "Lozano",
-//     nickname: "Rabona",
-//   },
-// ];
+const people = [
+  {
+    firstName: "Bartolomeo",
+    lastName: "Lozano",
+    nickname: "Rabona",
+  },
+];
 
 /* 
     2. 
@@ -108,6 +111,16 @@ console.log(people.map(giveNickname));
     - postaraj się zdefiniować funkcję powitalną tylko raz (nie rób tego w pętli, ani funkcji map)
     
 */
+function introduceYourself() {
+  const text = `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie [${this.nickname}]`;
+  console.log(text);
+}
+const newPeople = people.map((value) => ({
+  ...value,
+  introduceYourself: introduceYourself,
+}));
+console.log(newPeople[0]);
+newPeople.forEach((value) => value.introduceYourself());
 
 //  DANE WEJŚCIOWE
 // const people = [
