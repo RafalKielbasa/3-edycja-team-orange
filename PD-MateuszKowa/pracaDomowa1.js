@@ -12,6 +12,10 @@ const people = [
     firstName: "Ma",
     lastName: "Lo",
   },
+  {
+    firstName: "T",
+    lastName: "K",
+  },
 ];
 /* 
     1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
@@ -61,7 +65,7 @@ function giveNickname(value, index) {
   nickName = nickName.replace(nickName[0], nickName[0].toUpperCase());
   const result = {
     ...people[index],
-    nickName: nickName,
+    nickname: nickName,
   };
   return result;
 }
