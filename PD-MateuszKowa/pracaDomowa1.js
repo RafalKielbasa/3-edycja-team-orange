@@ -1,27 +1,27 @@
 //  DANE WEJŚCIOWE
 
-// const people = [
-//   {
-//     firstName: "Bartolomeo",
-//     lastName: "Lozano",
-//   },
-//   {
-//     firstName: "Mateo",
-//     lastName: "Loza",
-//   },
-//   {
-//     firstName: "Ma",
-//     lastName: "Lo",
-//   },
-//   {
-//     firstName: "T",
-//     lastName: "K",
-//   },
-//   {
-//     firstName: "Thomas",
-//     lastName: "Moore",
-//   },
-// ];
+const people = [
+  {
+    firstName: "Bartolomeo",
+    lastName: "Lozano",
+  },
+  {
+    firstName: "Mateo",
+    lastName: "Loza",
+  },
+  {
+    firstName: "Ma",
+    lastName: "Lo",
+  },
+  {
+    firstName: "T",
+    lastName: "K",
+  },
+  {
+    firstName: "Thomas",
+    lastName: "Moore",
+  },
+];
 
 /* 
     1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
@@ -75,16 +75,16 @@ function giveNickname(value, index) {
   };
   return result;
 }
-// console.log(people.map(giveNickname));
-
+console.log(people.map(giveNickname));
+const people_1 = people.map(giveNickname);
 // //  DANE WEJŚCIOWE
-const people = [
-  {
-    firstName: "Bartolomeo",
-    lastName: "Lozano",
-    nickname: "Rabona",
-  },
-];
+// const people = [
+//   {
+//     firstName: "Bartolomeo",
+//     lastName: "Lozano",
+//     nickname: "Rabona",
+//   },
+// ];
 
 /* 
     2. 
@@ -115,12 +115,12 @@ function introduceYourself() {
   const text = `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie [${this.nickname}]`;
   console.log(text);
 }
-const newPeople = people.map((value) => ({
+const people_2 = people_1.map((value) => ({
   ...value,
   introduceYourself: introduceYourself,
 }));
-console.log(newPeople[0]);
-newPeople.forEach((value) => value.introduceYourself());
+console.log(people_2[0]);
+people_2.forEach((value) => value.introduceYourself());
 
 //  DANE WEJŚCIOWE
 // const people = [
@@ -157,6 +157,23 @@ const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
     - w funkcji musicie użyć słówka this, parametru i tablicy, która jest na zewnątrz, tablica z kolorami może mieć
     dowoloną ilość kolorów
 */
+function getFavouriteColor(number) {
+  const typeNumber = typeof number;
+  if (typeNumber === "undefined") {
+    number = 5;
+  } else if (number < 1) {
+    console.log("podałeś za małą liczbę, liczba nie może być mniejsza niż 1");
+  } else if (number > 30) {
+    console.log("podałeś za dużą liczbę, liczba nie może być większa niż 30");
+  }
+  const charSum =
+    this.firstName.length + this.lastName.length + this.nickname.length;
+  const result = Math.abs(charSum - number);
+  const resultWithMod = result % colors.length;
+  console.log(colors[resultWithMod]);
+}
+const people_3 = people_2.map((value) => ({ ...value, getFavouriteColor }));
+people_3.forEach((value) => value.getFavouriteColor());
 
 /*
     4. Napisz funkcję analogiczną do funkcji z zadania 3, ale nie dodawaj jej w obiekcie.
