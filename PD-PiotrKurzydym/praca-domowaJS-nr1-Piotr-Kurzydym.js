@@ -1,4 +1,4 @@
-//  DANE WEJŚCIOWE
+//  DANE WEJŚCIOWE   !!! zadania jeszcze nie wykonane !!!
 const people1 = [
   {
     firstName: "Bartolomeo",
