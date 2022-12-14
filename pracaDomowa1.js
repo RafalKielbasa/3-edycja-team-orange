@@ -1,5 +1,5 @@
 //  DANE WEJŚCIOWE
-const people = [
+const people1 = [
   {
     firstName: "Bartolomeo",
     lastName: "Lozano",
@@ -40,14 +40,13 @@ const people = [
 */
 
 //  DANE WEJŚCIOWE
-const people = [
+const people2 = [
   {
     firstName: "Bartolomeo",
     lastName: "Lozano",
     nickname: "Rabona",
   },
 ];
-
 
 /* 
     2. 
@@ -76,7 +75,7 @@ const people = [
 */
 
 //  DANE WEJŚCIOWE
-const people = [
+const people3 = [
   {
     firstName: "Bartolomeo",
     lastName: "Lozano",
