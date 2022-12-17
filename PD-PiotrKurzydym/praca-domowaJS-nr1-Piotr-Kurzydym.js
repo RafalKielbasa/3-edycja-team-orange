@@ -10,6 +10,13 @@ const people1 = [
   },
 ];
 
+let text = "Polska";
+
+const firstThreeLetters = people1.map((nickname) => nickname.firstName);
+
+console.log(`firstThreeLetters:`, firstThreeLetters);
+// console.log(result);
+
 /* 
       1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
       a) pobierze 3 pierwsze litery imienia, odwróci ich kolejność i zapisze do zmiennej
