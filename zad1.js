@@ -7,6 +7,14 @@ const people = [
     firstName: "Mateo",
     lastName: "Loza",
   },
+  {
+    firstName: "Pablo",
+    lastName: "J",
+  },
+  {
+    firstName: "Cj",
+    lastName: "Mbappe",
+  },
 ];
 
 function createNickName(firstName, lastName) {
@@ -17,7 +25,7 @@ function createNickName(firstName, lastName) {
   return nickName.charAt(0).toUpperCase() + nickName.slice(1).toLowerCase();
 }
 
-const peopleWithUsurname = people.map((person) => {
+const peopleWithNickNames = people.map((person) => {
   return {
     fistName: person.firstName,
     lastName: person.lastName,
@@ -25,4 +33,4 @@ const peopleWithUsurname = people.map((person) => {
   };
 });
 
-console.log(peopleWithUsurname);
+console.log(peopleWithNickNames);
