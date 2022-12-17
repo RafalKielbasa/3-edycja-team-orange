@@ -17,24 +17,6 @@ function createNickName(firstName, lastName) {
   return nickName.charAt(0).toUpperCase() + nickName.slice(1).toLowerCase();
 }
 
-// const createNickName = people.map((person) => {
-//   const threeCharsOfName = person.firstName
-//     .slice(0, 3)
-//     .split("")
-//     .reverse()
-//     .join("");
-
-//   const threeCharsOfLastName = person.lastName
-//     .slice(-3)
-//     .split("")
-//     .reverse()
-//     .join("");
-
-//   const nickName = [threeCharsOfName, threeCharsOfLastName].join("");
-
-//   return nickName.charAt(0).toUpperCase() + nickName.slice(1).toLowerCase();
-// });
-
 const peopleWithUsurname = people.map((person) => {
   return {
     fistName: person.firstName,
@@ -44,4 +26,3 @@ const peopleWithUsurname = people.map((person) => {
 });
 
 console.log(peopleWithUsurname);
-// console.log(peopleMapped)
