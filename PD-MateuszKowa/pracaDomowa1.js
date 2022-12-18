@@ -2,24 +2,24 @@
 
 const people = [
   {
-    firstName: "Bartolomeo",
-    lastName: "Lozano",
+    firstName: "Bartolomeoa",
+    lastName: "Lozanobb",
   },
   {
-    firstName: "Mateo",
-    lastName: "Loza",
+    firstName: "Mateoaa",
+    lastName: "Lozakka",
   },
   {
     firstName: "Ma",
     lastName: "Lo",
   },
   {
-    firstName: "T",
-    lastName: "K",
+    firstName: "Ta",
+    lastName: "Kaaa",
   },
   {
-    firstName: "Thomas",
-    lastName: "Moore",
+    firstName: "Thomabk",
+    lastName: "Mooreaaa",
   },
 ];
 
@@ -175,7 +175,7 @@ function getFavouriteColor(number) {
   );
 }
 const people_3 = people_2.map((value) => ({ ...value, getFavouriteColor }));
-people_3.forEach((value) => value.getFavouriteColor());
+// people_3.forEach((value) => value.getFavouriteColor());
 
 /*
     4. Napisz funkcję analogiczną do funkcji z zadania 3, ale nie dodawaj jej w obiekcie.
@@ -200,9 +200,9 @@ function getFavouriteColorNoObject(object, number) {
     `${object.firstName} your favourite color is ${colors[resultWithMod]}- forloop`
   );
 }
-for (value of people_2) {
-  getFavouriteColorNoObject(value);
-}
+// for (value of people_2) {
+//   getFavouriteColorNoObject(value);
+// }
 /*
     5. Zadanie polega na użyciu .filter() .map() .reduce w wersji łańcuchowej,
     czyli nie twórz nowych tablic w momencie wykonanie jednej z powyższych metod, połącz wykonanie ze sobą w jeden 
@@ -241,6 +241,75 @@ for (value of people_2) {
     g) posortuj tablicę alfabetycznie
 */
 
+function checkExceptions() {
+  let checkPrime = true;
+  const isElite = Math.ceil(Math.random() * 100);
+  console.log(isElite);
+  for (let i = 2; i <= isElite / 2; i++) {
+    if (isElite % i == 0) {
+      checkPrime = false;
+      break;
+    }
+  }
+  return checkPrime;
+}
+const primeDoor = checkExceptions();
+console.log(primeDoor);
+function checkArray(value) {
+  const FNLenghth = value.firstName.length;
+  const LetterArr = ["k", "a"];
+  if (primeDoor == true || (value % 3 == 0 && value % 5 == 0)) {
+    return true;
+  } else if (
+    LetterArr.includes(value.firstName[FNLenghth - 1]) &&
+    value.lastName.length > 6 &&
+    value.nickname.indexOf("a") != -1
+  ) {
+    return true;
+  }
+}
+function mapArray(value) {
+  let newObject = {};
+  for (key in value) {
+    if (typeof value[key] === "function") {
+      delete key;
+    } else {
+      newObject[value[key]] = key;
+    }
+  }
+  return newObject;
+}
+
+const people_4 = people_3
+  .filter(checkArray)
+  .map(mapArray)
+  .reduce((acc, val) => {
+    for (key in val) {
+      acc[key] = val[key];
+    }
+    return acc;
+  }, {});
+function lastFiltration(object) {
+  sValue = "s".charCodeAt();
+  charArr = [];
+  for (key in object) {
+    const splittedKey = [...key];
+    if (object[key] === "lastName" || object[key] === "nickname") {
+      if (splittedKey.every((a) => a.toLowerCase().charCodeAt() < sValue)) {
+        charArr.push(key);
+      }
+    } else if (object[key] === "firstName") {
+      if (splittedKey.some((a) => a.toLowerCase().charCodeAt() >= sValue)) {
+        charArr.push(key);
+      }
+    }
+  }
+  return charArr;
+}
+
+console.log("people_4", people_4);
+console.log(lastFiltration(people_4).sort());
+
 /*
     *6. Currying function
     a) Napisz taką funkcję mnożącą 2 liczby, aby możliwe były następujące wywołania:
@@ -254,7 +323,24 @@ for (value of people_2) {
     - funkcja może zwracać inne funkcje
     - funkcja może korzystać ze zmiennych i parametrów funkcji zewnętrznych (czyli tych w których się znajduje)
 */
+function multi(a) {
+  return (b) => {
+    return a * b;
+  };
+}
+const multiplyBySix = multi(6);
+console.log("zadanie 6a", multiplyBySix(10));
 
+function multiFour(a) {
+  return (b) => {
+    return (c) => {
+      return (d) => {
+        return a * b * c * d;
+      };
+    };
+  };
+}
+console.log("zadanie 6b", multiFour(4)(5)(6)(10));
 /*
     **7. Rekurencja
      a) Mając zagnieżdżony obiekt, wyciągnij z niego wszystkie imiona i dodaj do tablicy
@@ -303,3 +389,24 @@ const nestedObject = {
     },
   ],
 };
+const nameArray = [nestedObject.name];
+function takeNames(object) {
+  for (key in object) {
+    if (Array.isArray(object[key])) {
+      takeNames(object[key]);
+    } else if (typeof object[key] === "object") {
+      let helperValue = "";
+      const newValue = object[key];
+      for (val in newValue) {
+        if (val !== "children") {
+          helperValue += newValue[val] + " ";
+        }
+      }
+      nameArray.push(helperValue);
+      takeNames(object[key]);
+    }
+  }
+  return nameArray;
+}
+
+console.log("zadanie 7", takeNames(nestedObject));
