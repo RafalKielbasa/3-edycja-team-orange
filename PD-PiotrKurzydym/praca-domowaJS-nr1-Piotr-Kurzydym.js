@@ -8,21 +8,43 @@ const people1 = [
     firstName: "Mateo",
     lastName: "Loza",
   },
+  {
+    firstName: "Piotrulo",
+    lastName: "Kurzydymulo",
+  },
 ];
+// 1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
+// a) pobierze 3 pierwsze litery imienia, odwróci ich kolejność i zapisze do zmiennej
+// //onazoL
+// //Lozano
+console.log(`Zadanie 1.a)`);
+const firstThreeLettersReversed = people1.map((nickname) =>
+  nickname.firstName.slice(0, 3).split("").reverse().join("")
+);
+console.log(`firstThreeLettersReversed:`, firstThreeLettersReversed);
+console.log(`---`);
 
-let text = "Polska";
+// b) pobierze 3 ostatnie litery nazwiska, zamieni kolejnością pierwszą i ostatnią i dołączy powstały string do poprzedniego
+console.log(`Zadanie 1.b)`);
+const lastThreeLettersReversed = people1.map((nickname) =>
+  nickname.lastName.slice(-3).split("").reverse().join("")
+);
+console.log(`lastThreeLettersReversed:`, lastThreeLettersReversed);
 
-const firstThreeLetters = people1.map((nickname) => nickname.firstName);
-
-console.log(`firstThreeLetters:`, firstThreeLetters);
-// console.log(result);
+const arrayConnect = [
+  ...firstThreeLettersReversed,
+  ...lastThreeLettersReversed,
+];
+let length = arrayConnect.length / 2;
+let firstAndLastConnected = [];
+for (i = 0; i < length; i++) {
+  arrayConnect[i] += arrayConnect[i + 3];
+  firstAndLastConnected.push(arrayConnect[i]);
+}
+console.log(firstAndLastConnected);
+console.log(`---`);
 
 /* 
-      1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
-      a) pobierze 3 pierwsze litery imienia, odwróci ich kolejność i zapisze do zmiennej
-      //onazoL
-      //Lozano
-      b) pobierze 3 ostatnie litery nazwiska, zamieni kolejnością pierwszą i ostatnią i dołączy powstały string do poprzedniego
       c*) Zmieni wielkość liter w taki sposób, żeby powstały nick zaczynał się wielką literą i nie miał żadnych wielkich liter poza 1.
       d) Jeżeli liczba znaków w imieniu bądź nazwisku jest mniejsza niż 3, nickname będzie odpowiednio krótszy 
       e) rozważcie wszystkie skrajne przypadki, ponieważ Waszą funkcję mapującą wrzucimy do testów na platformie
