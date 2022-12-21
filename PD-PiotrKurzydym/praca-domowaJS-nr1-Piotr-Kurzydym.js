@@ -12,6 +12,10 @@ const people1 = [
     firstName: "Piotrulo",
     lastName: "Kurzydymulo",
   },
+  {
+    firstName: "Ola",
+    lastName: "Dutkiewicz",
+  },
 ];
 // 1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
 // a) pobierze 3 pierwsze litery imienia, odwróci ich kolejność i zapisze do zmiennej
@@ -38,14 +42,22 @@ const arrayConnect = [
 let length = arrayConnect.length / 2;
 let firstAndLastConnected = [];
 for (i = 0; i < length; i++) {
-  arrayConnect[i] += arrayConnect[i + 3];
+  arrayConnect[i] += arrayConnect[i + length];
   firstAndLastConnected.push(arrayConnect[i]);
 }
-console.log(firstAndLastConnected);
+console.log(`firstAndLastConnected:`, firstAndLastConnected);
 console.log(`---`);
 
+// c*) Zmieni wielkość liter w taki sposób, żeby powstały nick zaczynał się wielką literą i nie miał żadnych wielkich liter poza 1.
+console.log(`Zadanie 1.c)`);
+let nicknameTidy = firstAndLastConnected
+  .map((nicknametidy) => nicknametidy.toLocaleLowerCase())
+  .map(
+    (nicknameTidy2) => nicknameTidy2[0].toUpperCase() + nicknameTidy2.slice(1)
+  );
+console.log(nicknameTidy);
+console.log(`---`);
 /* 
-      c*) Zmieni wielkość liter w taki sposób, żeby powstały nick zaczynał się wielką literą i nie miał żadnych wielkich liter poza 1.
       d) Jeżeli liczba znaków w imieniu bądź nazwisku jest mniejsza niż 3, nickname będzie odpowiednio krótszy 
       e) rozważcie wszystkie skrajne przypadki, ponieważ Waszą funkcję mapującą wrzucimy do testów na platformie
       e) Have fun :)
@@ -65,14 +77,22 @@ console.log(`---`);
   */
 
 //  DANE WEJŚCIOWE
+console.log(`Zadanie 2.a)`);
+
 const people2 = [
   {
     firstName: "Bartolomeo",
     lastName: "Lozano",
     nickname: "Rabona",
+    introduceYourself() {
+      console.log(
+        `Cześć jestem ${people2[0].firstName} ${people2[0].lastName}, ale w szkole mówią na mnie [${people2[0].nickname}]`
+      );
+    },
   },
 ];
-
+people2[0].introduceYourself();
+console.log(`---`);
 /* 
       2. 
       a) Do każdego obiektu dodaj funkcję introduceYourself, która za pomocą słówka this wyświetli w konsoli tekst powitalny.
