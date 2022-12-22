@@ -19,4 +19,4 @@ function multiB(a) {
   };
 }
 
-console.log("Zad6b " + multiB(4)(5)(6)(10));
+console.log("Zad6b ", multiB(4)(5)(6)(10));
