@@ -13,14 +13,13 @@ const people1 = [
     lastName: "Kurzydymulo",
   },
   {
-    firstName: "Ola",
-    lastName: "Dutkiewicz",
+    firstName: "Kurt",
+    lastName: "Cobain",
   },
 ];
 // 1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
 // a) pobierze 3 pierwsze litery imienia, odwróci ich kolejność i zapisze do zmiennej
-// //onazoL
-// //Lozano
+
 console.log(`Zadanie 1.a)`);
 const firstThreeLettersReversed = people1.map((nickname) =>
   nickname.firstName.slice(0, 3).split("").reverse().join("")
@@ -77,8 +76,14 @@ console.log(`---`);
   */
 
 //  DANE WEJŚCIOWE
+// 2.
+// a) Do każdego obiektu dodaj funkcję introduceYourself, która za pomocą słówka this wyświetli w konsoli tekst powitalny.
+
 console.log(`Zadanie 2.a)`);
 
+// Array.prototype.people22 = function (callback) {
+//   for (let i = 0; i < this.length; i++) {}
+// };
 const people2 = [
   {
     firstName: "Bartolomeo",
@@ -86,16 +91,32 @@ const people2 = [
     nickname: "Rabona",
     introduceYourself() {
       console.log(
-        `Cześć jestem ${people2[0].firstName} ${people2[0].lastName}, ale w szkole mówią na mnie [${people2[0].nickname}]`
+        `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie [${this.nickname}]`
+      );
+    },
+  },
+  {
+    firstName: "Piotrulo",
+    lastName: "Kurzydymulo",
+    nickname: "Kurzy",
+    introduceYourself() {
+      console.log(
+        `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie [${this.nickname}]`
       );
     },
   },
 ];
 people2[0].introduceYourself();
 console.log(`---`);
+
+// b) za pomocą pętli forEach, wywołaj funkcję powitalną dla każdego elementu tablicy. W rezultacie na ekranie powinien
+// pojawić się tekst powitalny dla każdej osoby w tablicy
+console.log(`Zadanie 2.b)`);
+people2.forEach(function (item) {
+  item.introduceYourself();
+});
+console.log(`---`);
 /* 
-      2. 
-      a) Do każdego obiektu dodaj funkcję introduceYourself, która za pomocą słówka this wyświetli w konsoli tekst powitalny.
       Oczywiście tekst powinien wyświetlić się dopiero po wywołaniu funkcji.
       Dla powyższego przykładu tekst powinien wyglądać w następujący sposób:
       "Cześć jestem Bartolomeo Lozano, ale w szkole mówią na mnie [Rabona]"
@@ -109,11 +130,13 @@ console.log(`---`);
       },
       b) za pomocą pętli forEach, wywołaj funkcję powitalną dla każdego elementu tablicy. W rezultacie na ekranie powinien
       pojawić się tekst powitalny dla każdej osoby w tablicy
+
       Hints:
       - nie używaj w tym zadaniu funkcji strzałkowej, ponieważ słówko this Ci nie zadziała i nie będziesz miał(a)
       dostępu do this.firstName lastName i nickname
       - postaraj się zdefiniować funkcję powitalną tylko raz (nie rób tego w pętli, ani funkcji map)
       
+
   */
 
 //  DANE WEJŚCIOWE
@@ -122,9 +145,24 @@ const people3 = [
     firstName: "Bartolomeo",
     lastName: "Lozano",
     nickname: "Rabona",
-    introduceYourself: "", // funkcja zamiast pustego stringa
+    getFavouriteColor(a) {
+      if (a < 1) {
+        console.log(
+          `podałeś za małą liczbę, liczba nie może być mniejsza niż 1`
+        );
+      } else if (a > 30) {
+        console.log(
+          `podałeś za dużą liczbę, liczba nie może być większa niż 30`
+        );
+      } else {
+        console.log(`O.K.`);
+        console.log(`a:`, a);
+        console.log(this.firstName.length);
+      }
+    },
   },
 ];
+people3[0].getFavouriteColor();
 
 const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
 
