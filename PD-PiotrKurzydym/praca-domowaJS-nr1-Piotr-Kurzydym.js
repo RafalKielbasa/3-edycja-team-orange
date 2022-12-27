@@ -140,6 +140,9 @@ console.log(`---`);
   */
 
 //  DANE WEJŚCIOWE
+console.log(`Zadanie 3.`);
+
+const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
 const people3 = [
   {
     firstName: "Bartolomeo",
@@ -148,24 +151,30 @@ const people3 = [
     getFavouriteColor(a) {
       if (a < 1) {
         console.log(
-          `podałeś za małą liczbę, liczba nie może być mniejsza niż 1`
+          `Podałeś za małą liczbę, liczba nie może być mniejsza niż 1`
         );
       } else if (a > 30) {
         console.log(
-          `podałeś za dużą liczbę, liczba nie może być większa niż 30`
+          `Podałeś za dużą liczbę, liczba nie może być większa niż 30`
         );
+      } else if (a === undefined) {
+        const sum =
+          this.firstName.length + this.lastName.length + this.nickname.length;
+        const index = Math.abs(sum - 5) % colors.length;
+        const FavouriteColor = colors[index];
+        console.log(`FavouriteColor:`, FavouriteColor);
       } else {
-        console.log(`O.K.`);
-        console.log(`a:`, a);
-        console.log(this.firstName.length);
+        const sum =
+          this.firstName.length + this.lastName.length + this.nickname.length;
+        const index = Math.abs(sum - a) % colors.length;
+        const FavouriteColor = colors[index];
+        console.log(`FavouriteColor:`, FavouriteColor);
       }
     },
   },
 ];
-people3[0].getFavouriteColor();
-
-const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
-
+people3[0].getFavouriteColor(5);
+console.log(`---`);
 /*
       3. 
       a) Dodaj do każdego obiektu funkcję getFavouriteColor
@@ -188,6 +197,82 @@ const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
       dowoloną ilość kolorów
   */
 
+console.log(`Zadanie 4.a) b)`);
+
+const colors2 = ["red", "green", "yellow", "blue", "pink", "orange"];
+const people4 = [
+  {
+    firstName: "Bartolomeo",
+    lastName: "Lozano",
+    nickname: "Rabona",
+  },
+  {
+    firstName: "Piotrulo",
+    lastName: "Kurzydymulo",
+    nickname: "Kurzy",
+  },
+  {
+    firstName: "James",
+    lastName: "Hetfield",
+    nickname: "Jaymz",
+  },
+];
+function getFavouriteColor2(a, arrayIndex) {
+  if (a < 1) {
+    console.log(`Podałeś za małą liczbę, liczba nie może być mniejsza niż 1`);
+  } else if (a > 30) {
+    console.log(`Podałeś za dużą liczbę, liczba nie może być większa niż 30`);
+  } else if (arrayIndex < 0) {
+    console.log(
+      `Podana liczba określająca index obiektu nie może być mniejsza niż 0`
+    );
+  } else if (arrayIndex > people4.length - 1) {
+    console.log(
+      `Podana liczba określająca index obiektu nie może być większa niż ${
+        people4.length - 1
+      }`
+    );
+  } else if (a === undefined) {
+    const sum2 =
+      people4[arrayIndex].firstName.length +
+      people4[arrayIndex].lastName.length +
+      people4[arrayIndex].nickname.length;
+    const index2 = Math.abs(sum2 - 5) % colors2.length;
+    const FavouriteColor2 = colors2[index2];
+    console.log(`FavouriteColor:`, FavouriteColor2);
+  } else {
+    const sum2 =
+      people4[arrayIndex].firstName.length +
+      people4[arrayIndex].lastName.length +
+      people4[arrayIndex].nickname.length;
+    const index2 = Math.abs(sum2 - a) % colors2.length;
+    const FavouriteColor2 = colors2[index2];
+    console.log(`FavouriteColor:`, FavouriteColor2);
+  }
+}
+getFavouriteColor2(1, 0);
+console.log(`---`);
+
+console.log(`Zadanie 4.c)`);
+function getFavouriteColor3(a) {
+  if (a < 1) {
+    console.log(`Podałeś za małą liczbę, liczba nie może być mniejsza niż 1`);
+  } else if (a > 30) {
+    console.log(`Podałeś za dużą liczbę, liczba nie może być większa niż 30`);
+  } else {
+    for (let person of people4) {
+      const sum3 =
+        person.firstName.length +
+        person.lastName.length +
+        person.nickname.length;
+      const index3 = Math.abs(sum3 - a) % colors2.length;
+      const FavouriteColor3 = colors2[index3];
+      console.log(`FavouriteColor:`, FavouriteColor3);
+    }
+  }
+}
+getFavouriteColor3(1);
+console.log(`---`);
 /*
       4. Napisz funkcję analogiczną do funkcji z zadania 3, ale nie dodawaj jej w obiekcie.
       a) funkcja powinna przyjąć 2 parametry (obiekt osoby i liczbę z zakresu 1 - 30)
@@ -195,6 +280,54 @@ const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
       c) Za pomocą pętli for of przeiteruj po wszystkich osobach z tablicy i wyświetl ich ulubione kolory
   */
 
+console.log(`Zadanie 5.`);
+const people5 = [
+  {
+    firstName: "Bartolomeo",
+    lastName: "Lozano",
+    nickname: "Rabona",
+  },
+  {
+    firstName: "Piotrulo",
+    lastName: "Kurzydymulo",
+    nickname: "Kurzy",
+  },
+  {
+    firstName: "Magda",
+    lastName: "Borsuk",
+    nickname: "Megie",
+  },
+  {
+    firstName: "James",
+    lastName: "Hetfield",
+    nickname: "Jaymz",
+  },
+  {
+    firstName: "Kasia",
+    lastName: "Kowalska",
+    nickname: "Kate",
+  },
+  {
+    firstName: "Anna",
+    lastName: "Piwowarczyk",
+    nickname: "Ciemnowłosa",
+  },
+];
+
+const newPeople5 = people5
+  .map((object) => object)
+  .filter(
+    (object) =>
+      (object.firstName[object.firstName.length - 1] === `a` ||
+        object.firstName[object.firstName.length - 1] === `k`) &&
+      object.lastName.length > 6 &&
+      object.nickname.includes("a")
+  );
+console.log(newPeople5);
+// console.log(object.nickname.includes("a"));
+// console.log(Math.round(Math.random() * 100));
+// console.log(people5.length);
+console.log(`---`);
 /*
       5. Zadanie polega na użyciu .filter() .map() .reduce w wersji łańcuchowej,
       czyli nie twórz nowych tablic w momencie wykonanie jednej z powyższych metod, połącz wykonanie ze sobą w jeden 
