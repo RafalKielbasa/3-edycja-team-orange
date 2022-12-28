@@ -330,8 +330,20 @@ const isEliteisPrime = (isElite) => {
   }
   return true;
 };
-const res = isEliteisPrime(isElite);
-const newPeople5 = people5.filter(function (object) {
+console.log(`Wartość isElite:`, isElite);
+console.log(
+  `Czy to jest liczba pierwsza lub podzielna przez 3 i 5 ?`,
+  isEliteisPrime(isElite)
+);
+console.log(`Zadanie 5.d)`);
+
+let resabcde = people5
+  .filter(people5Filtered)
+  .map(poeple5Reversed)
+  .reduce(poeple5Redused);
+
+function people5Filtered(object) {
+  const res = isEliteisPrime(isElite);
   if (res === false)
     return (
       (object.firstName[object.firstName.length - 1] === `a` ||
@@ -340,19 +352,13 @@ const newPeople5 = people5.filter(function (object) {
       object.nickname.includes("a")
     );
   return object;
-});
-console.log(`Wartość isElite:`, isElite);
-console.log(`Czy to jest liczba pierwsza lub podzielna przez 3 i 5 ?`, res);
-console.log(newPeople5);
+}
 console.log(`---`);
-
-console.log(`Zadanie 5.d) e)`);
-
-let resde = people5.map(poeple5Reversed).reduce(poeple5Redused);
 
 function poeple5Reversed(item) {
   let reversedPerson = {};
   let i = 0;
+
   for (let key in item) {
     reversedPerson = { ...reversedPerson, [item[key]]: key };
     if (i === 2) {
@@ -361,7 +367,6 @@ function poeple5Reversed(item) {
     }
     i++;
   }
-  console.log(reversedPerson);
 }
 
 function poeple5Redused(acc, item) {
@@ -369,7 +374,7 @@ function poeple5Redused(acc, item) {
   const { ...accEntries } = acc;
   return { ...accEntries, ...itemEntries };
 }
-console.log(`Wynik dla 5.d) e) łącznie:`, resde);
+console.log(`Wynik dla 5.a) b) c) d) e) łącznie:`, resabcde);
 console.log(`---`);
 
 /*
@@ -409,7 +414,31 @@ console.log(`---`);
       imię, którego chociaż jedna litera jest większa >= s
       g) posortuj tablicę alfabetycznie
   */
+console.log(`Zadanie 6.a)`);
+const multi = (a) => {
+  return (b) => {
+    return a * b;
+  };
+};
 
+console.log(multi(5)(6));
+const multiplyBySix = multi(6);
+console.log(multiplyBySix(10));
+console.log(`---`);
+
+console.log(`Zadanie 6.b)`);
+const multi2 = (a) => {
+  return (b) => {
+    return (c) => {
+      return (d) => {
+        return a * b * c * d;
+      };
+    };
+  };
+};
+console.log(multi2(4)(5)(6)(10));
+
+console.log(`---`);
 /*
       *6. Currying function
       a) Napisz taką funkcję mnożącą 2 liczby, aby możliwe były następujące wywołania:
@@ -430,6 +459,8 @@ console.log(`---`);
        Na przykład 'Kamil Bartek'
       INPUT:
   */
+console.log(`Zadanie 7.`);
+
 const nestedObject = {
   name: "Kamil",
   children: [
@@ -471,3 +502,30 @@ const nestedObject = {
     },
   ],
 };
+let names = [];
+
+// const object1 = {
+//   a: 'somestring',
+//   b: 42
+// };
+
+for (const [key, value] of Object.entries(nestedObject)) {
+  console.log(`${key}: ${value}`);
+}
+
+// for (let key in nestedObject) {
+//   console.log(`key`, key);
+// }
+
+// for (let i = 0; i < nestedObject.length; i++) {}
+// console.log(nestedObject.length);
+// console.log(i);
+// function findNames([...rest]) {
+//   while (x < rest.length) {
+//     x++;
+//   }
+//   console.log(`Wartość maksymalna: `, Math.max(...rest));
+//   console.log(`Wartość minimlna: `, Math.min(...rest));
+// }
+// repeat([2, 4, 5, 67, 122, 456]);
+console.log(`---`);
