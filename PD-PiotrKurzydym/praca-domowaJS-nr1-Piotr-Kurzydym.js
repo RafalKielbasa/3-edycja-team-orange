@@ -1,4 +1,5 @@
 //  DANE WEJŚCIOWE   !!! zadania jeszcze nie wykonane !!!
+console.log(`Zadanie 1.a)`);
 const people1 = [
   {
     firstName: "Bartolomeo",
@@ -17,23 +18,17 @@ const people1 = [
     lastName: "Cobain",
   },
 ];
-// 1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
-// a) pobierze 3 pierwsze litery imienia, odwróci ich kolejność i zapisze do zmiennej
-
-console.log(`Zadanie 1.a)`);
 const firstThreeLettersReversed = people1.map((nickname) =>
   nickname.firstName.slice(0, 3).split("").reverse().join("")
 );
 console.log(`firstThreeLettersReversed:`, firstThreeLettersReversed);
 console.log(`---`);
 
-// b) pobierze 3 ostatnie litery nazwiska, zamieni kolejnością pierwszą i ostatnią i dołączy powstały string do poprzedniego
 console.log(`Zadanie 1.b)`);
 const lastThreeLettersReversed = people1.map((nickname) =>
   nickname.lastName.slice(-3).split("").reverse().join("")
 );
 console.log(`lastThreeLettersReversed:`, lastThreeLettersReversed);
-
 const arrayConnect = [
   ...firstThreeLettersReversed,
   ...lastThreeLettersReversed,
@@ -47,7 +42,6 @@ for (i = 0; i < length; i++) {
 console.log(`firstAndLastConnected:`, firstAndLastConnected);
 console.log(`---`);
 
-// c*) Zmieni wielkość liter w taki sposób, żeby powstały nick zaczynał się wielką literą i nie miał żadnych wielkich liter poza 1.
 console.log(`Zadanie 1.c)`);
 let nicknameTidy = firstAndLastConnected
   .map((nicknametidy) => nicknametidy.toLocaleLowerCase())
@@ -56,7 +50,12 @@ let nicknameTidy = firstAndLastConnected
   );
 console.log(nicknameTidy);
 console.log(`---`);
+
 /* 
+// 1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
+// a) pobierze 3 pierwsze litery imienia, odwróci ich kolejność i zapisze do zmiennej
+// b) pobierze 3 ostatnie litery nazwiska, zamieni kolejnością pierwszą i ostatnią i dołączy powstały string do poprzedniego
+// c*) Zmieni wielkość liter w taki sposób, żeby powstały nick zaczynał się wielką literą i nie miał żadnych wielkich liter poza 1.
       d) Jeżeli liczba znaków w imieniu bądź nazwisku jest mniejsza niż 3, nickname będzie odpowiednio krótszy 
       e) rozważcie wszystkie skrajne przypadki, ponieważ Waszą funkcję mapującą wrzucimy do testów na platformie
       e) Have fun :)
@@ -75,15 +74,7 @@ console.log(`---`);
       - Na stringach czy pojedynczych literkach możemy używać metod toLowerCase(), toUpperCase()
   */
 
-//  DANE WEJŚCIOWE
-// 2.
-// a) Do każdego obiektu dodaj funkcję introduceYourself, która za pomocą słówka this wyświetli w konsoli tekst powitalny.
-
 console.log(`Zadanie 2.a)`);
-
-// Array.prototype.people22 = function (callback) {
-//   for (let i = 0; i < this.length; i++) {}
-// };
 const people2 = [
   {
     firstName: "Bartolomeo",
@@ -109,14 +100,18 @@ const people2 = [
 people2[0].introduceYourself();
 console.log(`---`);
 
-// b) za pomocą pętli forEach, wywołaj funkcję powitalną dla każdego elementu tablicy. W rezultacie na ekranie powinien
-// pojawić się tekst powitalny dla każdej osoby w tablicy
 console.log(`Zadanie 2.b)`);
 people2.forEach(function (item) {
   item.introduceYourself();
 });
 console.log(`---`);
+
 /* 
+//  DANE WEJŚCIOWE
+// 2.
+// a) Do każdego obiektu dodaj funkcję introduceYourself, która za pomocą słówka this wyświetli w konsoli tekst powitalny.
+// b) za pomocą pętli forEach, wywołaj funkcję powitalną dla każdego elementu tablicy. W rezultacie na ekranie powinien
+// pojawić się tekst powitalny dla każdej osoby w tablicy
       Oczywiście tekst powinien wyświetlić się dopiero po wywołaniu funkcji.
       Dla powyższego przykładu tekst powinien wyglądać w następujący sposób:
       "Cześć jestem Bartolomeo Lozano, ale w szkole mówią na mnie [Rabona]"
@@ -141,7 +136,6 @@ console.log(`---`);
 
 //  DANE WEJŚCIOWE
 console.log(`Zadanie 3.`);
-
 const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
 const people3 = [
   {
@@ -198,7 +192,6 @@ console.log(`---`);
   */
 
 console.log(`Zadanie 4.a) b)`);
-
 const colors2 = ["red", "green", "yellow", "blue", "pink", "orange"];
 const people4 = [
   {
@@ -280,17 +273,21 @@ console.log(`---`);
       c) Za pomocą pętli for of przeiteruj po wszystkich osobach z tablicy i wyświetl ich ulubione kolory
   */
 
-console.log(`Zadanie 5.`);
+console.log(`Zadanie 5.a) b) c)`);
 const people5 = [
   {
     firstName: "Bartolomeo",
     lastName: "Lozano",
     nickname: "Rabona",
+    introduceYourself() {},
+    getFavouriteColor() {},
   },
   {
     firstName: "Piotrulo",
     lastName: "Kurzydymulo",
     nickname: "Kurzy",
+    introduceYourself() {},
+    getFavouriteColor() {},
   },
   {
     firstName: "Magda",
@@ -314,20 +311,67 @@ const people5 = [
   },
 ];
 
-const newPeople5 = people5
-  .map((object) => object)
-  .filter(
-    (object) =>
+const isElite = Math.round(Math.random() * 100);
+const isEliteisPrime = (isElite) => {
+  if (isElite % 3 === 0 && isElite % 5 === 0) {
+    return true;
+  }
+  if (isElite < 2) {
+    return false;
+  }
+  if (isElite === 2 || isElite === 3) {
+    return true;
+  }
+  const sq = Math.sqrt(isElite);
+  for (let i = 2; i <= sq; i++) {
+    if (isElite % i === 0) {
+      return false;
+    }
+  }
+  return true;
+};
+const res = isEliteisPrime(isElite);
+const newPeople5 = people5.filter(function (object) {
+  if (res === false)
+    return (
       (object.firstName[object.firstName.length - 1] === `a` ||
         object.firstName[object.firstName.length - 1] === `k`) &&
       object.lastName.length > 6 &&
       object.nickname.includes("a")
-  );
+    );
+  return object;
+});
+console.log(`Wartość isElite:`, isElite);
+console.log(`Czy to jest liczba pierwsza lub podzielna przez 3 i 5 ?`, res);
 console.log(newPeople5);
-// console.log(object.nickname.includes("a"));
-// console.log(Math.round(Math.random() * 100));
-// console.log(people5.length);
 console.log(`---`);
+
+console.log(`Zadanie 5.d) e)`);
+
+let resde = people5.map(poeple5Reversed).reduce(poeple5Redused);
+
+function poeple5Reversed(item) {
+  let reversedPerson = {};
+  let i = 0;
+  for (let key in item) {
+    reversedPerson = { ...reversedPerson, [item[key]]: key };
+    if (i === 2) {
+      console.log(`reversedPerson:`, reversedPerson);
+      return reversedPerson;
+    }
+    i++;
+  }
+  console.log(reversedPerson);
+}
+
+function poeple5Redused(acc, item) {
+  const { ...itemEntries } = item;
+  const { ...accEntries } = acc;
+  return { ...accEntries, ...itemEntries };
+}
+console.log(`Wynik dla 5.d) e) łącznie:`, resde);
+console.log(`---`);
+
 /*
       5. Zadanie polega na użyciu .filter() .map() .reduce w wersji łańcuchowej,
       czyli nie twórz nowych tablic w momencie wykonanie jednej z powyższych metod, połącz wykonanie ze sobą w jeden 
