@@ -504,28 +504,86 @@ const nestedObject = {
 };
 let names = [];
 
-// const object1 = {
-//   a: 'somestring',
-//   b: 42
-// };
-
-for (const [key, value] of Object.entries(nestedObject)) {
-  console.log(`${key}: ${value}`);
+function getNames(items) {
+  x = 0;
+  for (const [key, value] of Object.entries(items)) {
+    if (key === `name`) {
+      names.push(value);
+    } else if (key === `children`) {
+      x = value;
+      for (const [key, value] of Object.entries(x)) {
+        x = value;
+        for (const [key, value] of Object.entries(x)) {
+          if (key === `name`) {
+            names.push(value);
+          } else if (key === `name2`) {
+            names.push(value);
+          } else if (key === `children`) {
+            x = value;
+            for (const [key, value] of Object.entries(x)) {
+              x = value;
+              for (const [key, value] of Object.entries(x)) {
+                if (key === `name`) {
+                  names.push(value);
+                } else if (key === `children`) {
+                  x = value;
+                  for (const [key, value] of Object.entries(x)) {
+                    x = value;
+                    for (const [key, value] of Object.entries(x)) {
+                      if (key === `name`) {
+                        names.push(value);
+                      } else if (key === `name2`) {
+                        names.push(value);
+                      } else if (key === `children`) {
+                        x = value;
+                        for (const [key, value] of Object.entries(x)) {
+                          x = value;
+                          for (const [key, value] of Object.entries(x)) {
+                            if (key === `name`) {
+                              names.push(value);
+                            } else if (key === `name2`) {
+                              names.push(value);
+                            } else if (key === `name3`) {
+                              names.push(value);
+                            } else if (key === `children`) {
+                              x = value;
+                              for (const [key, value] of Object.entries(x)) {
+                                x = value;
+                                for (const [key, value] of Object.entries(x)) {
+                                  if (key === `name`) {
+                                    names.push(value);
+                                  } else if (key === `children`) {
+                                    x = value;
+                                    for (const [key, value] of Object.entries(
+                                      x
+                                    )) {
+                                      x = value;
+                                      for (const [key, value] of Object.entries(
+                                        x
+                                      )) {
+                                        if (key === `name`) {
+                                          names.push(value);
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
-
-// for (let key in nestedObject) {
-//   console.log(`key`, key);
-// }
-
-// for (let i = 0; i < nestedObject.length; i++) {}
-// console.log(nestedObject.length);
-// console.log(i);
-// function findNames([...rest]) {
-//   while (x < rest.length) {
-//     x++;
-//   }
-//   console.log(`Wartość maksymalna: `, Math.max(...rest));
-//   console.log(`Wartość minimlna: `, Math.min(...rest));
-// }
-// repeat([2, 4, 5, 67, 122, 456]);
+getNames(nestedObject);
+console.log(`names:`, names);
 console.log(`---`);
