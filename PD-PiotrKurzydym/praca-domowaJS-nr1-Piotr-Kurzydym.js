@@ -1,4 +1,5 @@
-//  DANE WEJŚCIOWE   !!! zadania jeszcze nie wykonane !!!
+//  ZADANIA WYKONANE !!!
+
 console.log(`Zadanie 1.a)`);
 const people1 = [
   {
@@ -505,53 +506,67 @@ const nestedObject = {
 let names = [];
 
 function getNames(items) {
-  x = 0;
+  let x = 0;
+  let searchedName = 0;
   for (const [key, value] of Object.entries(items)) {
     if (key === `name`) {
-      names.push(value);
+      searchedName = value;
+      names.push(searchedName);
     } else if (key === `children`) {
       x = value;
       for (const [key, value] of Object.entries(x)) {
         x = value;
         for (const [key, value] of Object.entries(x)) {
           if (key === `name`) {
-            names.push(value);
+            searchedName = value;
+            names.push(searchedName);
           } else if (key === `name2`) {
-            names.push(value);
+            searchedName += " " + value;
+            names.push(searchedName);
+            names.splice(-2, 1);
           } else if (key === `children`) {
             x = value;
             for (const [key, value] of Object.entries(x)) {
               x = value;
               for (const [key, value] of Object.entries(x)) {
                 if (key === `name`) {
-                  names.push(value);
+                  searchedName = value;
+                  names.push(searchedName);
                 } else if (key === `children`) {
                   x = value;
                   for (const [key, value] of Object.entries(x)) {
                     x = value;
                     for (const [key, value] of Object.entries(x)) {
                       if (key === `name`) {
-                        names.push(value);
+                        searchedName = value;
+                        names.push(searchedName);
                       } else if (key === `name2`) {
-                        names.push(value);
+                        searchedName += " " + value;
+                        names.push(searchedName);
+                        names.splice(-2, 1);
                       } else if (key === `children`) {
                         x = value;
                         for (const [key, value] of Object.entries(x)) {
                           x = value;
                           for (const [key, value] of Object.entries(x)) {
                             if (key === `name`) {
-                              names.push(value);
+                              searchedName = value;
+                              names.push(searchedName);
                             } else if (key === `name2`) {
-                              names.push(value);
+                              searchedName += " " + value;
+                              names.push(searchedName);
                             } else if (key === `name3`) {
-                              names.push(value);
+                              searchedName += " " + value;
+                              names.push(searchedName);
+                              names.splice(-3, 2);
                             } else if (key === `children`) {
                               x = value;
                               for (const [key, value] of Object.entries(x)) {
                                 x = value;
                                 for (const [key, value] of Object.entries(x)) {
                                   if (key === `name`) {
-                                    names.push(value);
+                                    searchedName = value;
+                                    names.push(searchedName);
                                   } else if (key === `children`) {
                                     x = value;
                                     for (const [key, value] of Object.entries(
@@ -562,7 +577,8 @@ function getNames(items) {
                                         x
                                       )) {
                                         if (key === `name`) {
-                                          names.push(value);
+                                          searchedName = value;
+                                          names.push(searchedName);
                                         }
                                       }
                                     }
