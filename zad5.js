@@ -86,19 +86,14 @@ const newPeople = people
     }
   })
   .map((person) => {
-    const newObject = [];
-
     for (let key in person) {
       if (typeof person[key] == "string") {
-        newObject.push({ [person[key]]: key });
+        return { [person[key]]: key };
       }
     }
-
-    return newObject;
   })
-  .reduce((acc, val) => {}, {});
+  .reduce((acc, item) => {
+    return { ...acc, ...item };
+  }, {});
 
 console.log(newPeople);
-
-// [1,2,3,4,5,6]
-//
