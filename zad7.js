@@ -40,14 +40,24 @@ const nestedObject = {
   ],
 };
 
-function recursive(array) {
-  const nameArray = [];
+let names = [];
 
-  for (let key in array) {
-    nameArray.push(array.name[key]);
+function nameRecursion(arr) {
+  let nameInArr;
+
+  for (const [key, value] of Object.entries(arr)) {
+    if (key == "name") {
+      nameInArr = value;
+    } else if (key == "name2" || key == "name3") {
+      nameInArr += " " + value;
+    } else if (key == "children") {
+      for (let i = 0; i < value.length; i++) {
+        nameRecursion(value[i]);
+      }
+    }
   }
-
-  recursive();
+  names.push(nameInArr);
 }
 
-console.log(recursive(nestedObject));
+nameRecursion(nestedObject);
+console.log(names);
