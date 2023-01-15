@@ -82,3 +82,13 @@ async function fetchData6() {
   const vehicles = await vehiclesResponce.json();
   console.log(`vehicles`, vehicles);
 }
+// add_shortcode(`external_data`, `callback_function_name`);
+
+// function callback_function_name() {
+
+//   $html = ``;
+//   $html = `<table>`;
+//   $html = `</table>`;
+
+//   return $html;
+// }

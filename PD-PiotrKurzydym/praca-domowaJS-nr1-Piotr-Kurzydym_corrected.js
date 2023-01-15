@@ -86,36 +86,36 @@ console.log(`---`);
       - Na stringach czy pojedynczych literkach możemy używać metod toLowerCase(), toUpperCase()
   */
 
-console.log(`Zadanie 2.a)`);
 const people2 = [
   {
     firstName: "Bartolomeo",
     lastName: "Lozano",
     nickname: "Rabona",
-    introduceYourself() {
-      console.log(
-        `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie [${this.nickname}]`
-      );
-    },
+    introduceYourself,
   },
   {
     firstName: "Piotrulo",
     lastName: "Kurzydymulo",
     nickname: "Kurzy",
-    introduceYourself() {
-      console.log(
-        `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie [${this.nickname}]`
-      );
-    },
+    introduceYourself,
+  },
+  {
+    firstName: "James",
+    lastName: "Hetfield",
+    nickname: "Jaymz",
+    introduceYourself,
   },
 ];
-people2[0].introduceYourself();
+function introduceYourself() {
+  console.log(
+    `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie [${this.nickname}]`
+  );
+}
+console.log(`Zadanie 2.a)`);
+people2[2].introduceYourself();
 console.log(`---`);
-
 console.log(`Zadanie 2.b)`);
-people2.forEach(function (item) {
-  item.introduceYourself();
-});
+people2.forEach((item) => item.introduceYourself());
 console.log(`---`);
 
 /* 
@@ -147,38 +147,36 @@ console.log(`---`);
   */
 
 //  DANE WEJŚCIOWE
-console.log(`Zadanie 3.`);
+
 const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
 const people3 = [
   {
     firstName: "Bartolomeo",
     lastName: "Lozano",
     nickname: "Rabona",
-    getFavouriteColor(a) {
-      if (a < 1) {
-        console.log(
-          `Podałeś za małą liczbę, liczba nie może być mniejsza niż 1`
-        );
-      } else if (a > 30) {
-        console.log(
-          `Podałeś za dużą liczbę, liczba nie może być większa niż 30`
-        );
-      } else if (a === undefined) {
-        const sum =
-          this.firstName.length + this.lastName.length + this.nickname.length;
-        const index = Math.abs(sum - 5) % colors.length;
-        const FavouriteColor = colors[index];
-        console.log(`FavouriteColor:`, FavouriteColor);
-      } else {
-        const sum =
-          this.firstName.length + this.lastName.length + this.nickname.length;
-        const index = Math.abs(sum - a) % colors.length;
-        const FavouriteColor = colors[index];
-        console.log(`FavouriteColor:`, FavouriteColor);
-      }
-    },
+    getFavouriteColor,
   },
 ];
+function getFavouriteColor(number) {
+  if (number < 1) {
+    console.log(`Podałeś za małą liczbę, liczba nie może być mniejsza niż 1`);
+  } else if (number > 30) {
+    console.log(`Podałeś za dużą liczbę, liczba nie może być większa niż 30`);
+  } else if (number === undefined) {
+    const sum =
+      this.firstName.length + this.lastName.length + this.nickname.length;
+    const index = Math.abs(sum - 5) % colors.length;
+    const FavouriteColor = colors[index];
+    console.log(`FavouriteColor:`, FavouriteColor);
+  } else {
+    const sum =
+      this.firstName.length + this.lastName.length + this.nickname.length;
+    const index = Math.abs(sum - number) % colors.length;
+    const FavouriteColor = colors[index];
+    console.log(`FavouriteColor:`, FavouriteColor);
+  }
+}
+console.log(`Zadanie 3.`);
 people3[0].getFavouriteColor(5);
 console.log(`---`);
 /*
@@ -513,126 +511,22 @@ const nestedObject = {
   ],
 };
 let names = [];
-// const arr = [1, 2, 3, 4, 5, 6];
 function getNames(a) {
-  let x = 0;
   let searchedName;
-  while (x < 10) {
-    for (const [key, value] of Object.entries(a)) {
-      // console.log(value);
-      if (key === `name`) {
-        searchedName = value;
-      } else if (key === `children`) {
-        for (i = 0; i < value.length; i++) {
-          getNames = value[i];
-        }
+  for (let [key, value] of Object.entries(a)) {
+    if (key === `name`) {
+      searchedName = value;
+    } else if (key === `name2`) {
+      searchedName += ` ` + value;
+    } else if (key === `name3`) {
+      searchedName += ` ` + value;
+    } else if (key === `children`) {
+      for (i = 0; i < value.length; i++) {
+        getNames(value[i]);
       }
-      // console.log(nestedObject[x]);
-      x++;
     }
-    names.push(searchedName);
   }
+  names.push(searchedName);
 }
 getNames(nestedObject);
 console.log(`names`, names);
-
-// let names = [];
-
-// function getNames(items) {
-//   let x = 0;
-//   let searchedName = 0;
-//   for (const [key, value] of Object.entries(items)) {
-//     if (key === `name`) {
-//       searchedName = value;
-//       names.push(searchedName);
-//     } else if (key === `children`) {
-//       x = value;
-//       for (const [key, value] of Object.entries(x)) {
-//         x = value;
-//         for (const [key, value] of Object.entries(x)) {
-//           if (key === `name`) {
-//             searchedName = value;
-//             names.push(searchedName);
-//           } else if (key === `name2`) {
-//             searchedName += " " + value;
-//             names.push(searchedName);
-//             names.splice(-2, 1);
-//           } else if (key === `children`) {
-//             x = value;
-//             for (const [key, value] of Object.entries(x)) {
-//               x = value;
-//               for (const [key, value] of Object.entries(x)) {
-//                 if (key === `name`) {
-//                   searchedName = value;
-//                   names.push(searchedName);
-//                 } else if (key === `children`) {
-//                   x = value;
-//                   for (const [key, value] of Object.entries(x)) {
-//                     x = value;
-//                     for (const [key, value] of Object.entries(x)) {
-//                       if (key === `name`) {
-//                         searchedName = value;
-//                         names.push(searchedName);
-//                       } else if (key === `name2`) {
-//                         searchedName += " " + value;
-//                         names.push(searchedName);
-//                         names.splice(-2, 1);
-//                       } else if (key === `children`) {
-//                         x = value;
-//                         for (const [key, value] of Object.entries(x)) {
-//                           x = value;
-//                           for (const [key, value] of Object.entries(x)) {
-//                             if (key === `name`) {
-//                               searchedName = value;
-//                               names.push(searchedName);
-//                             } else if (key === `name2`) {
-//                               searchedName += " " + value;
-//                               names.push(searchedName);
-//                             } else if (key === `name3`) {
-//                               searchedName += " " + value;
-//                               names.push(searchedName);
-//                               names.splice(-3, 2);
-//                             } else if (key === `children`) {
-//                               x = value;
-//                               for (const [key, value] of Object.entries(x)) {
-//                                 x = value;
-//                                 for (const [key, value] of Object.entries(x)) {
-//                                   if (key === `name`) {
-//                                     searchedName = value;
-//                                     names.push(searchedName);
-//                                   } else if (key === `children`) {
-//                                     x = value;
-//                                     for (const [key, value] of Object.entries(
-//                                       x
-//                                     )) {
-//                                       x = value;
-//                                       for (const [key, value] of Object.entries(
-//                                         x
-//                                       )) {
-//                                         if (key === `name`) {
-//                                           searchedName = value;
-//                                           names.push(searchedName);
-//                                         }
-//                                       }
-//                                     }
-//                                   }
-//                                 }
-//                               }
-//                             }
-//                           }
-//                         }
-//                       }
-//                     }
-//                   }
-//                 }
-//               }
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-// getNames(nestedObject);
-// console.log(`names:`, names);
-// console.log(`---`);
