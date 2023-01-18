@@ -10,6 +10,8 @@ const people = [
   },
 ];
 
+const lastLetters = () => {};
+
 /* 
     1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
     a) pobierze 3 pierwsze litery imienia, odwróci ich kolejność i zapisze do zmiennej
@@ -47,7 +49,6 @@ const people = [
     nickname: "Rabona",
   },
 ];
-
 
 /* 
     2. 
