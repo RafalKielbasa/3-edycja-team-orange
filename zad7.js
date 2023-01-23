@@ -56,7 +56,7 @@ function nameRecursion(arr) {
       }
     }
   }
-  names.push(nameInArr);
+  +names.push(nameInArr);
 }
 
 nameRecursion(nestedObject);
