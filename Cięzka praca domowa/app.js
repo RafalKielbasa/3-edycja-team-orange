@@ -9,11 +9,11 @@ const data = fetch(api)
       button.addEventListener("click", async () => {
         const response = await fetch(item[1]);
         const data = await response.json();
-
         console.clear();
         console.log(data);
       });
+
       container.appendChild(button);
-      button.innerText = item[0];
+      button.innerText = item[0].toUpperCase();
     });
   });
