@@ -97,7 +97,8 @@ const URL = `https://swapi.dev/api/`;
 const vehicles = [];
 async function getVehicles() {
   const response = await fetch(`${URL}/vehicles`);
-  vehicles.push(await response.json());
+  const data = await response.json();
+  vehicles.push(data);
 }
 async function printVehicles() {
   await getVehicles();
