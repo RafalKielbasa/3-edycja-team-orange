@@ -1,170 +1,124 @@
-// const fetchData1Btn = document.getElementById("buttons");
-// const fetchData2Btn = document.getElementById("dane2");
-// const fetchData3Btn = document.getElementById("dane3");
-// const fetchData4Btn = document.getElementById("dane4");
-// const fetchData5Btn = document.getElementById("dane5");
-const fetchData6Btn = document.getElementById("dane6");
-// const fetchBaseUrlBtn = document.getElementById("BASE_URL");
-
-//fetchData1Btn.addEventListener("click", async () => {
-// console.log(printButtons(el));
-// await fetchData1();
-// });
-// fetchData2Btn.addEventListener("click", async () => {
-//   console.log("people");
-//   await fetchData2();
-// });
-// fetchData3Btn.addEventListener("click", async () => {
-//   console.log("planets");
-//   await fetchData3();
-// });
-// fetchData4Btn.addEventListener("click", async () => {
-//   console.log("species");
-//   await fetchData4();
-// });
-// fetchData5Btn.addEventListener("click", async () => {
-//   console.log("starships");
-//   await fetchData5();
-// });
-// fetchData6Btn.addEventListener("click", async () => {
-//   await getVehicles();
-//   printVehicles();
-// });
-// fetchBaseUrlBtn.addEventListener("click", async () => {
-//   console.log("BASE_URL");
-//   await fetchBaseUrl();
-// });
-
 const URL = `https://swapi.dev/api/`;
 let newURL;
-// async function fetchBaseUrl() {
-//   const data = await fetch(`https://swapi.dev/api/`);
-//   const response = await data.json();
-//   console.log(`fetchData`, response);
-// }
-// async function fetchData1() {
-//   const data = await fetch(`https://swapi.dev/api/`);
-//   const response = await data.json();
-//   const filmsResponce = await fetch(response.films);
-//   const films = await filmsResponce.json();
-//   console.log(`films`, films);
-// }
-// async function fetchData2() {
-//   const data = await fetch(`https://swapi.dev/api/`);
-//   const response = await data.json();
-//   const peopleResponce = await fetch(response.people);
-//   const people = await peopleResponce.json();
-//   console.log(`people`, people);
-// }
-// async function fetchData3() {
-//   const data = await fetch(`https://swapi.dev/api/`);
-//   const response = await data.json();
-//   const planetsResponce = await fetch(response.planets);
-//   const planets = await planetsResponce.json();
-//   console.log(`planets`, planets);
-// }
-// async function fetchData4() {
-//   const data = await fetch(`https://swapi.dev/api/`);
-//   const response = await data.json();
-//   const speciesResponce = await fetch(response.species);
-//   const species = await speciesResponce.json();
-//   console.log(`species`, species);
-// }
-// async function fetchData5() {
-//   const data = await fetch(`https://swapi.dev/api/`);
-//   const response = await data.json();
-//   const starshipsResponce = await fetch(response.starships);
-//   const starships = await starshipsResponce.json();
-//   console.log(`starships`, starships);
-// }
-// async function fetchData6() {
-//   const data = await fetch(`https://swapi.dev/api/`);
-//   const response = await data.json();
-//   const vehiclesResponce = await fetch(response.vehicles);
-//   const vehicles = await vehiclesResponce.json();
-//   console.log(`vehicles`, vehicles);
-// }
-// document.body.onload = addElement;
 
-// async function addElement() {
-//   const newDiv = document.createElement(`li`);
-//   // const newContent = vehicles;
-//   const newContent = document.createTextNode(`Hi all`);
-//   newDiv.appendChild(newContent);
-//   const currentDiv = document.getElementById(`div1`);
-//   document.body.insertBefore(newDiv, currentDiv);
-// }
-const mainData = [];
-(async function getMainData() {
-  const response = await fetch(`https://swapi.dev/api/planets`);
-  const data = await response.json();
-  mainData.push(data);
-})();
-console.log(`mainData`, mainData);
+const mainData = {
+  data: null,
+  results: null,
+  button: null,
+  outcome: null,
+};
 
-const vehicles = [];
-async function printVehicles() {
-  // await getVehicles();
-  const $vehiclesList = document.getElementById("vehicles");
-  const $list = document.createElement("ul");
-  vehicles.map((user) => {
-    user.results.map((result) => {
-      let resultData = [];
-      resultData.push(result.name);
-      console.log(resultData);
-      const $result = document.createElement("li");
-      $result.innerHTML = result.name;
-      $list.appendChild($result);
-    });
-  });
-  $vehiclesList.appendChild($list);
+async function getMainData() {
+  const data = await fetch(`https://swapi.dev/api/`);
+  const responce = await data.json();
+  mainData.data = responce;
 }
-// console.log(`vehicles`, vehicles);
-const buttons = [];
-// console.log(`buttons`, buttons);
-async function getButtons() {
-  const response = await fetch(`${URL}`);
-  const data = await response.json();
-  buttons.push(data);
-}
+
 async function printButtons() {
-  await getButtons();
-  const $buttonsList = document.getElementById("buttons");
-  buttons.map((item) => {
-    for (key in item) {
-      const buttonsData = [];
-      buttonsData.push(key);
-      // console.log(`buttonsData`, buttonsData);
-      buttonsData.forEach(function (el) {
-        const $buttons = document.createElement("button");
-        //console.log(`el`, el);
-        $buttons.innerHTML = el;
-        $buttonsList.appendChild($buttons);
-        $buttons.addEventListener("click", async () => {
-          let newURL = `https://swapi.dev/api/` + el;
-          const response = await fetch(newURL);
-          const data = await response.json();
-          vehicles.push(data);
-          printVehicles();
-          // return newURL;
-        });
+  if (mainData.data) {
+    const $buttonsList = document.getElementById("buttons");
+    Object.entries(mainData.data).forEach((item) => {
+      const $buttons = document.createElement("button");
+      $buttons.innerText = item[0];
+      $buttonsList.appendChild($buttons);
+      $buttons.addEventListener("click", async () => {
+        mainData.results = null;
+        mainData.button = null;
+        let newURL = `https://swapi.dev/api/${item[0]}/`;
+        const data = await fetch(newURL);
+        const responce = await data.json();
+        mainData.results = responce.results;
+        mainData.button = $buttons.innerText;
+        printResults();
       });
-    }
-  });
+    });
+  }
 }
-// (async function main() {
-//   await getVehicles();
-//   printVehicles();
-// })();
-(async function main() {
-  await getButtons();
-  printButtons();
-})();
 
-// var text = ["text1", "tex2", "text3", "text4"];
-// text.forEach(function (el) {
-//   var div = document.createElement("div");
-//   div.className = "finalBlock";
-//   div.innerHTML = el;
-//   document.body.appendChild(div);
-// });
+async function printResults() {
+  if (mainData.results) {
+    document.getElementById("results").innerHTML = "";
+    const $resultsList = document.getElementById("results");
+    const $list = document.createElement("ul");
+    mainData.results.forEach((result) => {
+      if (mainData.button === "people") {
+        mainData.outcome = new people({ ...result });
+      } else if (mainData.button === "planets") {
+        mainData.outcome = new planets({ ...result });
+      } else if (mainData.button === "films") {
+        mainData.outcome = new films({ ...result });
+      } else if (mainData.button === "species") {
+        mainData.outcome = new species({ ...result });
+      } else if (mainData.button === "vehicles") {
+        mainData.outcome = new vehicles({ ...result });
+      } else if (mainData.button === "starships") {
+        mainData.outcome = new starships({ ...result });
+      }
+      let $result = document.createElement("li");
+      $result.innerHTML = mainData.outcome.name;
+      $list.appendChild($result);
+      //
+      // Object.entries(mainData.outcome).forEach((item) => {
+      //   console.log(`item`, item);
+      // });
+      // for (key in mainData.outcome) {
+      //   console.log(`key`, key);
+      // }
+      console.log(`mainData.outcome`, mainData.outcome);
+    });
+    $resultsList.appendChild($list);
+  }
+}
+class people {
+  constructor({ name, height, mass, hair_color }) {
+    this.name = name;
+    this.height = height;
+    this.mass = mass;
+    this.hair_color = hair_color;
+  }
+}
+class planets {
+  constructor({ name, orbital_period, diameter, climate }) {
+    this.name = name;
+    this.orbital_period = orbital_period;
+    this.diameter = diameter;
+    this.climate = climate;
+  }
+}
+class films {
+  constructor({ title, episode_id, director, producer }) {
+    this.title = title;
+    this.episode_id = episode_id;
+    this.director = director;
+    this.producer = producer;
+  }
+}
+class species {
+  constructor({ name, classification, average_height, average_lifespan }) {
+    this.name = name;
+    this.classification = classification;
+    this.average_height = average_height;
+    this.average_lifespan = average_lifespan;
+  }
+}
+class vehicles {
+  constructor({ name, model, manufacturer, crew }) {
+    this.name = name;
+    this.model = model;
+    this.manufacturer = manufacturer;
+    this.crew = crew;
+  }
+}
+class starships {
+  constructor({ name, model, manufacturer, hyperdrive_rating }) {
+    this.name = name;
+    this.model = model;
+    this.manufacturer = manufacturer;
+    this.hyperdrive_rating = hyperdrive_rating;
+  }
+}
+
+(async function main() {
+  await getMainData();
+  await printButtons();
+})();
