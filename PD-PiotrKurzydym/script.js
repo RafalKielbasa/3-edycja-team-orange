@@ -1,5 +1,6 @@
 const URL = `https://swapi.dev/api/`;
 let newURL;
+let myTable = document.querySelector("#myTable");
 
 const mainData = {
   data: null,
@@ -7,6 +8,7 @@ const mainData = {
   button: null,
   outcome: null,
 };
+// let x = [];
 
 async function getMainData() {
   const data = await fetch(`https://swapi.dev/api/`);
@@ -22,6 +24,7 @@ async function printButtons() {
       $buttons.innerText = item[0];
       $buttonsList.appendChild($buttons);
       $buttons.addEventListener("click", async () => {
+        let x = null;
         mainData.results = null;
         mainData.button = null;
         let newURL = `https://swapi.dev/api/${item[0]}/`;
@@ -35,14 +38,17 @@ async function printButtons() {
   }
 }
 
-async function printResults() {
+function printResults() {
   if (mainData.results) {
-    document.getElementById("results").innerHTML = "";
-    const $resultsList = document.getElementById("results");
-    const $list = document.createElement("ul");
+    let x = [];
+    // document.getElementById("results").innerHTML = "";
+    // const $resultsList = document.getElementById("results");
+    // const $list = document.createElement("ul");
     mainData.results.forEach((result) => {
       if (mainData.button === "people") {
-        mainData.outcome = new people({ ...result });
+        [new people({ ...result })].forEach((el) => {
+          x.push({ ...el });
+        });
       } else if (mainData.button === "planets") {
         mainData.outcome = new planets({ ...result });
       } else if (mainData.button === "films") {
@@ -54,21 +60,68 @@ async function printResults() {
       } else if (mainData.button === "starships") {
         mainData.outcome = new starships({ ...result });
       }
-      let $result = document.createElement("li");
-      $result.innerHTML = mainData.outcome.name;
-      $list.appendChild($result);
+      // let $result = document.createElement("li");
+      // $result.innerHTML = mainData.outcome.name;
+      // $list.appendChild($result);
       //
       // Object.entries(mainData.outcome).forEach((item) => {
-      //   console.log(`item`, item);
+      // console.log(`people`, new people());
       // });
-      // for (key in mainData.outcome) {
-      //   console.log(`key`, key);
-      // }
-      console.log(`mainData.outcome`, mainData.outcome);
     });
-    $resultsList.appendChild($list);
+    // $resultsList.appendChild($list);
+    // console.log(`x`, Object.keys(x[0]));
+
+    let table = document.getElementById("myTable");
+    let headerRow = document.createElement("tr");
+
+    Object.keys(x[0]).forEach((headerOutcome) => {
+      console.log(`headerOutcome`, headerOutcome);
+      let header = document.createElement("th");
+      let textNode = document.createTextNode(headerOutcome);
+      header.appendChild(textNode);
+      headerRow.appendChild(header);
+    });
+    table.appendChild(headerRow);
+
+    x.forEach((outcome) => {
+      let row = document.createElement("tr");
+      // console.log(`outcome`, Object.keys(outcome));
+
+      Object.values(outcome).forEach((item) => {
+        //  console.log(`item`, item);
+        let cell = document.createElement("td");
+        let textNode = document.createTextNode(item);
+        cell.appendChild(textNode);
+        row.appendChild(cell);
+      });
+      table.appendChild(row);
+    });
+    // myTable.appendChild(table);
   }
 }
+
+//
+
+// function generateTable() {
+//   var x = document.createElement("TH");
+//   var t = document.createTextNode(mainData.outcome);
+//   x.appendChild(t);
+//   document.getElementById("myTable").appendChild(x);
+// }
+// generateTable();
+//
+//
+// function myFunction() {
+//   var x = document.createElement("TR");
+//   x.setAttribute("id", "myTr");
+//   document.getElementById("myTable").appendChild(x);
+
+//   var y = document.createElement("TD");
+//   var t = document.createTextNode("new cell");
+//   y.appendChild(t);
+//   document.getElementById("myTr").appendChild(y);
+// }
+
 class people {
   constructor({ name, height, mass, hair_color }) {
     this.name = name;
