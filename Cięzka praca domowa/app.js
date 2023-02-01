@@ -1,34 +1,63 @@
-const api = 'https://swapi.dev/api/';
 const container = document.getElementById('container');
+const api = 'https://swapi.dev/api/';
 const state = {
   urls: null,
-  results: null,
+  result: [],
 };
+const classes = [(people = null)];
 
 async function fetchData() {
   const response = await fetch(api);
-  const dataFetched = await response.json();
+  const data = await response.json();
 
-  createButtons(dataFetched);
+  return data;
 }
+
+async function fetchUrls(item) {
+  const response = await fetch(item);
+  const data = await response.json();
+  state.result.push(data.results);
+
+  console.log(data);
+}
+
+const main = async () => {
+  console.log('run');
+  state.urls = await fetchData();
+
+  createButtons(state.urls);
+
+  console.log(state.urls);
+};
+main();
 
 function createButtons(data) {
   Object.entries(data).forEach((item) => {
     const button = document.createElement('button');
-
+    button.innerText = item[0];
+    container.appendChild(button);
     button.addEventListener('click', async () => {
-      const response = await fetch(item[1]);
-      const data = await response.json();
-      state.results = data.results;
-      console.log(state.results);
+      await fetchUrls(item[1]);
+      createClasses(button.innerText);
+      console.log(classes.people);
     });
-    header.appendChild(button);
-    button.innerText = item[0].toUpperCase();
+  });
+}
+
+function createClasses(btn) {
+  state.result.map((item) => {
+    switch (btn) {
+      case 'people':
+        let person = new Peolpe(...item);
+        classes.people = person;
+
+        return person;
+    }
   });
 }
 
 class Peolpe {
-  constructor(name, height, mass, gender) {
+  constructor({ name, height, mass, gender }) {
     this.name = name;
     this.height = height;
     this.mass = mass;
