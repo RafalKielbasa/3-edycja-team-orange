@@ -4,7 +4,12 @@ const state = {
   urls: null,
   people: null,
   planets: null,
+  films: null,
+  species: null,
+  vehicles: null,
+  starships: null,
 };
+
 async function fetchData() {
   const response = await fetch(api);
   const data = await response.json();
@@ -16,6 +21,7 @@ async function fetchData() {
 async function fetchUrls(item, btn) {
   const response = await fetch(item);
   const data = await response.json();
+  console.log(data.results);
   state[btn] = createClasses(btn, data.results);
   console.log(state);
 }
@@ -45,6 +51,21 @@ function createClasses(btn, response) {
       case 'people':
         const people = new Peolpe({ ...item });
         return people;
+      case 'planets':
+        const planets = new Planets({ ...item });
+        return planets;
+      case 'films':
+        const films = new Films({ ...item });
+        return films;
+      case 'species':
+        const species = new Species({ ...item });
+        return species;
+      case 'vehicles':
+        const vehicles = new Vehicles({ ...item });
+        return vehicles;
+      case 'starships':
+        const starships = new Statships({ ...item });
+        return starships;
     }
   });
 }
@@ -58,39 +79,39 @@ class Peolpe {
   }
 }
 class Planets {
-  constructor(name, climate, rotationPeriod, orbitalPeriod) {
+  constructor({ name, climate, rotation_period, orbital_period }) {
     this.name = name;
     this.climate = climate;
-    this.rotationPeriod = rotationPeriod;
-    this.orbitalPeriod = orbitalPeriod;
+    this.rotationPeriod = rotation_period;
+    this.orbitalPeriod = orbital_period;
   }
 }
 class Films {
-  constructor(title, director, releaseDate, episodeId) {
+  constructor({ title, director, release_date, episode_id }) {
     this.title = title;
     this.director = director;
-    this.releaseDate = releaseDate;
-    this.episodeId = episodeId;
+    this.releaseDate = release_date;
+    this.episodeId = episode_id;
   }
 }
 class Species {
-  constructor(name, ckassIfication, designation, skinColor) {
+  constructor({ name, classification, designation, skin_colors }) {
     this.name = name;
-    this.ckassIfication = ckassIfication;
+    this.classification = classification;
     this.designation = designation;
-    this.skinColor = skinColor;
+    this.skinColor = skin_colors;
   }
 }
 class Vehicles {
-  constructor(name, model, manufacturer, costInCredits) {
+  constructor({ name, model, manufacturer, cost_in_credits }) {
     this.name = name;
     this.model = model;
     this.manufacturer = manufacturer;
-    this.costInCredits = costInCredits;
+    this.costInCredits = cost_in_credits;
   }
 }
 class Statships extends Vehicles {
-  constructor(name, model, manufacturer, costInCredits) {
-    super(name, model, manufacturer, costInCredits);
+  constructor({ name, model, manufacturer, cost_in_credits }) {
+    super({ name, model, manufacturer, cost_in_credits });
   }
 }
