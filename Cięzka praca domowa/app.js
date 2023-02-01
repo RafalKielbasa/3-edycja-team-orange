@@ -1,7 +1,11 @@
 const container = document.getElementById('container');
+const dataTable = document.getElementById('table');
+const header = document.getElementById('header');
 const api = 'https://swapi.dev/api/';
+const urls = {
+  url: null,
+};
 const state = {
-  urls: null,
   people: null,
   planets: null,
   films: null,
@@ -21,16 +25,15 @@ async function fetchData() {
 async function fetchUrls(item, btn) {
   const response = await fetch(item);
   const data = await response.json();
-  console.log(data.results);
   state[btn] = createClasses(btn, data.results);
   console.log(state);
 }
 
 const main = async () => {
   console.log('run');
-  state.urls = await fetchData();
+  urls.url = await fetchData();
 
-  console.log(state.urls);
+  console.log(urls.url);
 };
 main();
 
@@ -38,9 +41,10 @@ function createButtons(data) {
   Object.entries(data).forEach((item) => {
     const button = document.createElement('button');
     button.innerText = item[0];
-    container.appendChild(button);
+    header.appendChild(button);
     button.addEventListener('click', async () => {
       await fetchUrls(item[1], button.innerText);
+      createTable(state, button.innerText);
     });
   });
 }
@@ -68,6 +72,38 @@ function createClasses(btn, response) {
         return starships;
     }
   });
+}
+
+function createTable(data, btn) {
+  const table = document.createElement('table');
+  const headerRow = document.createElement('tr');
+  let headers = [];
+
+  data[btn].map((item) => {
+    headers = Object.keys(item);
+  });
+  headers.forEach((value) => {
+    const header = document.createElement('th');
+    const headerText = document.createTextNode(value);
+    header.appendChild(headerText);
+    headerRow.appendChild(header);
+  });
+
+  table.appendChild(headerRow);
+
+  data[btn].forEach((item) => {
+    const row = document.createElement('tr');
+
+    Object.values(item).forEach((value) => {
+      const cell = document.createElement('td');
+      const cellText = document.createTextNode(value);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+    });
+
+    table.appendChild(row);
+  });
+  dataTable.appendChild(table);
 }
 
 class Peolpe {
