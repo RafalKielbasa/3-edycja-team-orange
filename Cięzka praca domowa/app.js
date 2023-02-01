@@ -48,10 +48,10 @@ function createClasses(btn) {
   state.result.map((item) => {
     switch (btn) {
       case 'people':
-        let person = new Peolpe(...item);
-        classes.people = person;
-
-        return person;
+        for (let person of item) {
+          person = new Peolpe(...item);
+          classes.people = person;
+        }
     }
   });
 }
