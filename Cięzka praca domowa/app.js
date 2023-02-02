@@ -6,6 +6,7 @@ const urls = {
   url: null,
 };
 const state = {
+  activeBtn: null,
   people: null,
   planets: null,
   films: null,
@@ -36,7 +37,6 @@ const main = async () => {
   console.log(urls.url);
 };
 main();
-
 function createButtons(data) {
   Object.entries(data).forEach((item) => {
     const button = document.createElement('button');
@@ -45,6 +45,7 @@ function createButtons(data) {
     button.addEventListener('click', async () => {
       await fetchUrls(item[1], button.innerText);
       createTable(state, button.innerText);
+      state.activeBtn = button.innerText;
     });
   });
 }
@@ -78,33 +79,96 @@ function createTable(data, btn) {
   const table = document.createElement('table');
   const headerRow = document.createElement('tr');
   let headers = [];
-
   data[btn].map((item) => {
     headers = Object.keys(item);
   });
-  headers.forEach((value) => {
-    const header = document.createElement('th');
-    const headerText = document.createTextNode(value);
-    header.appendChild(headerText);
-    headerRow.appendChild(header);
-  });
+
+  if (state.activeBtn !== btn) {
+    data[btn].map((item) => {
+      headers = Object.keys(item);
+    });
+    headers.forEach((value) => {
+      const header = document.createElement('th');
+      const headerText = document.createTextNode(value);
+      header.appendChild(headerText);
+      headerRow.appendChild(header);
+    });
+  }
 
   table.appendChild(headerRow);
 
-  data[btn].forEach((item) => {
-    const row = document.createElement('tr');
+  if (state.activeBtn !== btn) {
+    data[btn].forEach((item) => {
+      const row = document.createElement('tr');
 
-    Object.values(item).forEach((value) => {
-      const cell = document.createElement('td');
-      const cellText = document.createTextNode(value);
-      cell.appendChild(cellText);
-      row.appendChild(cell);
+      Object.values(item).forEach((value) => {
+        const cell = document.createElement('td');
+        const cellText = document.createTextNode(value);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+      });
+
+      table.appendChild(row);
     });
-
-    table.appendChild(row);
-  });
-  dataTable.appendChild(table);
+    dataTable.appendChild(table);
+  }
+  if (!state.activeBtn) {
+    console.log(state.activeBtn);
+  }
 }
+
+// function createTable(data, btn) {
+//   const table = document.createElement('table');
+//   const headerRow = document.createElement('tr');
+//   let headers = {
+//     people: null,
+//     planets: null,
+//     films: null,
+//     species: null,
+//     vehicles: null,
+//     starships: null,
+//   };
+
+//   data[btn].forEach((item) => {
+//     headers[btn] = Object.keys(item);
+//   });
+
+//   if (!headers[btn]) {
+//     headers[btn].forEach((value) => {
+//       console.log(value);
+//       const header = document.createElement('th');
+//       header.innerHTML = value;
+//       headerRow.appendChild(header);
+//     });
+//   }
+//   console.log(headers[btn]);
+
+//   table.appendChild(headerRow);
+//   dataTable.appendChild(table);
+
+// headers.forEach((value) => {
+//   const header = document.createElement('th');
+//   const headerText = document.createTextNode(value);
+//   header.appendChild(headerText);
+//   headerRow.appendChild(header);
+// });
+
+// table.appendChild(headerRow);
+
+// data[btn].forEach((item) => {
+//   const row = document.createElement('tr');
+
+//   Object.values(item).forEach((value) => {
+//     const cell = document.createElement('td');
+//     const cellText = document.createTextNode(value);
+//     cell.appendChild(cellText);
+//     row.appendChild(cell);
+//   });
+
+//   table.appendChild(row);
+// });
+// dataTable.appendChild(table);
+//}
 
 class Peolpe {
   constructor({ name, height, mass, gender }) {
