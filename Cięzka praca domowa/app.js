@@ -27,6 +27,7 @@ async function fetchUrls(item, btn) {
   const response = await fetch(item);
   const data = await response.json();
   state[btn] = createClasses(btn, data.results);
+
   console.log(state);
 }
 
@@ -79,9 +80,14 @@ function createTable(data, btn) {
   const table = document.createElement('table');
   const headerRow = document.createElement('tr');
   let headers = [];
-  data[btn].map((item) => {
-    headers = Object.keys(item);
-  });
+  let stateTable = {
+    people: null,
+    planets: null,
+    films: null,
+    species: null,
+    vehicles: null,
+    starships: null,
+  };
 
   if (state.activeBtn !== btn) {
     data[btn].map((item) => {
@@ -93,11 +99,8 @@ function createTable(data, btn) {
       header.appendChild(headerText);
       headerRow.appendChild(header);
     });
-  }
+    table.appendChild(headerRow);
 
-  table.appendChild(headerRow);
-
-  if (state.activeBtn !== btn) {
     data[btn].forEach((item) => {
       const row = document.createElement('tr');
 
@@ -112,63 +115,9 @@ function createTable(data, btn) {
     });
     dataTable.appendChild(table);
   }
-  if (!state.activeBtn) {
-    console.log(state.activeBtn);
-  }
+
+  console.log(stateTable);
 }
-
-// function createTable(data, btn) {
-//   const table = document.createElement('table');
-//   const headerRow = document.createElement('tr');
-//   let headers = {
-//     people: null,
-//     planets: null,
-//     films: null,
-//     species: null,
-//     vehicles: null,
-//     starships: null,
-//   };
-
-//   data[btn].forEach((item) => {
-//     headers[btn] = Object.keys(item);
-//   });
-
-//   if (!headers[btn]) {
-//     headers[btn].forEach((value) => {
-//       console.log(value);
-//       const header = document.createElement('th');
-//       header.innerHTML = value;
-//       headerRow.appendChild(header);
-//     });
-//   }
-//   console.log(headers[btn]);
-
-//   table.appendChild(headerRow);
-//   dataTable.appendChild(table);
-
-// headers.forEach((value) => {
-//   const header = document.createElement('th');
-//   const headerText = document.createTextNode(value);
-//   header.appendChild(headerText);
-//   headerRow.appendChild(header);
-// });
-
-// table.appendChild(headerRow);
-
-// data[btn].forEach((item) => {
-//   const row = document.createElement('tr');
-
-//   Object.values(item).forEach((value) => {
-//     const cell = document.createElement('td');
-//     const cellText = document.createTextNode(value);
-//     cell.appendChild(cellText);
-//     row.appendChild(cell);
-//   });
-
-//   table.appendChild(row);
-// });
-// dataTable.appendChild(table);
-//}
 
 class Peolpe {
   constructor({ name, height, mass, gender }) {
