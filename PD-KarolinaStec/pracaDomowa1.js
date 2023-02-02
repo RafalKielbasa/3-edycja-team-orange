@@ -48,7 +48,6 @@ const people = [
   },
 ];
 
-
 /* 
     2. 
     a) Do każdego obiektu dodaj funkcję introduceYourself, która za pomocą słówka this wyświetli w konsoli tekst powitalny.
