@@ -68,8 +68,23 @@ const people2 = [
     firstName: "Bartolomeo",
     lastName: "Lozano",
     nickname: "Rabona",
+    // Metoda introduceYourself jest właściwością pierwszego obiektu w tablicy people2. Gdy jest wywoływana loguje w konsoli wiadomość skonstruowaną ze właściwości obiektu oraz stringa zapisanego za pomocą template literals oraz słówka this które jest uzwane aby uzyskać dostęp do właściwości obiektu.
+    introduceYourself: function () {
+      console.log(
+        `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie ${this.nickname}`
+      );
+    },
   },
 ];
+//a)
+//wywołujemy metodę introduceYourself uzywając notacji kropkowej z pierwszego obiektu z indexem 0 tablicy people2
+people2[0].introduceYourself();
+
+//b)
+//uzywając metody forEach skanujemy tablicę people2 i wywołujemy metodę introduceYourself dla kazdego elementu tablicy ktorym jest w tym przypadku jeden obiekt reprezentujacy osobę.
+people2.forEach(function (person) {
+  person.introduceYourself();
+});
 
 /* 
     2. 
