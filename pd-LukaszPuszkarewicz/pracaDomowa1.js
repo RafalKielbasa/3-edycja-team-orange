@@ -10,7 +10,28 @@ const people = [
   },
 ];
 
-const lastLetters = () => {};
+function createNickname(person) {
+  //a)
+  let firstPart = person.firstName.slice(0, 3).split("").reverse().join("");
+  //b) part 1
+  let secondPart = person.lastName.slice(-3).split("").reverse().join("");
+  //d)
+  if (person.lastName.length < 3) {
+    secondPart = person.lastName;
+  }
+  //b)part 2
+  let nickname = firstPart + secondPart;
+  // c*)
+  nickname = nickname.charAt(0).toUpperCase() + nickname.slice(1).toLowerCase();
+  return nickname;
+}
+// funkcja mapPeople zwraca tablicę obiektów zawierających właściwość nickname, która jest mapowana z tablicy people uzywając funkcji createNickname
+function mapPeople(people) {
+  return people.map(createNickname);
+}
+//przypisujamy zmienną peopleWithNicknames do wyniku funkcji mapPeople z argumentem tablicą people. Logujemy w konsoli wartość peopleWithNicknames.
+const peopleWithNicknames = mapPeople(people);
+console.log(peopleWithNicknames);
 
 /* 
     1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
@@ -42,7 +63,7 @@ const lastLetters = () => {};
 */
 
 //  DANE WEJŚCIOWE
-const people = [
+const people2 = [
   {
     firstName: "Bartolomeo",
     lastName: "Lozano",
@@ -77,7 +98,7 @@ const people = [
 */
 
 //  DANE WEJŚCIOWE
-const people = [
+const people3 = [
   {
     firstName: "Bartolomeo",
     lastName: "Lozano",
