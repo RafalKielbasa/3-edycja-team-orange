@@ -113,16 +113,42 @@ people2.forEach(function (person) {
 */
 
 //  DANE WEJŚCIOWE
+
 const people3 = [
   {
     firstName: "Bartolomeo",
     lastName: "Lozano",
     nickname: "Rabona",
-    introduceYourself: "", // funkcja zamiast pustego stringa
+    // a) d) W przypadku wywołania funkcji bez parametru ustawiamy domyślny parametr = 5.
+    getFavouriteColor: function (number = 5) {
+      if (number < 1) {
+        console.log(
+          "podałeś za małą liczbę, liczba nie może być mniejsza niż 1"
+        );
+        //c) jeśli liczba jest mniejsze niz 1 zatrzymujemy funkcję uzwając pustego komunikatu return
+        return;
+      } else if (number > 30) {
+        console.log(
+          "podałeś za dużą liczbę, liczba nie może być większa niż 30"
+        );
+        return;
+      }
+      //
+      //e)Zapisujemy do zmiennej namesSum sumę długości trzech właściwości tego obiektu.
+      let namesSum =
+        this.firstName.length + this.lastName.length + this.nickname.length;
+
+      //e) Wyliczamy index koloru z tablicy colours na podstawie reszty z dzielenia róznicy wartości absolutnej, namesSum oraz liczby podanej w parametrze z długością tablicy colours.
+      let index = Math.abs(namesSum - number) % colors.length;
+      //Wywołujemy odpowiednia pozycję z tablicy
+      console.log(colors[index]);
+    },
   },
 ];
 
 const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
+
+people3[0].getFavouriteColor(4);
 
 /*
     3. 
