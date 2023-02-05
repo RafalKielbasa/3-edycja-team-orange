@@ -2,20 +2,8 @@ const BASE_URL = 'https://swapi.dev/api/';
 const state = {
   activeBtn: null,
   urls: null,
-  people: null,
-  planets: null,
-  films: null,
-  species: null,
-  vehicles: null,
-  starships: null,
-};
-const classesState = {
-  people: null,
-  planets: null,
-  films: null,
-  species: null,
-  vehicles: null,
-  starships: null,
+  data: {},
+  classes: {},
 };
 
 const fetchData = async () => {
@@ -27,7 +15,10 @@ const fetchData = async () => {
 const fetchUrls = async (item, btn) => {
   const response = await fetch(item);
   const data = await response.json();
-  state[btn] = data.results;
+  state.data = {
+    ...state.data,
+    [btn]: data.results,
+  };
   console.log(data);
 };
 
@@ -44,9 +35,10 @@ const buttons = (data) => {
 const headerButtonEvent = async (btn, textBtn, data) => {
   btn.addEventListener('click', async () => {
     await fetchUrls(data, textBtn);
-    classesState[textBtn] = createClasses(textBtn, state[textBtn]);
+    state.classes = {
+      [textBtn]: createClasses(textBtn, state.data[textBtn]),
+    };
     state.activeBtn = textBtn;
-    console.log(classesState);
     console.log(state);
   });
 };
