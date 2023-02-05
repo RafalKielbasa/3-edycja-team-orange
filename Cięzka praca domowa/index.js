@@ -1,4 +1,5 @@
 const BASE_URL = 'https://swapi.dev/api/';
+const $container = document.getElementById('container');
 const state = {
   activeBtn: null,
   urls: null,
@@ -37,44 +38,82 @@ const buttons = (data) => {
 
 const headerButtonEvent = async (btn, textBtn, data) => {
   btn.addEventListener('click', async () => {
-    state.activeBtn = textBtn;
     await fetchUrls(data, textBtn);
-    createTable();
+    state.activeBtn = textBtn;
+    createTable(textBtn);
     console.log(state);
+    console.log(state.data[state.activeBtn]);
   });
 };
 
 const createTable = () => {
-  if (!state.activeBtn) {
-    return;
-  }
   const $dataTable = document.getElementById('table');
-
+  $dataTable.innerHTML = '';
   const table = document.createElement('table');
+
+  createThead(table);
+
+  createTbody(table);
+
+  console.log(table);
+  $dataTable.appendChild(table);
+};
+
+const createThead = (item) => {
   const thead = document.createElement('thead');
-  table.appendChild(thead);
+  item.appendChild(thead);
+
   const trHead = document.createElement('tr');
   thead.appendChild(trHead);
+
+  const lpHead = document.createElement('th');
+  lpHead.innerHTML = 'lp';
+  trHead.append(lpHead);
+
   Object.keys(state.classes[state.activeBtn][1]).forEach((key) => {
     const th = document.createElement('th');
     th.innerHTML = key;
     trHead.appendChild(th);
   });
+};
 
+const createTbody = (item) => {
   const tbody = document.createElement('tbody');
-  table.appendChild(tbody);
+  item.appendChild(tbody);
 
-  state.classes[state.activeBtn].forEach((item) => {
+  state.classes[state.activeBtn].forEach((item, index) => {
+    const detailsBtn = document.createElement('button');
+
+    detailsBtn.innerHTML = 'details';
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.innerHTML = 'delete';
+
     const trbody = document.createElement('tr');
+    const lpBody = document.createElement('td');
+    trbody.appendChild(lpBody);
+
+    detailsBtn.addEventListener('click', () => {
+      const $contentContainer = document.getElementById('contentContainer');
+      const details = document.createElement('div');
+      $contentContainer.appendChild(details);
+      Object.values(state.data[state.activeBtn]).forEach((item, index) => {
+        details.innerHTML = item[index];
+      });
+    });
+
     Object.values(item).forEach((value) => {
+      lpBody.innerHTML = index + 1;
       const td = document.createElement('td');
       td.innerHTML = value;
+
       trbody.appendChild(td);
+      trbody.append(detailsBtn);
+      trbody.append(deleteBtn);
     });
+
     tbody.appendChild(trbody);
   });
-
-  $dataTable.appendChild(table);
 };
 
 const createClasses = (btn, data) => {

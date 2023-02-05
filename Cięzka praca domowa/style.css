@@ -1,6 +1,5 @@
 #container {
   display: flex;
-  justify-content: center;
   flex-direction: column;
 }
 #header {
@@ -8,13 +7,25 @@
   justify-content: center;
   gap: 5px;
 }
-#table {
+#contentContainer {
   display: flex;
   justify-content: center;
-  margin-top: 200px;
+}
+#table {
+  display: flex;
+  padding-top: 200px;
 }
 th {
   background-color: aqua;
   gap: 20px;
   border: 1px solid black;
+}
+dialog {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
