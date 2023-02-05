@@ -19,6 +19,9 @@ const fetchUrls = async (item, btn) => {
     ...state.data,
     [btn]: data.results,
   };
+  state.classes = {
+    [btn]: createClasses(btn, state.data[btn]),
+  };
   console.log(data);
 };
 
@@ -34,13 +37,44 @@ const buttons = (data) => {
 
 const headerButtonEvent = async (btn, textBtn, data) => {
   btn.addEventListener('click', async () => {
-    await fetchUrls(data, textBtn);
-    state.classes = {
-      [textBtn]: createClasses(textBtn, state.data[textBtn]),
-    };
     state.activeBtn = textBtn;
+    await fetchUrls(data, textBtn);
+    createTable();
     console.log(state);
   });
+};
+
+const createTable = () => {
+  if (!state.activeBtn) {
+    return;
+  }
+  const $dataTable = document.getElementById('table');
+
+  const table = document.createElement('table');
+  const thead = document.createElement('thead');
+  table.appendChild(thead);
+  const trHead = document.createElement('tr');
+  thead.appendChild(trHead);
+  Object.keys(state.classes[state.activeBtn][1]).forEach((key) => {
+    const th = document.createElement('th');
+    th.innerHTML = key;
+    trHead.appendChild(th);
+  });
+
+  const tbody = document.createElement('tbody');
+  table.appendChild(tbody);
+
+  state.classes[state.activeBtn].forEach((item) => {
+    const trbody = document.createElement('tr');
+    Object.values(item).forEach((value) => {
+      const td = document.createElement('td');
+      td.innerHTML = value;
+      trbody.appendChild(td);
+    });
+    tbody.appendChild(trbody);
+  });
+
+  $dataTable.appendChild(table);
 };
 
 const createClasses = (btn, data) => {
@@ -75,48 +109,78 @@ const main = async () => {
 };
 main();
 
+const correctDate = (date) => {
+  const oldDate = date.slice(0, 10).split('-');
+  const newDate = oldDate[1] + '-' + oldDate[2] + '-' + oldDate[0];
+  return newDate;
+};
+
 class Peolpe {
-  constructor({ name, height, mass, gender }) {
+  constructor({ name, height, mass, gender, created, edited }) {
     this.name = name;
     this.height = height;
     this.mass = mass;
     this.gender = gender;
+    this.created = correctDate(created);
+    this.edited = correctDate(edited);
   }
 }
 class Planets {
-  constructor({ name, climate, rotation_period, orbital_period }) {
+  constructor({
+    name,
+    climate,
+    rotation_period,
+    orbital_period,
+    created,
+    edited,
+  }) {
     this.name = name;
     this.climate = climate;
     this.rotationPeriod = rotation_period;
     this.orbitalPeriod = orbital_period;
+    this.created = correctDate(created);
+    this.edited = correctDate(edited);
   }
 }
 class Films {
-  constructor({ title, director, release_date, episode_id }) {
+  constructor({ title, director, release_date, episode_id, created, edited }) {
     this.title = title;
     this.director = director;
     this.releaseDate = release_date;
     this.episodeId = episode_id;
+    this.created = correctDate(created);
+    this.edited = correctDate(edited);
   }
 }
 class Species {
-  constructor({ name, classification, designation, skin_colors }) {
+  constructor({
+    name,
+    classification,
+    designation,
+    skin_colors,
+    created,
+    edited,
+  }) {
     this.name = name;
     this.classification = classification;
     this.designation = designation;
     this.skinColor = skin_colors;
+    this.created = correctDate(created);
+    this.edited = correctDate(edited);
   }
 }
 class Vehicles {
-  constructor({ name, model, manufacturer, cost_in_credits }) {
+  constructor({ name, model, manufacturer, cost_in_credits, created, edited }) {
     this.name = name;
     this.model = model;
     this.manufacturer = manufacturer;
     this.costInCredits = cost_in_credits;
+    this.created = correctDate(created);
+    this.edited = correctDate(edited);
   }
 }
 class Statships extends Vehicles {
-  constructor({ name, model, manufacturer, cost_in_credits }) {
-    super({ name, model, manufacturer, cost_in_credits });
+  constructor({ name, model, manufacturer, cost_in_credits, created, edited }) {
+    super({ name, model, manufacturer, cost_in_credits, created, edited });
   }
 }
