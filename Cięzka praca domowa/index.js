@@ -1,68 +1,58 @@
-const container = document.getElementById('container');
-const dataTable = document.getElementById('table');
-const header = document.getElementById('header');
-const api = 'https://swapi.dev/api/';
-const urls = {
-  url: null,
-};
+const BASE_URL = 'https://swapi.dev/api/';
 const state = {
   activeBtn: null,
-  activeTable: null,
+  urls: null,
   people: null,
-  peopleCount: null,
   planets: null,
-  planetsCount: null,
   films: null,
   species: null,
-  speciesCount: null,
-  vehicles: null,
   vehicles: null,
   starships: null,
-  starshipsCount: null,
+};
+const classesState = {
+  people: null,
+  planets: null,
+  films: null,
+  species: null,
+  vehicles: null,
+  starships: null,
 };
 
-async function fetchData() {
-  const response = await fetch(api);
+const fetchData = async () => {
+  const response = await fetch(BASE_URL);
   const data = await response.json();
-  createButtons(data);
-
   return data;
-}
+};
 
-async function fetchUrls(item, btn) {
+const fetchUrls = async (item, btn) => {
   const response = await fetch(item);
   const data = await response.json();
-  state[btn] = createClasses(btn, data.results);
-
+  state[btn] = data.results;
   console.log(data);
-  console.log(state);
-}
-
-const main = async () => {
-  console.log('run');
-  urls.url = await fetchData();
-
-  console.log(urls.url);
 };
-main();
-function createButtons(data) {
-  Object.entries(data).forEach((item) => {
+
+const buttons = (data) => {
+  const $header = document.getElementById('header');
+  Object.entries(data).forEach(([key, value]) => {
     const button = document.createElement('button');
-    button.innerText = item[0];
-    header.appendChild(button);
-    button.addEventListener('click', async () => {
-      await fetchUrls(item[1], button.innerText);
-      createTable(state, button.innerText);
-
-      state.activeBtn = button.innerText;
-
-      console.log(state.activeBtn);
-    });
+    button.innerText = key;
+    $header.appendChild(button);
+    headerButtonEvent(button, button.innerText, value);
   });
-}
+};
 
-function createClasses(btn, response) {
-  return response.map((item) => {
+const headerButtonEvent = async (btn, textBtn, data) => {
+  btn.addEventListener('click', async () => {
+    await fetchUrls(data, textBtn);
+    classesState[textBtn] = createClasses(textBtn, state[textBtn]);
+    state.activeBtn = textBtn;
+    console.log(classesState);
+    console.log(state);
+  });
+};
+
+const createClasses = (btn, data) => {
+  return data.map((item) => {
     switch (btn) {
       case 'people':
         const people = new Peolpe({ ...item });
@@ -84,43 +74,14 @@ function createClasses(btn, response) {
         return starships;
     }
   });
-}
+};
 
-function createTable(data, btn) {
-  const table = document.createElement('table');
-  const headerRow = document.createElement('tr');
-  let headers = [];
-
-  if (state.activeBtn !== btn) {
-    data[btn].map((item) => {
-      headers = Object.keys(item);
-    });
-    headers.forEach((value) => {
-      const header = document.createElement('th');
-      const headerText = document.createTextNode(value);
-      header.appendChild(headerText);
-      headerRow.appendChild(header);
-    });
-    table.appendChild(headerRow);
-
-    data[btn].forEach((item) => {
-      const row = document.createElement('tr');
-
-      Object.values(item).forEach((value) => {
-        const cell = document.createElement('td');
-        const cellText = document.createTextNode(value);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
-      });
-
-      table.appendChild(row);
-    });
-    dataTable.appendChild(table);
-  }
-
-  console.log(table);
-}
-function pagination(data) {}
+const main = async () => {
+  state.urls = await fetchData();
+  buttons(state.urls);
+  console.log(state.urls);
+};
+main();
 
 class Peolpe {
   constructor({ name, height, mass, gender }) {
