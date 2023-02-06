@@ -1,15 +1,39 @@
-//  DANE WEJŚCIOWE
-const people = [
-  {
-    firstName: "Bartolomeo",
-    lastName: "Lozano",
-  },
-  {
-    firstName: "Mateo",
-    lastName: "Loza",
-  },
-];
+// /  DANE WEJŚCIOWE
+// const people = [
+//   {
+//     firstName: "Bartolomeo",
+//     lastName: "Lozano",
+//   },
+//   {
+//     firstName: "Mateo",
+//     lastName: "Loza",
+//   },
+//   {
+//     firstName: "Ki",
+//     lastName: "So",
+//   },
+// ];
 
+// const reverse = (string, firstParameter, secondParameter) =>
+//   string
+//     .slice(firstParameter, secondParameter)
+//     .split("")
+//     .reverse()
+//     .join("")
+//     .toLowerCase();
+
+// const peopleMapped = people.map((name) => {
+//   const firstName = name.firstName;
+//   const lastName = name.lastName;
+//   const nickname1 = reverse(name.firstName, 0, 3);
+//   const nickname2 = reverse(name.lastName, -3);
+//   let nickname = nickname1 + nickname2;
+//   nickname = nickname.charAt(0).toUpperCase() + nickname.slice(1);
+
+//   return { firstName, lastName, nickname };
+// });
+
+// console.log(peopleMapped);
 /* 
     1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
     a) pobierze 3 pierwsze litery imienia, odwróci ich kolejność i zapisze do zmiennej
@@ -46,8 +70,25 @@ const people = [
     lastName: "Lozano",
     nickname: "Rabona",
   },
+  {
+    firstName: "Mateo",
+    lastName: "Loza",
+    nickname: "Tamazo",
+  },
 ];
 
+function introduceYourself() {
+  const intro = `Czesc jestem ${this.firstName} ${this.lastName}, ale w szkole mowią do mnie ${this.nickname}`;
+  console.log(intro);
+}
+
+for (let i = 0; i < people.length; i++) {
+  people[i].introduceYourself = introduceYourself;
+}
+
+const personIntro = people.forEach((person) => person.introduceYourself());
+
+console.log(personIntro);
 
 /* 
     2. 
@@ -76,16 +117,46 @@ const people = [
 */
 
 //  DANE WEJŚCIOWE
-const people = [
-  {
-    firstName: "Bartolomeo",
-    lastName: "Lozano",
-    nickname: "Rabona",
-    introduceYourself: "", // funkcja zamiast pustego stringa
-  },
-];
+// const people = [
+//   {
+//     firstName: "Bartolomeo",
+//     lastName: "Lozano",
+//     nickname: "Rabona",
+//     introduceYourself: "", // funkcja zamiast pustego stringa
+//   },
+// ];
 
 const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
+
+const getFavColor = function getFavouriteColor(number = 5) {
+  if (number < 1) {
+    return console.log(
+      "Podałeś za małą liczbę, liczba nie moze być mniejsza niz 1"
+    );
+  }
+  if (number > 30) {
+    return console.log(
+      "Podałeś za duzą liczbę, liczba nie moze być większa niz 30"
+    );
+  } else {
+    indexColor =
+      Math.abs(
+        this.firstName.length +
+          this.lastName.length +
+          this.nickname.length -
+          number
+      ) % colors.length;
+    return console.log(colors[indexColor]);
+  }
+};
+
+for (let i = 0; i < people.length; i++) {
+  people[i].getFavColor = getFavColor;
+}
+
+console.log(people);
+
+console.log(people[0].getFavColor());
 
 /*
     3. 
@@ -111,6 +182,32 @@ const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
     dowoloną ilość kolorów
 */
 
+const getFavColor2 = (person, number = 5) => {
+  if (number < 1) {
+    return console.log(
+      "Podałeś za małą liczbę, liczba nie moze być mniejsza niz 1"
+    );
+  }
+  if (number > 30) {
+    return console.log(
+      "Podałeś za duzą liczbę, liczba nie moze być większa niz 30"
+    );
+  } else {
+    let indexColor =
+      Math.abs(
+        person.firstName.length +
+          person.lastName.length +
+          person.nickname.length -
+          number
+      ) % colors.length;
+    return console.log(colors[indexColor]);
+  }
+};
+
+for (let person of people) {
+  getFavColor2(person, 2);
+}
+
 /*
     4. Napisz funkcję analogiczną do funkcji z zadania 3, ale nie dodawaj jej w obiekcie.
     a) funkcja powinna przyjąć 2 parametry (obiekt osoby i liczbę z zakresu 1 - 30)
@@ -118,103 +215,3 @@ const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
     c) Za pomocą pętli for of przeiteruj po wszystkich osobach z tablicy i wyświetl ich ulubione kolory
 */
 
-/*
-    5. Zadanie polega na użyciu .filter() .map() .reduce w wersji łańcuchowej,
-    czyli nie twórz nowych tablic w momencie wykonanie jednej z powyższych metod, połącz wykonanie ze sobą w jeden 
-    "łańcuch" tzn. const wynik = arr.filter().map().reduce()
-    a) Przefiltruj tablicę w taki sposób, aby zostały w niej osoby,
-    których imię kończy się na literę 'a' lub 'k' 
-    i nazwisko ma więcej znaków niż 6 
-    i nick zawiera w sobie przynajmniej jedną literę a
-    b) do powyższego warunku dodaj "furtkę" w postaci parametru isElite. Zmienna isElite powinna być obliczona
-    za pomocą generatora liczb pseudolosowych Math.random(). Za pomocą tego generatora wylosujcie liczbę z zakresu 0 - 100.
-    Jeżeli wartość losowej liczby będzie liczbą pierwszą lub będzie podzielna przez 3 i 5, ustawcie isElite na true, w pozostałych przypadkach
-    isElite powinno być ustawione na false
-    c) jeżeli zmienna isElite ma wartość true, nie bierzcie pod uwagę warunku z punktu a przy filtracji
-    d) za pomocą funkcji map i for in odwróccie wartości i klucze w obiekcie, usuwając przy tym funkcje
-    Przykład
-    INPUT
-    {
-        firstName: "Bartolomeo",
-        lastName: "Lozano",
-        nickname: "Rabona",
-        introduceYourself: '' // funkcja zamiast pustego stringa
-        getFavouriteColor: '' // funkcja zamiast pustego stringa
-    },
-    OUTPUT
-    {
-        Bartolomeo: "firstName",
-        Lozano: "lastName",
-        Rabona: "nickname",
-    },
-    e) zredukuj tablicę obiektów do pojedynczego obiektu, który będzie zawierał wszystkie klucze i wartości
-    wszystkich obiektów z tablicy, dzięki temu, że w punkcie d) odwrócilismy klucze z wartościami, nie będzie 
-    z tym problemu :)
-    *f) odtwórz z obiektu tablicę, która będzie zawierała same nicknames i 
-    nazwiska, ktdjest < s i
-    imię, którego chociaż jedna litera jest większa >= s
-    g) posortuj tablicę alfabetycznie
-*/
-
-/*
-    *6. Currying function
-    a) Napisz taką funkcję mnożącą 2 liczby, aby możliwe były następujące wywołania:
-    - multi(5)(6)
-    - const multiplyBySix = sum(6)
-      multiplyBySix(10)
-    b) Analogicznie napisz funkcję, która mnoży 4 liczby i możliwe jest wywołanie
-    - multi(4)(5)(6)(10)
-
-    Hints:
-    - funkcja może zwracać inne funkcje
-    - funkcja może korzystać ze zmiennych i parametrów funkcji zewnętrznych (czyli tych w których się znajduje)
-*/
-
-/*
-    **7. Rekurencja
-     a) Mając zagnieżdżony obiekt, wyciągnij z niego wszystkie imiona i dodaj do tablicy
-     ***b) Jeżeli osoba ma więcej niż jedno imię, te imiona powinny znajdować się w jednym stringu w tablicy
-     Na przykład 'Kamil Bartek'
-    INPUT:
-*/
-const nestedObject = {
-  name: "Kamil",
-  children: [
-    {
-      name: "Zosia",
-    },
-    {
-      name: "Krysia",
-      name2: "Barbara",
-      children: [
-        {
-          name: "Basia",
-          children: [
-            {
-              name: "Monika",
-              name2: "Viola",
-              children: [
-                {
-                  name: "Mateusz",
-                },
-                {
-                  name: "Sebastian",
-                  name2: "August",
-                  name3: "Franciszek",
-                  children: [
-                    { name: "Alex" },
-                    { name: "Stasio" },
-                    {
-                      name: "Paulina",
-                      children: [{ name: "Kuba" }, { name: "Kacper" }],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};
