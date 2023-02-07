@@ -1,7 +1,7 @@
 const URL = `https://swapi.dev/api/`;
 let newURL;
 
-const mainData = {
+let mainData = {
   data: null,
   results: null,
   button: null,
@@ -34,10 +34,20 @@ async function printButtons() {
         mainData.results = responce.results;
         mainData.button = $buttons.innerText;
         printResults();
+        paginationButtons();
+        console.log(`mainData.responce`, mainData.responce);
       });
     });
   }
 }
+function paginationButtons() {
+  if (mainData.responce) {
+    [mainData.responce].forEach((item) => {
+      console.log(`item`, item);
+    });
+  }
+}
+paginationButtons();
 
 function printResults() {
   if (mainData.results) {
@@ -93,14 +103,12 @@ function printTable() {
       headerRow.appendChild(header);
     });
     table.appendChild(headerRow);
-    // let t = document.createTextNode("ppp");
-    // header.appendChild(t);
 
     Object.entries(mainData.outcome).forEach(([key, value]) => {
       let row = document.createElement("tr");
       let no = Number(key) + 1;
 
-      let tableBody = [no, ...Object.values(value)];
+      let tableBody = [no, ...Object.values(value), printExtraButtons()];
       // let t = (document.innerHTML += `
       // <tr>
       //     <td><button>Delete</button></td>
@@ -122,7 +130,6 @@ function printTable() {
         row.appendChild(cell);
       });
       table.appendChild(row);
-      // table.appendChild(t);
     });
   }
 }
