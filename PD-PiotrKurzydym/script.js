@@ -1,17 +1,16 @@
 const URL = `https://swapi.dev/api/`;
 let newURL;
-let myTable = document.querySelector("#myTable");
 
 const mainData = {
   data: null,
   results: null,
   button: null,
-  outcome: null,
+  responce: null,
+  outcome: [],
 };
-// let x = [];
 
 async function getMainData() {
-  const data = await fetch(`https://swapi.dev/api/`);
+  const data = await fetch(URL);
   const responce = await data.json();
   mainData.data = responce;
 }
@@ -21,15 +20,17 @@ async function printButtons() {
     const $buttonsList = document.getElementById("buttons");
     Object.entries(mainData.data).forEach((item) => {
       const $buttons = document.createElement("button");
-      $buttons.innerText = item[0];
+      $buttons.innerText = item[0].toUpperCase();
       $buttonsList.appendChild($buttons);
       $buttons.addEventListener("click", async () => {
-        let x = null;
+        document.getElementById("myTable").innerHTML = "";
         mainData.results = null;
         mainData.button = null;
-        let newURL = `https://swapi.dev/api/${item[0]}/`;
+        mainData.outcome.splice(0, mainData.outcome.length);
+        let newURL = `https://swapi.dev/api/${item[0]}/?page=1`;
         const data = await fetch(newURL);
         const responce = await data.json();
+        mainData.responce = responce;
         mainData.results = responce.results;
         mainData.button = $buttons.innerText;
         printResults();
@@ -40,87 +41,91 @@ async function printButtons() {
 
 function printResults() {
   if (mainData.results) {
-    let x = [];
-    // document.getElementById("results").innerHTML = "";
-    // const $resultsList = document.getElementById("results");
-    // const $list = document.createElement("ul");
     mainData.results.forEach((result) => {
-      if (mainData.button === "people") {
+      if (mainData.button === "PEOPLE") {
         [new people({ ...result })].forEach((el) => {
-          x.push({ ...el });
+          mainData.outcome.push({ ...el, created: setCreated() });
         });
-      } else if (mainData.button === "planets") {
-        mainData.outcome = new planets({ ...result });
-      } else if (mainData.button === "films") {
-        mainData.outcome = new films({ ...result });
-      } else if (mainData.button === "species") {
-        mainData.outcome = new species({ ...result });
-      } else if (mainData.button === "vehicles") {
-        mainData.outcome = new vehicles({ ...result });
-      } else if (mainData.button === "starships") {
-        mainData.outcome = new starships({ ...result });
+      } else if (mainData.button === "PLANETS") {
+        [new planets({ ...result })].forEach((el) => {
+          mainData.outcome.push({ ...el, created: setCreated() });
+        });
+      } else if (mainData.button === "FILMS") {
+        [new films({ ...result })].forEach((el) => {
+          mainData.outcome.push({ ...el, created: setCreated() });
+        });
+      } else if (mainData.button === "SPECIES") {
+        [new species({ ...result })].forEach((el) => {
+          mainData.outcome.push({ ...el, created: setCreated() });
+        });
+      } else if (mainData.button === "VEHICLES") {
+        [new vehicles({ ...result })].forEach((el) => {
+          mainData.outcome.push({ ...el, created: setCreated() });
+        });
+      } else if (mainData.button === "STARSHIPS") {
+        [new starships({ ...result })].forEach((el) => {
+          mainData.outcome.push({ ...el, created: setCreated() });
+        });
       }
-      // let $result = document.createElement("li");
-      // $result.innerHTML = mainData.outcome.name;
-      // $list.appendChild($result);
-      //
-      // Object.entries(mainData.outcome).forEach((item) => {
-      // console.log(`people`, new people());
-      // });
+      function setCreated() {
+        let date = result.created.slice(0, 10);
+        let year = date.slice(0, 4);
+        let month = date.slice(5, 7);
+        let day = date.slice(8, 10);
+        let created = [day + `-` + month + `-` + year];
+        return created;
+      }
     });
-    // $resultsList.appendChild($list);
-    // console.log(`x`, Object.keys(x[0]));
+  }
+  printTable();
+}
 
+function printTable() {
+  if (mainData.outcome) {
     let table = document.getElementById("myTable");
     let headerRow = document.createElement("tr");
 
-    Object.keys(x[0]).forEach((headerOutcome) => {
-      console.log(`headerOutcome`, headerOutcome);
+    let headerText = [`ordinal number`, ...Object.keys(mainData.outcome[0])];
+    headerText.forEach((headerOutcome) => {
       let header = document.createElement("th");
       let textNode = document.createTextNode(headerOutcome);
       header.appendChild(textNode);
       headerRow.appendChild(header);
     });
     table.appendChild(headerRow);
+    // let t = document.createTextNode("ppp");
+    // header.appendChild(t);
 
-    x.forEach((outcome) => {
+    Object.entries(mainData.outcome).forEach(([key, value]) => {
       let row = document.createElement("tr");
-      // console.log(`outcome`, Object.keys(outcome));
+      let no = Number(key) + 1;
 
-      Object.values(outcome).forEach((item) => {
-        //  console.log(`item`, item);
+      let tableBody = [no, ...Object.values(value)];
+      // let t = (document.innerHTML += `
+      // <tr>
+      //     <td><button>Delete</button></td>
+      // </tr>
+      // `);
+
+      function printExtraButtons() {
+        const btn = document.createElement(`button`);
+        btn.innerText = `Delete`;
+        return btn;
+        // const tBodyEl = document.getElementsByTagName("th");
+        // e.preventDefault();
+      }
+
+      tableBody.forEach((item) => {
         let cell = document.createElement("td");
         let textNode = document.createTextNode(item);
         cell.appendChild(textNode);
         row.appendChild(cell);
       });
       table.appendChild(row);
+      // table.appendChild(t);
     });
-    // myTable.appendChild(table);
   }
 }
-
-//
-
-// function generateTable() {
-//   var x = document.createElement("TH");
-//   var t = document.createTextNode(mainData.outcome);
-//   x.appendChild(t);
-//   document.getElementById("myTable").appendChild(x);
-// }
-// generateTable();
-//
-//
-// function myFunction() {
-//   var x = document.createElement("TR");
-//   x.setAttribute("id", "myTr");
-//   document.getElementById("myTable").appendChild(x);
-
-//   var y = document.createElement("TD");
-//   var t = document.createTextNode("new cell");
-//   y.appendChild(t);
-//   document.getElementById("myTr").appendChild(y);
-// }
 
 class people {
   constructor({ name, height, mass, hair_color }) {
