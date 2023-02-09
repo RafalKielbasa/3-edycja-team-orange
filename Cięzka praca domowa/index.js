@@ -1,5 +1,6 @@
 const BASE_URL = 'https://swapi.dev/api/';
 const $container = document.getElementById('container');
+const $contentContainer = document.getElementById('contentContainer');
 const state = {
   activeBtn: null,
   urls: null,
@@ -48,6 +49,7 @@ const headerButtonEvent = async (btn, textBtn, data) => {
 
 const createTable = () => {
   const $dataTable = document.getElementById('table');
+
   $dataTable.innerHTML = '';
   const table = document.createElement('table');
 
@@ -83,7 +85,6 @@ const createTbody = (item) => {
 
   state.classes[state.activeBtn].forEach((item, index) => {
     const detailsBtn = document.createElement('button');
-
     detailsBtn.innerHTML = 'details';
 
     const deleteBtn = document.createElement('button');
@@ -92,15 +93,6 @@ const createTbody = (item) => {
     const trbody = document.createElement('tr');
     const lpBody = document.createElement('td');
     trbody.appendChild(lpBody);
-
-    detailsBtn.addEventListener('click', () => {
-      const $contentContainer = document.getElementById('contentContainer');
-      const details = document.createElement('div');
-      $contentContainer.appendChild(details);
-      Object.values(state.data[state.activeBtn]).forEach((item, index) => {
-        details.innerHTML = item[index];
-      });
-    });
 
     Object.values(item).forEach((value) => {
       lpBody.innerHTML = index + 1;
@@ -111,9 +103,81 @@ const createTbody = (item) => {
       trbody.append(detailsBtn);
       trbody.append(deleteBtn);
     });
+    showDetailsTable(detailsBtn, index);
 
     tbody.appendChild(trbody);
   });
+};
+
+const showDetailsTable = (btn, index) => {
+  btn.addEventListener('click', function () {
+    $contentContainer.style.justifyContent = 'start';
+    const $detailsTable = document.getElementById('details');
+    $detailsTable.innerHTML = '';
+    const detailsTable = document.createElement('table');
+
+    createDetailsThead(detailsTable, index);
+
+    $detailsTable.appendChild(detailsTable);
+
+    createDetailsTbody(detailsTable, index);
+  });
+};
+
+const createDetailsThead = (table, index) => {
+  const detailsThead = document.createElement('thead');
+  table.appendChild(detailsThead);
+
+  const detailsTr = document.createElement('tr');
+  detailsThead.appendChild(detailsTr);
+
+  Object.entries(state.data).forEach((item) => {
+    Object.keys(item[1][index]).forEach((key) => {
+      const detailsTh = document.createElement('th');
+      detailsTh.innerHTML = key;
+      detailsTr.appendChild(detailsTh);
+    });
+  });
+};
+
+const createDetailsTbody = (table, index) => {
+  const detailsTbody = document.createElement('tbody');
+  table.appendChild(detailsTbody);
+
+  const detailrTrbody = document.createElement('tr');
+
+  Object.entries(state.data).forEach((item) => {
+    Object.values(item[1][index]).forEach((value) => {
+      const detailsTd = document.createElement('td');
+
+      const checkArray = Array.isArray(value);
+
+      if (!checkArray) {
+        detailsTd.innerHTML = value;
+      } else if (value.length == 0) {
+        detailsTd.innerHTML = 'N/A';
+      } else {
+        const select = createSelect(value);
+        detailsTd.appendChild(select);
+      }
+      fetchDetails();
+
+      detailrTrbody.appendChild(detailsTd);
+    });
+  });
+  detailsTbody.appendChild(detailrTrbody);
+};
+
+const createSelect = (urls) => {
+  const select = document.createElement('select');
+  select.value = '';
+  urls.forEach((url) => {
+    const option = document.createElement('option');
+    option.innerHTML = url;
+    option.value = url;
+    select.appendChild(option);
+  });
+  return select;
 };
 
 const createClasses = (btn, data) => {

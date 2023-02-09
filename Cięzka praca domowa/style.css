@@ -9,23 +9,28 @@
 }
 #contentContainer {
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  padding-top: 200px;
+  gap: 20px;
+  width: 100%;
 }
 #table {
   display: flex;
-  padding-top: 200px;
+  max-width: 50%;
 }
-th {
-  background-color: aqua;
-  gap: 20px;
-  border: 1px solid black;
-}
-dialog {
-  width: 100px;
-  height: 100px;
+#details {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
+  max-width: 50%;
+}
+
+thead {
+  background-color: aqua;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
 }
