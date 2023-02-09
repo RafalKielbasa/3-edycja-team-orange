@@ -111,10 +111,19 @@ const createTbody = (item) => {
 
 const showDetailsTable = (btn, index) => {
   btn.addEventListener('click', function () {
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '&larr;';
+
     $contentContainer.style.justifyContent = 'start';
     const $detailsTable = document.getElementById('details');
     $detailsTable.innerHTML = '';
     const detailsTable = document.createElement('table');
+    $detailsTable.appendChild(closeBtn);
+    closeBtn.addEventListener('click', function () {
+      detailsTable.remove();
+      closeBtn.remove();
+      $contentContainer.style.justifyContent = 'center';
+    });
 
     createDetailsThead(detailsTable, index);
 
@@ -134,6 +143,7 @@ const createDetailsThead = (table, index) => {
   Object.entries(state.data).forEach((item) => {
     Object.keys(item[1][index]).forEach((key) => {
       const detailsTh = document.createElement('th');
+
       detailsTh.innerHTML = key;
       detailsTr.appendChild(detailsTh);
     });
@@ -160,7 +170,6 @@ const createDetailsTbody = (table, index) => {
         const select = createSelect(value);
         detailsTd.appendChild(select);
       }
-      fetchDetails();
 
       detailrTrbody.appendChild(detailsTd);
     });
