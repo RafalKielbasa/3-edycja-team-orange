@@ -58,15 +58,11 @@ function reverseString(string) {
 }
 function giveNickname(value, index) {
   const splittedFirstName =
-    (value.firstName[0] || "") +
-    (value.firstName[1] || "") +
-    (value.firstName[2] || "");
+    (value.firstName[0] || "") + (value.firstName[1] || "") + (value.firstName[2] || "");
   const revFirstName = reverseString(splittedFirstName);
   const revLastNameArr = reverseString(value.lastName);
   const revLastName =
-    (revLastNameArr[0] || "") +
-    (revLastNameArr[1] || "") +
-    (revLastNameArr[2] || "");
+    (revLastNameArr[0] || "") + (revLastNameArr[1] || "") + (revLastNameArr[2] || "");
   let nickName = (revFirstName + revLastName).toLowerCase();
   nickName = nickName.replace(nickName[0], nickName[0].toUpperCase());
   const result = {
@@ -75,7 +71,7 @@ function giveNickname(value, index) {
   };
   return result;
 }
-console.log(people.map(giveNickname));
+// console.log(people.map(giveNickname));
 const people_1 = people.map(giveNickname);
 // //  DANE WEJŚCIOWE
 // const people = [
@@ -112,14 +108,13 @@ const people_1 = people.map(giveNickname);
     
 */
 function introduceYourself() {
-  const text = `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie [${this.nickname}]`;
-  console.log(text);
+  // const text = `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie [${this.nickname}]`;
+  // console.log(text);
 }
 const people_2 = people_1.map((value) => ({
   ...value,
-  introduceYourself: introduceYourself,
+  introduceYourself,
 }));
-console.log(people_2[0]);
 people_2.forEach((value) => value.introduceYourself());
 
 //  DANE WEJŚCIOWE
@@ -166,13 +161,10 @@ function getFavouriteColor(number) {
   } else if (number > 30) {
     console.log("podałeś za dużą liczbę, liczba nie może być większa niż 30");
   }
-  const charSum =
-    this.firstName.length + this.lastName.length + this.nickname.length;
+  const charSum = this.firstName.length + this.lastName.length + this.nickname.length;
   const result = Math.abs(charSum - number);
   const resultWithMod = result % colors.length;
-  console.log(
-    `${this.firstName} your favourite color is ${colors[resultWithMod]}`
-  );
+  console.log(`${this.firstName} your favourite color is ${colors[resultWithMod]}`);
 }
 const people_3 = people_2.map((value) => ({ ...value, getFavouriteColor }));
 // people_3.forEach((value) => value.getFavouriteColor());
@@ -192,13 +184,10 @@ function getFavouriteColorNoObject(object, number) {
   } else if (number > 30) {
     console.log("podałeś za dużą liczbę, liczba nie może być większa niż 30");
   }
-  const charSum =
-    object.firstName.length + object.lastName.length + object.nickname.length;
+  const charSum = object.firstName.length + object.lastName.length + object.nickname.length;
   const result = Math.abs(charSum - number);
   const resultWithMod = result % colors.length;
-  console.log(
-    `${object.firstName} your favourite color is ${colors[resultWithMod]}- forloop`
-  );
+  // console.log(`${object.firstName} your favourite color is ${colors[resultWithMod]}- forloop`);
 }
 // for (value of people_2) {
 //   getFavouriteColorNoObject(value);
@@ -244,7 +233,6 @@ function getFavouriteColorNoObject(object, number) {
 function checkExceptions() {
   let checkPrime = true;
   const isElite = Math.ceil(Math.random() * 100);
-  console.log(isElite);
   for (let i = 2; i <= isElite / 2; i++) {
     if (isElite % i == 0) {
       checkPrime = false;
@@ -254,7 +242,6 @@ function checkExceptions() {
   return checkPrime;
 }
 const primeDoor = checkExceptions();
-console.log(primeDoor);
 function checkArray(value) {
   const FNLenghth = value.firstName.length;
   const LetterArr = ["k", "a"];
@@ -307,8 +294,8 @@ function lastFiltration(object) {
   return charArr;
 }
 
-console.log("people_4", people_4);
-console.log(lastFiltration(people_4).sort());
+// console.log("people_4", people_4);
+// console.log(lastFiltration(people_4).sort());
 
 /*
     *6. Currying function
@@ -329,7 +316,7 @@ function multi(a) {
   };
 }
 const multiplyBySix = multi(6);
-console.log("zadanie 6a", multiplyBySix(10));
+// console.log("zadanie 6a", multiplyBySix(10));
 
 function multiFour(a) {
   return (b) => {
@@ -340,7 +327,7 @@ function multiFour(a) {
     };
   };
 }
-console.log("zadanie 6b", multiFour(4)(5)(6)(10));
+// console.log("zadanie 6b", multiFour(4)(5)(6)(10));
 /*
     **7. Rekurencja
      a) Mając zagnieżdżony obiekt, wyciągnij z niego wszystkie imiona i dodaj do tablicy
@@ -409,4 +396,43 @@ function takeNames(object) {
   return nameArray;
 }
 
-console.log("zadanie 7", takeNames(nestedObject));
+// console.log("zadanie 7", takeNames(nestedObject));
+const Grid = [
+  [5, 1, 2, 3],
+  [5, 4, 5, 6],
+  [5, 7, 8, 9],
+  [5, 6, 10, 11],
+];
+function changeGrid(value, index, array) {
+  const result = value.map((v, i) => {
+    return (
+      (v || 0) +
+      (value[i + 1] || 0) +
+      (value[i - 1] || 0) +
+      (array?.[index + 1]?.[i] || 0) +
+      (array?.[index + 1]?.[i + 1] || 0) +
+      (array?.[index + 1]?.[i - 1] || 0) +
+      (array?.[index - 1]?.[i] || 0) +
+      (array?.[index - 1]?.[i + 1] || 0) +
+      (array?.[index - 1]?.[i - 1] || 0)
+    );
+  });
+
+  return result;
+}
+
+console.log(Grid.map(changeGrid));
+
+//   [12, 21, 16],
+//   [27, 45, 33],
+//   [24, 39, 28]
+// //
+// value[0] +
+//     value[1] +
+//     (value[-1] || 0) +
+//     (array?.[index + 1]?.[0] || 0) +
+//     (array?.[index + 1]?.[1] || 0) +
+//     (array?.[index + 1]?.[-1] || 0) +
+//     (array?.[index - 1]?.[0] || 0) +
+//     (array?.[index - 1]?.[1] || 0) +
+//     (array?.[index - 1]?.[-1] || 0);

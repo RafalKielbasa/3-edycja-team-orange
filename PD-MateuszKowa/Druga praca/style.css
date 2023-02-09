@@ -1,0 +1,37 @@
+#table > table > thead > tr > th {
+  border: 3px solid black;
+  padding-right: 24px;
+  padding-left: 24px;
+  padding-right: 10px;
+}
+#table > table > tbody > tr > td {
+  border: 3px solid black;
+  padding-right: 24px;
+  padding-left: 24px;
+  padding-right: 10px;
+  padding-bottom: 24px;
+}
+#pagination {
+  display: none;
+}
+#deleteCnf {
+  background-color: gold;
+  font-size: 48px;
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#find {
+  display: none;
+}
+body {
+  background-image: url("WallpaperDog-966390.jpg");
+  background-color: #cccccc;
+  color: white;
+  font-size: 22px;
+}
+button {
+  font-size: 22px;
+}

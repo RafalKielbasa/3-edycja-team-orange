@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app"></div>
+    <div id="pagination">
+        <button id="prevBtn" disabled>PREV</button>
+        <input type="number" id="pageNumber" value="1">
+        <button id="nextBtn">NEXT</button>
+        <button id="search">SEARCH</button>
+        <select name="itemsNumber" id="itemsNumber">
+            <option value="5">5</option>
+            <option selected="selected" value="10">10</option>
+            <option value="20">20</option>
+        </select>
+        <button id="deleteFewRows">DELETE SELECTED</button>
+    </div>
+    <div id="find">
+        <span>WHAT ARE YOU LOOKING FOR</span>
+        <input type="searchValue" name="searchValue" id="searchValue">
+        <button id="szukaj">Szukaj</button>
+    </div>
+    <div id="table"></div>
+    <div id=deleteCnf>
+        <span>"Are you sure"</span>
+        <button id="confirmBtn">YES</button>
+        <button id="backBtn">NO</button>
+    </div>
+    <script type="module" src="scripver2.js"></script>
+</body>
+
+</html>
