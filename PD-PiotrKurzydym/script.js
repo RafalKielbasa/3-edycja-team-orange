@@ -5,7 +5,7 @@ let mainData = {
   data: null,
   results: null,
   buttons: null,
-  category,
+  category: null,
   responce: null,
   outcome: [],
 };
@@ -25,7 +25,6 @@ function printButtons() {
       $buttons.addEventListener("click", async () => {
         pageNumber = 1;
         document.getElementById("pageNumber").value = pageNumber;
-        console.log({ pageNumber });
         mainData.category = item[0];
         getData();
       });
@@ -41,6 +40,12 @@ async function getData() {
   const responce = await data.json();
   mainData.responce = responce;
   mainData.results = responce.results;
+  if (mainData.responce.previous === null) {
+    previousButton.disabled = true;
+  } else previousButton.disabled = false;
+  if (mainData.responce.next === null) {
+    nextButton.disabled = true;
+  } else nextButton.disabled = false;
   printResults();
 }
 
@@ -49,14 +54,12 @@ function paginationButtons() {
   previousButton.addEventListener(`click`, async function () {
     pageNumber -= 1;
     document.getElementById("pageNumber").value = pageNumber;
-    console.log({ pageNumber });
     getData();
   });
   nextButton = document.getElementById("next");
   nextButton.addEventListener(`click`, function () {
     pageNumber += 1;
     document.getElementById("pageNumber").value = pageNumber;
-    console.log({ pageNumber });
     getData();
   });
 }
@@ -117,10 +120,34 @@ function printTable() {
 
     mainData.outcome.forEach((item, index) => {
       let row = document.createElement("tr");
-      let no = index + 1;
+
+      function setNo(number) {
+        if (number === 1) {
+          no = index + 1;
+        } else if (number === 2) {
+          no = index + 11;
+        } else if (number === 3) {
+          no = index + 21;
+        } else if (number === 4) {
+          no = index + 31;
+        } else if (number === 5) {
+          no = index + 41;
+        } else if (number === 6) {
+          no = index + 51;
+        } else if (number === 7) {
+          no = index + 61;
+        } else if (number === 8) {
+          no = index + 71;
+        } else if (number === 9) {
+          no = index + 81;
+        } else if (number === 10) {
+          no = index + 91;
+        }
+        return no;
+      }
 
       let tableBody = [
-        no,
+        setNo(pageNumber),
         ...Object.values(item),
         printDeleteButton,
         printDetailsButton,
