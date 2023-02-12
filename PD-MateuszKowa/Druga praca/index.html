@@ -10,31 +10,49 @@
 </head>
 
 <body>
-    <div id="app"></div>
-    <div id="pagination">
-        <button id="prevBtn" disabled>PREV</button>
-        <input type="number" id="pageNumber" value="1">
-        <button id="nextBtn">NEXT</button>
-        <button id="search">SEARCH</button>
-        <select name="itemsNumber" id="itemsNumber">
-            <option value="5">5</option>
-            <option selected="selected" value="10">10</option>
-            <option value="20">20</option>
-        </select>
-        <button id="deleteFewRows">DELETE SELECTED</button>
+    <div id="app">
+        <div id="header">
+            <span id="buttons"></span>
+            <span>Number of items to display</span>
+            <select name="itemsNumber" id="itemsNumberOnPage">
+                <option value="5">5</option>
+                <option selected="selected" value="10">10</option>
+                <option value="20">20</option>
+            </select>
+        </div>
+        <div id="searcherByEndpoints">
+            <span>Search by <span id="availableSearchFields">name</span> in <select id="endpointsSelector"></select>
+            </span>
+            <input type="text" id="endpointInput">
+            <button id="endpointSearchBtn" disabled="true">SEARCH</button>
+        </div>
+        <div id=tableWithData></div>
+        <div>
+            <button id="deleteManyRows">DELETE MANY ROWS</button>
+        </div>
+        <!-- <div id="pagination">
+            <button id="prevBtn" disabled>PREV</button>
+            <input type="number" id="pageNumber" value="1">
+            <button id="nextBtn">NEXT</button>
+            <button id="search">SEARCH</button>
+
+            <button id="deleteFewRows">DELETE SELECTED</button>
+        </div>
+        <div id="find">
+            <span>WHAT ARE YOU LOOKING FOR</span>
+            <input type="searchValue" name="searchValue" id="searchValue">
+            <button id="szukaj">Szukaj</button>
+        </div> -->
+        <div id=deleteCnf>
+            <span>"Are you sure"</span>
+            <button id="confirmBtn">YES</button>
+            <button id="backBtn">NO</button>
+        </div>
+        <div class="overlay">
+            <div class="loading">loading</div>
+        </div>
     </div>
-    <div id="find">
-        <span>WHAT ARE YOU LOOKING FOR</span>
-        <input type="searchValue" name="searchValue" id="searchValue">
-        <button id="szukaj">Szukaj</button>
-    </div>
-    <div id="table"></div>
-    <div id=deleteCnf>
-        <span>"Are you sure"</span>
-        <button id="confirmBtn">YES</button>
-        <button id="backBtn">NO</button>
-    </div>
-    <script type="module" src="scripver2.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>

@@ -1,4 +1,52 @@
-#table > table > thead > tr > th {
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: hsla(0, 0%, 0%, 0.8);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.overlay.active {
+  display: flex;
+  cursor: wait;
+}
+.loading {
+  font-size: 5rem;
+  color: white;
+  text-transform: uppercase;
+  animation-name: pulse;
+  animation-duration: 1s;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+}
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+#deleteManyRows {
+  display: none;
+}
+#deleteCnf {
+  background-color: gold;
+  font-size: 48px;
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* #table > table > thead > tr > th {
   border: 3px solid black;
   padding-right: 24px;
   padding-left: 24px;
@@ -14,15 +62,7 @@
 #pagination {
   display: none;
 }
-#deleteCnf {
-  background-color: gold;
-  font-size: 48px;
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+
 #find {
   display: none;
 }
@@ -35,3 +75,6 @@ body {
 button {
   font-size: 22px;
 }
+#itemsNumber {
+  display: none;
+} */

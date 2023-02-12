@@ -5,25 +5,25 @@ API - https://swapi.dev/
 Dokumentacja SWAPI - https://swapi.dev/documentation
 SWAPI jest otwartym API, w którym znajdziemy dane z universum STAR WARS
 CEL: Implementacja interaktywnej aplikacji www
-a) Stwórz pliki
+a) Stwórz pliki DONE
     index.html
     script.js
     style.css
-b) podłącz plik script i style do index.html
+b) podłącz plik script i style do index.html DONE
 c) napisz funkcję pobierającą linki do dostępnych danych w SWAPI
-    https://swapi.dev/api/ (BASE_URL)
+    https://swapi.dev/api/ (BASE_URL) zrobione
 d) Stwórz na górze strony przyciski bazujące na danych, które zejdą po wykonaniu funkcji z punktu c)
     *miej na uwadze że dane pochodzące z API mogą być różne, dlatego bazuj tylko na danych, które zejdą
-   z API, nie pisz na sztywno nazw filmy/postacie itd.
+   z API, nie pisz na sztywno nazw filmy/postacie itd. DONE
 e) Po kliknięciu w przycisk wywołaj odpowiedni endpoint pobierający daną kolekcję danych.
-    np. przycisk films powienien pobierać dane z https://swapi.dev/api/films/
-    *napisz funcję z punktu c) w taki sposób, żeby można ją było używać także tutaj
+    np. przycisk films powienien pobierać dane z https://swapi.dev/api/films/ 
+    *napisz funcję z punktu c) w taki sposób, żeby można ją było używać także tutaj zrobione DONE
 f) Przygotuj dla każdej kolekcji klasę, która w konstruktorze przyjmie co najmniej 4 parametry pochodzące z modelu, który pobierzesz,
     następnie dla całej listy stwórz tablicę obiektów, które będą instancjami danej klasy films/people/planets/species/starships/vehicles
-    *jeżeli znajdziesz jakiekolwiek punkty wspólne, możesz pokusić się o dziedziczenie po klasie bazowej
+    *jeżeli znajdziesz jakiekolwiek punkty wspólne, możesz pokusić się o dziedziczenie po klasie bazowej zrobione DONE
 g) Na podstawie stworzonych obiektów wyświetl tabelkę, w której
     - nagłówkami będą nazwy właściwości obiektów
-    - ostatnią kolumną będzie data 'created' przeformatowana do formatu DD-MM-YY
+    - ostatnią kolumną będzie data 'created' przeformatowana do formatu DD-MM-YY 
     - pierwszą kolumną będzie # liczba porządkowa 1,2,3...
     - na końcu każdego wiersza pojawią się 2 przyciski/ikony, DELETE i DETAILS
     - po kliknięciu w DETAILS wyświetl listę po lewej stronie ekranu, a po prawej pokaż rozszerzony widok konkretnego modelu
@@ -36,14 +36,14 @@ h) do tabelki dodaj paginację
     - select, w którym możemy zmienić ilość elementów wyświetlanych na stronie
 *i) widok każdego modelu, powinen zawierać unikalną funkcję zaimplementowaną na klasie danego modelu
     np. dla films mógłby to być przycisk, który po kliknięciu w modalu wyświetli opis tego filmu
-**j) zaimplementuj 2 rodzaje wyszukiwarki
+**j) zaimplementuj 2 rodzaje wyszukiwarki 
     - za pomocą użycia odpowiednich parametrów w endpointach konkretnych modeli
     - za pomocą przeszukiwania tabelki(tablicy) bez używania endpointu
 ***j) dodaj 3 ukryte funkcjonalności, które wszystkich zaskoczą
     np. po klinięciu 'enter' wyświetli się komunikat GAME OVER i otworzy się nowa karta w przeglądarce
     po najechaniu myszką na logo, bądź inny element odpali się dźwięk/film/animacja
-    w tym zadaniu liczy się Wasza kreatywność, znajdźcie coś co nas zaskoczy
-****k) dodaj możliwośc zaznaczania checkboxem wierszy na tabelce, dzięki czemu na raz będziemy mogli usunąć kilka itemów z listy, a nie tylko jeden
+    w tym zadaniu liczy się Wasza kreatywność, znajdźcie coś co nas zaskoczy DONE
+****k) dodaj możliwośc zaznaczania checkboxem wierszy na tabelce, dzięki czemu na raz będziemy mogli usunąć kilka itemów z listy, a nie tylko jeden DONE
 *****l) korzystając z wiedzy zdobytej podczas tworzenia gry, spróbuj za pomocą modelu(klasy) postaci zaimplementować walkę 2 postaci
     jedna postać niech to będzie "sztuczna inteligencja", zaimplementowana za pomocą ifów
     drugą postacią będziemy grać my, czyli musi być opcja wygrania i przegrania z przeciwnikiem :)
