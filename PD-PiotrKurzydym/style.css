@@ -1,82 +1,166 @@
-body {
-  text-align: center;
-}
-div {
-  text-align: center;
+/* div {
   display: flex;
+  text-align: center;
   justify-content: center;
+} */
+#category {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  color: #24292e;
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 16px;
+  font-weight: 500;
+  user-select: none;
+  -webkit-user-select: none;
+}
+#header {
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 5px;
+  appearance: none;
+  background-color: #fafbfc;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0,
+    rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  box-sizing: border-box;
   color: #24292e;
   cursor: pointer;
   font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   font-size: 14px;
   font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  padding: 8px;
+
+  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  word-wrap: break-word;
 }
-#myTable {
-  /* display: inline-block; */
-  margin-top: 15px;
-  /* padding: 10px, 20px, 20px, 20px; */
+#buttons {
+  margin-right: 3%;
+  margin-bottom: 2%;
+}
+button {
+  background-color: #fafbfc;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0,
+    rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  box-sizing: border-box;
+  color: #24292e;
+  cursor: pointer;
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  padding: 6px 16px;
+  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  word-wrap: break-word;
+}
+#pageNumber {
+  text-align: center;
+  margin: 2px;
+  width: 23px;
+  height: 23px;
+}
+#tablediv {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  color: #24292e;
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 20px;
 }
 th,
 td {
   border: 1px solid black;
+  /* margin-top: 15px; */
+}
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+#id01 {
+  display: none;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  /* transform: translateX(-40%); */
+  z-index: 1;
+  top: 25%;
+  width: 400px; /* Full width */
+  height: 215px; /* Full height */
+  overflow: auto; /*Enable scroll if needed */
+  background-color: white;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #888;
+}
+/* Modal Content/Box */
+.modal-content {
+  background-color: white;
+  margin: 5% auto 5% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid white;
+  width: 90%; /* Could be more or less, depending on screen size */
+  height: 80%;
+}
+
+.close {
+  position: absolute;
+  right: 5px;
+  top: 0px;
+  font-size: 40px;
+  font-weight: bold;
+  color: black;
+}
+.close:hover,
+.close:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+/* button:hover {
+  opacity: 1;
+} */
+#modalCancelBtn,
+#modalDeleteBtn {
+  width: 40%;
   margin-top: 15px;
 }
-#buttons {
-  margin-top: 5px;
-  margin-right: 20px;
-  margin-top: 5px;
-  appearance: none;
-  background-color: #fafbfc;
-  border: 1px solid rgba(27, 31, 35, 0.15);
-  border-radius: 6px;
-  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0,
-    rgba(255, 255, 255, 0.25) 0 1px 0 inset;
-  box-sizing: border-box;
-  color: #24292e;
-  cursor: pointer;
-  display: inline-block;
-  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  list-style: none;
-  padding: 6px 16px;
-  position: relative;
-  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  white-space: nowrap;
-  word-wrap: break-word;
+
+#modalCancelBtn {
+  float: left;
+  background-color: #ccc;
+  color: black;
 }
-button {
-  margin-top: 5px;
-  appearance: none;
-  background-color: #fafbfc;
-  border: 1px solid rgba(27, 31, 35, 0.15);
-  border-radius: 6px;
-  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0,
-    rgba(255, 255, 255, 0.25) 0 1px 0 inset;
-  box-sizing: border-box;
-  color: #24292e;
-  cursor: pointer;
-  display: inline-block;
-  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  list-style: none;
-  padding: 6px 16px;
-  position: relative;
-  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  white-space: nowrap;
-  word-wrap: break-word;
+#modalDeleteBtn {
+  float: right;
+  background-color: #f44336;
 }

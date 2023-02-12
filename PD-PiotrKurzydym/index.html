@@ -8,24 +8,37 @@
     <link rel="stylesheet" href="style.css"
   </head>
   <body>
-    <div>
+    <div id="category">
       <div>WYBIERZ KATEGORIĘ:</div>
     </div>
-    <div>
+    <div id="header">
       <div id="buttons"></div>
-      <button id="prev">prev</button>
-      <button id="next">next</button>
+      <button id="previous">Prev</button>
+      <input id="pageNumber" type="text" value="1"></input>
+      <button id="next">Next</button>
     </div>
-    <div>
-      <div id="results"></div>
-    </div>
-    <div>
+    <div id="tablediv">
       <table id="myTable"></table>
-      <div id="extraButtons"></div>
+    </div>
+
+    <div id="id01" class="modal" data-toggle="modal">
+      <span id="modalClose" class="close" title="Close Modal">×</span>
+      <form class="modal-content" action="/action_page.php">
+        <div class="container">
+          <h1>Usuwanie rzędu</h1>
+          <p>Czy jesteś pewien ?</p>
+          <button id="modalCancelBtn" type="button" class="cancelbtn">
+            Cancel
+          </button>
+          <button id="modalDeleteBtn" type="button" class="deletebtn">
+            Delete
+          </button>
+        </div>
+      </form>
     </div>
 
     <script src="script.js"></script>
   </body>
 </html>
 
-<div><form method="POST" onsubmit="onRegister(event)"></form></div>
+<!-- <div><form method="POST" onsubmit="onRegister(event)"></form></div> -->
