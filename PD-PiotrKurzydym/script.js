@@ -9,7 +9,7 @@ let mainData = {
   responce: null,
   outcome: [],
 };
-
+console.log(mainData.category);
 async function getMainData() {
   const data = await fetch(URL);
   const responce = await data.json();
@@ -22,10 +22,26 @@ function printButtons() {
       const $buttons = document.createElement("button");
       $buttons.innerText = item[0].toUpperCase();
       $buttonsList.appendChild($buttons);
+      previousButton = document.getElementById("previous");
+      previousButton.disabled = true;
+      nextButton = document.getElementById("next");
+      nextButton.disabled = true;
+      // var header = document.getElementById("myDIV");
+      // var btns = header.getElementsByClassName("btn");
+      // for (var i = 0; i < btns.length; i++) {
+      //   btns[i].addEventListener("click", function () {
+      //     var current = document.getElementsByClassName("active");
+      //     current[i].className = current[i].className.replace(" active", "");
+      //     this.className += " active";
+      //   });
+      // }
       $buttons.addEventListener("click", async () => {
+        previousButton.disabled = false;
+        nextButton.disabled = true;
         pageNumber = 1;
         document.getElementById("pageNumber").value = pageNumber;
         mainData.category = item[0];
+        console.log(mainData.category);
         getData();
       });
     });
@@ -50,13 +66,11 @@ async function getData() {
 }
 
 function paginationButtons() {
-  previousButton = document.getElementById("previous");
   previousButton.addEventListener(`click`, async function () {
     pageNumber -= 1;
     document.getElementById("pageNumber").value = pageNumber;
     getData();
   });
-  nextButton = document.getElementById("next");
   nextButton.addEventListener(`click`, function () {
     pageNumber += 1;
     document.getElementById("pageNumber").value = pageNumber;

@@ -12,7 +12,7 @@
       <div>WYBIERZ KATEGORIĘ:</div>
     </div>
     <div id="header">
-      <div id="buttons"></div>
+      <div id="buttons" class="btn active"></div>
       <button id="previous">Prev</button>
       <input id="pageNumber" type="text" value="1"></input>
       <button id="next">Next</button>
@@ -25,13 +25,13 @@
       <span id="modalClose" class="close" title="Close Modal">×</span>
       <form class="modal-content" action="/action_page.php">
         <div class="container">
-          <h1>Usuwanie rzędu</h1>
-          <p>Czy jesteś pewien ?</p>
+          <h1>Delete a row of data</h1>
+          <p>Are you sure ?</p>
           <button id="modalCancelBtn" type="button" class="cancelbtn">
-            Cancel
+            No
           </button>
           <button id="modalDeleteBtn" type="button" class="deletebtn">
-            Delete
+            Yes
           </button>
         </div>
       </form>
