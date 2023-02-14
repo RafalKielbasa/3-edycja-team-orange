@@ -46,6 +46,12 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.defaultTable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* #table > table > thead > tr > th {
   border: 3px solid black;
   padding-right: 24px;

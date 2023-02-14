@@ -1,8 +1,4 @@
 /*
-g) Na podstawie stworzonych obiektów wyświetl tabelkę, w której
-    - na końcu każdego wiersza pojawią się 2 przyciski/ikony, DELETE i DETAILS
-    - po kliknięciu w DETAILS wyświetl listę po lewej stronie ekranu, a po prawej pokaż rozszerzony widok konkretnego modelu
-    - na widoku modelu dodaj przycisk close, który zamknie detailsy i ponownie wyświetli listę na środku ekranu
 h) do tabelki dodaj paginację
     - poprzednia strona (z zablokowaniem < 1)
     - następna strona (oblicz ilość stron na podstawie ilosci wynikow i ilosci wyswietlonych elementow na 1 stronie)

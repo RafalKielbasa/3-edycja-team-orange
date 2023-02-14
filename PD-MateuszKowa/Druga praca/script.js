@@ -7,6 +7,7 @@ let state = {
   rowsToDelete: [],
   itemsNumberOnPage: 10,
   endpointSelected: "people",
+  idToDetail: 0,
 };
 const $buttons = document.getElementById("buttons");
 const $itemsNumberOnPage = document.getElementById("itemsNumberOnPage");
@@ -22,6 +23,7 @@ const $deleteManyRows = document.getElementById("deleteManyRows");
 const $deleteCnf = document.getElementById("deleteCnf");
 const $backBtn = document.getElementById("backBtn");
 const $confirmBtn = document.getElementById("confirmBtn");
+
 async function app() {
   try {
     await fetchData(BASE_URL, "api");
@@ -106,6 +108,10 @@ $pageNumberInput?.addEventListener("input", (e) => {
   state.pageNmb = value;
 });
 async function buttonClick(event) {
+  if (state.idToDetail != 0) {
+    state.idToDetail = 0;
+    $tableWithData.childNodes[1].remove();
+  }
   $deleteManyRows.style.display = "none";
   const buttonValue = event.target.innerHTML;
   state.ActiveBtn = buttonValue;
@@ -155,10 +161,11 @@ function createAndShowTable(dataToShow) {
   if ($tableWithData.firstChild) {
     $tableWithData.removeChild($tableWithData.firstElementChild);
   }
+  $tableWithData.classList.add("defaultTable");
   const $table = document.createElement("table");
   $tableWithData.appendChild($table);
   createTH(dataToShow, $table);
-  createTB(dataToShow, $table);
+  createOriginalTB(dataToShow, $table);
 }
 const deleteFewRows = (event) => {
   $deleteManyRows.style.display = "block";
@@ -227,7 +234,22 @@ function createTH(data, tableName) {
       tableName.appendChild($thead);
     });
 }
-function createTB(data, tableName) {
+function createBtnAndInput(index, number, row) {
+  const $deleteBtn = document.createElement("button");
+  $deleteBtn.innerHTML = "DELETE";
+  const $detailsBtn = document.createElement("button");
+  $detailsBtn.innerHTML = "DETAILS";
+  const $checkInput = document.createElement("INPUT");
+  $checkInput.setAttribute("type", "checkbox");
+  $checkInput.id = `${index[4]}-${number}-checkInput`;
+  $checkInput.onchange = deleteFewRows;
+  row.appendChild($deleteBtn);
+  row.appendChild($detailsBtn);
+  row.appendChild($checkInput);
+  $deleteBtn.onclick = showAlertAndTakeId;
+  $detailsBtn.onclick = createDetailTable;
+}
+function createOriginalTB(data, tableName) {
   const $tbody = document.createElement("tbody");
   let appropriatelength = state.itemsNumberOnPage;
   if (appropriatelength > data.length) {
@@ -239,35 +261,61 @@ function createTB(data, tableName) {
     if (pageNmb != 1) {
       lpNumber = i + 1 + (pageNmb - 1) * itemsNumberOnPage;
     }
-    const { url } = data?.[i];
-    const lpIndex = url.split("/");
-    const $tr = document.createElement("tr");
-    $tr.id = `${lpIndex[4]}-${lpNumber}`;
-    const $deleteBtn = document.createElement("button");
-    $deleteBtn.innerHTML = "DELETE";
-    const $detailsBtn = document.createElement("button");
-    $detailsBtn.innerHTML = "DETAILS";
-    const $checkInput = document.createElement("INPUT");
-    $checkInput.setAttribute("type", "checkbox");
-    $checkInput.id = `${lpIndex[4]}-${lpNumber}-checkInput`;
-    $checkInput.onchange = deleteFewRows;
-    const $tdId = document.createElement("td");
-    $tdId.innerHTML = lpNumber;
-    $tr.appendChild($tdId);
-    Object.entries(data?.[i])
-      .reverse()
-      .forEach(([k, v]) => {
-        const $td = document.createElement("td");
-        $td.innerHTML = v;
-        $td.id = k;
-        $tr.appendChild($td);
-      });
-    $tr.appendChild($deleteBtn);
-    $tr.appendChild($detailsBtn);
-    $tr.appendChild($checkInput);
-    $tbody.appendChild($tr);
-    tableName.appendChild($tbody);
-    $deleteBtn.onclick = showAlertAndTakeId;
+    createDataCells(data, $tbody, lpNumber, i);
   }
+  tableName.appendChild($tbody);
 }
-function createTwoButtonsAndCheck(rowtoAdd) {}
+const createDetailTable = (event) => {
+  const idToDetail = event.target.parentElement.id.split("-")[1];
+  const $detailTabel = document.createElement("table");
+  state.idToDetail = Number(idToDetail);
+  $tableWithData.appendChild($detailTabel);
+  const $detailTbody = document.createElement("tbody");
+  const { ActiveBtn } = state;
+  createTH(state[ActiveBtn].results, $detailTabel);
+  createDataCells(state[ActiveBtn].results, $detailTbody, idToDetail, idToDetail - 1);
+  $detailTabel.appendChild($detailTbody);
+  const $closeBtn = document.createElement("button");
+  $closeBtn.innerHTML = "Close";
+  $detailTabel.appendChild($closeBtn);
+  $closeBtn.onclick = closeTable;
+  function closeTable() {
+    state.idToDetail = 0;
+    $detailTabel.remove();
+  }
+  console.log({ state });
+};
+function createDataCells(data, tbodyName, number, dataIndex) {
+  const { url } = data?.[dataIndex];
+  const lpIndex = url.split("/");
+  const $tr = document.createElement("tr");
+  $tr.id = `${lpIndex[4]}-${number}`;
+  const $tdId = document.createElement("td");
+  $tdId.innerHTML = number;
+  $tr.appendChild($tdId);
+  const dataINeed = Object.entries(data?.[dataIndex]);
+  dataINeed.reverse().forEach(([k, v]) => {
+    const $td = document.createElement("td");
+    if (Array.isArray(v)) {
+      const $selectElement = document.createElement("select");
+      $selectElement.value = "";
+      v.forEach((op) => {
+        const $optiontElement = document.createElement("option");
+        $optiontElement.innerHTML = op;
+        $optiontElement.value = op;
+        $selectElement.appendChild($optiontElement);
+      });
+      $td.id = k;
+      $td.appendChild($selectElement);
+      $tr.appendChild($td);
+    } else {
+      $td.innerHTML = v;
+      $td.id = k;
+      $tr.appendChild($td);
+    }
+  });
+  if (state.idToDetail == 0) {
+    createBtnAndInput(lpIndex, number, $tr);
+  }
+  tbodyName.appendChild($tr);
+}
