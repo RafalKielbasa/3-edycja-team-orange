@@ -7,8 +7,12 @@
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   font-size: 16px;
   font-weight: 500;
-  user-select: none;
-  -webkit-user-select: none;
+  /* user-select: none;
+  -webkit-user-select: none; */
+}
+#search {
+  position: absolute;
+  right: 5%;
 }
 #header {
   display: inline-block;
@@ -69,6 +73,9 @@ button {
   white-space: nowrap;
   word-wrap: break-word;
 }
+#slash {
+  font-size: 22px;
+}
 /* .btn {
   border: none;
   outline: none;
@@ -82,12 +89,20 @@ button {
   background-color: #666;
   color: white;
 } */
-#pageNumber {
+#pageNumber,
+#maxPageNumber {
   text-align: center;
   margin: 2px;
   width: 23px;
   height: 23px;
 }
+#searchPage {
+  text-align: center;
+  margin: 2px;
+  width: 40px;
+  height: 23px;
+}
+
 #tablediv {
   display: flex;
   text-align: center;

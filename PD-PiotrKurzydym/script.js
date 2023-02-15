@@ -26,22 +26,16 @@ function printButtons() {
       previousButton.disabled = true;
       nextButton = document.getElementById("next");
       nextButton.disabled = true;
-      // var header = document.getElementById("myDIV");
-      // var btns = header.getElementsByClassName("btn");
-      // for (var i = 0; i < btns.length; i++) {
-      //   btns[i].addEventListener("click", function () {
-      //     var current = document.getElementsByClassName("active");
-      //     current[i].className = current[i].className.replace(" active", "");
-      //     this.className += " active";
-      //   });
-      // }
+      searchButton = document.getElementById("searchBtn");
+      searchButton.disabled = true;
+
       $buttons.addEventListener("click", async () => {
         previousButton.disabled = false;
-        nextButton.disabled = true;
+        nextButton.disabled = false;
+        searchButton.disabled = false;
         pageNumber = 1;
         document.getElementById("pageNumber").value = pageNumber;
         mainData.category = item[0];
-        console.log(mainData.category);
         getData();
       });
     });
@@ -62,9 +56,10 @@ async function getData() {
   if (mainData.responce.next === null) {
     nextButton.disabled = true;
   } else nextButton.disabled = false;
+  const maxPageNumber = Math.ceil(mainData.responce.count / 10);
+  document.getElementById("maxPageNumber").value = maxPageNumber;
   printResults();
 }
-
 function paginationButtons() {
   previousButton.addEventListener(`click`, async function () {
     pageNumber -= 1;
@@ -77,6 +72,17 @@ function paginationButtons() {
     getData();
   });
 }
+function validation(event) {
+  event.preventDefault();
+  const serchedPage = document.getElementById("searchPage").value;
+  document.getElementById(`searchPage`).value = "";
+  pageNumber = Number(serchedPage);
+  console.log({ pageNumber });
+  console.log({ maxPageNumber });
+  document.getElementById("pageNumber").value = pageNumber;
+  getData();
+}
+
 function printResults() {
   if (mainData.results) {
     mainData.results.forEach((result) => {

@@ -9,12 +9,22 @@
   </head>
   <body>
     <div id="category">
-      <div>WYBIERZ KATEGORIĘ:</div>
+      <div>SELECT A CATEGORY:</div>    
+      <div id="search">
+        <form onsubmit="validation(event)">
+          <label for="">Enter a page number:</label>
+          <input id="searchPage" type="number" name="searchPage" min="1" max="9"/>
+          <button id="searchBtn">Search</button>
+         </form>
+      </div> 
+       
     </div>
     <div id="header">
       <div id="buttons" class="btn active"></div>
       <button id="previous">Prev</button>
-      <input id="pageNumber" type="text" value="1"></input>
+      <input id="pageNumber" type="text"></input>
+      <span id="slash">/</span>
+      <input id="maxPageNumber" type="text"></input>
       <button id="next">Next</button>
     </div>
     <div id="tablediv">
