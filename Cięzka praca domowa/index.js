@@ -12,6 +12,7 @@ const state = {
   classes: {},
   nextPage: null,
   previousPage: null,
+  count: null,
   currentPage: 1,
 };
 
@@ -35,6 +36,7 @@ const fetchUrls = async (btn) => {
   };
   state.nextPage = data.next;
   state.previousPage = data.previous;
+  state.count = data.count;
   console.log(data);
 };
 
@@ -53,7 +55,7 @@ const headerButtonEvent = async (btn, textBtn) => {
     state.activeBtn = textBtn;
     await fetchUrls(textBtn);
     createTable(textBtn);
-    createPagination();
+
     $details.innerHTML = '';
     $popup.style.display = 'none';
     $contentContainer.style.justifyContent = 'center';
@@ -73,6 +75,7 @@ const createTable = () => {
 
   console.log(table);
   $dataTable.appendChild(table);
+  createPagination();
 };
 
 const createThead = (item) => {
@@ -107,7 +110,7 @@ const createTbody = (item) => {
     const trbody = document.createElement('tr');
     const lpBody = document.createElement('td');
     trbody.appendChild(lpBody);
-    deleteBtnEvent(deleteBtn, index, trbody);
+    deleteBtnEvent(deleteBtn, trbody);
 
     Object.values(item).forEach((value) => {
       lpBody.innerHTML = index + 1;
@@ -150,7 +153,7 @@ const closeButtonEventOnDetails = (btn, table) => {
   });
 };
 
-const createModal = (index, tr) => {
+const createModal = (tr) => {
   const modalContent = document.createElement('div');
   const modalDiv = document.createElement('div');
   modalDiv.innerHTML = 'Are you sure?';
@@ -181,10 +184,10 @@ const modalNoButtonEvent = (btn) => {
   });
 };
 
-const deleteBtnEvent = (btn, index, tr) => {
+const deleteBtnEvent = (btn, tr) => {
   btn.addEventListener('click', function () {
     $popup.innerHTML = '';
-    createModal(index, tr);
+    createModal(tr);
     $popup.style.display = 'flex';
   });
 };
@@ -255,17 +258,24 @@ const createPagination = () => {
 };
 
 const nextButtonEvent = (btn) => {
-  btn.addEventListener('click', function () {
-    state.currentPage++;
-    fetchUrls(state.activeBtn);
+  btn.addEventListener('click', async function () {
+    if (state.currentPage < Math.ceil(state.count / 10)) {
+      await fetchUrls(state.activeBtn);
+      createTable();
+      state.currentPage++;
+    }
+
     console.log(state.currentPage);
   });
 };
 
 const prevButtonEvent = (btn) => {
-  btn.addEventListener('click', function () {
-    state.currentPage--;
-    fetchUrls;
+  btn.addEventListener('click', async function () {
+    if (state.currentPage > 1) {
+      await fetchUrls(state.activeBtn);
+      createTable();
+      state.currentPage--;
+    }
     console.log(state.currentPage);
   });
 };
