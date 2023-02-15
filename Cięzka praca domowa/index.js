@@ -1,11 +1,18 @@
-const BASE_URL = 'https://swapi.dev/api/';
+const BASE_URL = `https://swapi.dev/api/`;
 const $container = document.getElementById('container');
+const $dataTable = document.getElementById('table');
 const $contentContainer = document.getElementById('contentContainer');
+const $details = document.getElementById('details');
+const $popup = document.getElementById('popup');
+const $pagination = document.getElementById('pagination');
 const state = {
   activeBtn: null,
   urls: null,
   data: {},
   classes: {},
+  nextPage: null,
+  previousPage: null,
+  currentPage: 1,
 };
 
 const fetchData = async () => {
@@ -15,7 +22,7 @@ const fetchData = async () => {
 };
 
 const fetchUrls = async (item, btn) => {
-  const response = await fetch(item);
+  const response = await fetch(`${item}/?page=${state.currentPage}`);
   const data = await response.json();
   state.data = {
     ...state.data,
@@ -24,6 +31,8 @@ const fetchUrls = async (item, btn) => {
   state.classes = {
     [btn]: createClasses(btn, state.data[btn]),
   };
+  state.nextPage = data.next;
+  state.previousPage = data.previous;
   console.log(data);
 };
 
@@ -39,18 +48,21 @@ const buttons = (data) => {
 
 const headerButtonEvent = async (btn, textBtn, data) => {
   btn.addEventListener('click', async () => {
-    await fetchUrls(data, textBtn);
     state.activeBtn = textBtn;
+    await fetchUrls(data, textBtn);
     createTable(textBtn);
-    console.log(state);
+    createPagination();
+    $details.innerHTML = '';
+    $popup.style.display = 'none';
+    $contentContainer.style.justifyContent = 'center';
+    console.log(state.nextPage);
     console.log(state.data[state.activeBtn]);
   });
 };
 
 const createTable = () => {
-  const $dataTable = document.getElementById('table');
-
   $dataTable.innerHTML = '';
+
   const table = document.createElement('table');
 
   createThead(table);
@@ -86,13 +98,14 @@ const createTbody = (item) => {
   state.classes[state.activeBtn].forEach((item, index) => {
     const detailsBtn = document.createElement('button');
     detailsBtn.innerHTML = 'details';
-
+    detailsButtonEvent(detailsBtn, index);
     const deleteBtn = document.createElement('button');
     deleteBtn.innerHTML = 'delete';
 
     const trbody = document.createElement('tr');
     const lpBody = document.createElement('td');
     trbody.appendChild(lpBody);
+    deleteBtnEvent(deleteBtn, index, trbody);
 
     Object.values(item).forEach((value) => {
       lpBody.innerHTML = index + 1;
@@ -103,13 +116,12 @@ const createTbody = (item) => {
       trbody.append(detailsBtn);
       trbody.append(deleteBtn);
     });
-    showDetailsTable(detailsBtn, index);
 
     tbody.appendChild(trbody);
   });
 };
 
-const showDetailsTable = (btn, index) => {
+const detailsButtonEvent = (btn, index) => {
   btn.addEventListener('click', function () {
     const closeBtn = document.createElement('button');
     closeBtn.innerHTML = '&larr;';
@@ -119,34 +131,74 @@ const showDetailsTable = (btn, index) => {
     $detailsTable.innerHTML = '';
     const detailsTable = document.createElement('table');
     $detailsTable.appendChild(closeBtn);
-    closeBtn.addEventListener('click', function () {
-      detailsTable.remove();
-      closeBtn.remove();
-      $contentContainer.style.justifyContent = 'center';
-    });
 
     createDetailsThead(detailsTable, index);
-
     $detailsTable.appendChild(detailsTable);
-
     createDetailsTbody(detailsTable, index);
+
+    closeButtonEventOnDetails(closeBtn, detailsTable);
   });
 };
 
-const createDetailsThead = (table, index) => {
+const closeButtonEventOnDetails = (btn, table) => {
+  btn.addEventListener('click', function () {
+    table.remove();
+    btn.remove();
+    $contentContainer.style.justifyContent = 'center';
+  });
+};
+
+const createModal = (index, tr) => {
+  const modalContent = document.createElement('div');
+  const modalDiv = document.createElement('div');
+  modalDiv.innerHTML = 'Are you sure?';
+  modalDiv.style.justifyContent = 'center';
+  const yesButton = document.createElement('button');
+  yesButton.innerHTML = 'YES';
+  modalYesButton(yesButton, tr);
+  const noButton = document.createElement('button');
+  noButton.innerHTML = 'NO';
+  modalNoButtonEvent(noButton);
+
+  modalContent.appendChild(modalDiv);
+  modalContent.appendChild(yesButton);
+  modalContent.appendChild(noButton);
+  $popup.appendChild(modalContent);
+};
+
+const modalYesButton = (btn, tr) => {
+  btn.addEventListener('click', function () {
+    $popup.style.display = 'none';
+    tr.remove();
+  });
+};
+
+const modalNoButtonEvent = (btn) => {
+  btn.addEventListener('click', function () {
+    $popup.style.display = 'none';
+  });
+};
+
+const deleteBtnEvent = (btn, index, tr) => {
+  btn.addEventListener('click', function () {
+    $popup.innerHTML = '';
+    createModal(index, tr);
+    $popup.style.display = 'flex';
+  });
+};
+
+const createDetailsThead = (table) => {
   const detailsThead = document.createElement('thead');
   table.appendChild(detailsThead);
 
   const detailsTr = document.createElement('tr');
   detailsThead.appendChild(detailsTr);
 
-  Object.entries(state.data).forEach((item) => {
-    Object.keys(item[1][index]).forEach((key) => {
-      const detailsTh = document.createElement('th');
+  Object.keys(state.data[state.activeBtn][1]).forEach((key) => {
+    const detailsTh = document.createElement('th');
 
-      detailsTh.innerHTML = key;
-      detailsTr.appendChild(detailsTh);
-    });
+    detailsTh.innerHTML = key;
+    detailsTr.appendChild(detailsTh);
   });
 };
 
@@ -156,25 +208,64 @@ const createDetailsTbody = (table, index) => {
 
   const detailrTrbody = document.createElement('tr');
 
-  Object.entries(state.data).forEach((item) => {
-    Object.values(item[1][index]).forEach((value) => {
-      const detailsTd = document.createElement('td');
+  Object.values(state.data[state.activeBtn][index]).forEach((value) => {
+    const detailsTd = document.createElement('td');
 
-      const checkArray = Array.isArray(value);
+    const checkArray = Array.isArray(value);
 
-      if (!checkArray) {
-        detailsTd.innerHTML = value;
-      } else if (value.length == 0) {
-        detailsTd.innerHTML = 'N/A';
-      } else {
-        const select = createSelect(value);
-        detailsTd.appendChild(select);
-      }
+    if (!checkArray) {
+      detailsTd.innerHTML = value;
+    } else if (value.length == 0) {
+      detailsTd.innerHTML = 'N/A';
+    } else {
+      const select = createSelect(value);
+      detailsTd.appendChild(select);
+    }
 
-      detailrTrbody.appendChild(detailsTd);
-    });
+    detailrTrbody.appendChild(detailsTd);
   });
+
   detailsTbody.appendChild(detailrTrbody);
+};
+
+const createPagination = () => {
+  const paginationDiv = document.createElement('div');
+  paginationDiv.style.display = 'flex';
+  paginationDiv.style.justifyContent = 'center';
+  paginationDiv.style.gap = '5px';
+  $dataTable.appendChild(paginationDiv);
+
+  const input = document.createElement('input');
+  input.style.width = '20px';
+
+  const nextButton = document.createElement('button');
+  nextButton.innerHTML = 'NEXT';
+  nextButtonEvent(nextButton);
+
+  const prevButton = document.createElement('button');
+  prevButton.innerHTML = 'PREV';
+
+  prevButtonEvent(prevButton);
+
+  paginationDiv.appendChild(prevButton);
+  paginationDiv.appendChild(nextButton);
+  paginationDiv.appendChild(input);
+};
+
+const nextButtonEvent = (btn) => {
+  btn.addEventListener('click', function () {
+    state.currentPage++;
+    fetchUrls(state.activeBtn);
+    console.log(state.currentPage);
+  });
+};
+
+const prevButtonEvent = (btn) => {
+  btn.addEventListener('click', function () {
+    state.currentPage--;
+    fetchUrls;
+    console.log(state.currentPage);
+  });
 };
 
 const createSelect = (urls) => {
@@ -217,6 +308,7 @@ const createClasses = (btn, data) => {
 const main = async () => {
   state.urls = await fetchData();
   buttons(state.urls);
+
   console.log(state.urls);
 };
 main();
