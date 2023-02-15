@@ -8,6 +8,8 @@ let state = {
   itemsNumberOnPage: 10,
   endpointSelected: "people",
   idToDetail: 0,
+  used: 0,
+  ActiveBtn: 0,
 };
 const $buttons = document.getElementById("buttons");
 const $itemsNumberOnPage = document.getElementById("itemsNumberOnPage");
@@ -23,7 +25,15 @@ const $deleteManyRows = document.getElementById("deleteManyRows");
 const $deleteCnf = document.getElementById("deleteCnf");
 const $backBtn = document.getElementById("backBtn");
 const $confirmBtn = document.getElementById("confirmBtn");
-
+const $pagination = document.getElementById("pagination");
+const $nextBtn = document.getElementById("nextBtn");
+const $prevtBtn = document.getElementById("prevBtn");
+const $choosePage = document.getElementById("choosePage");
+const $maxPageNmbr = document.getElementById("maxPageNmbr");
+const $SearchThrouTable = document.getElementById("SearchThrouTable");
+const $searchedValue = document.getElementById("searchedValue");
+const $searchInTable = document.getElementById("searchInTable");
+const $ShowAll = document.getElementById("ShowAll");
 async function app() {
   try {
     await fetchData(BASE_URL, "api");
@@ -41,6 +51,11 @@ async function app() {
     $deleteManyRows.onclick = deleteMany;
     $backBtn.onclick = hideAlert;
     $confirmBtn.onclick = deleteRow;
+    $nextBtn.onclick = nextPage;
+    $prevtBtn.onclick = prevPage;
+    $choosePage.onclick = choosePage;
+    $searchInTable.onclick = searchResult;
+    $ShowAll.onclick = showAllRows;
   } catch (error) {
     console.log("Wystąpił błąd: " + error);
   }
@@ -51,6 +66,17 @@ async function fetchData(url, stateKey) {
     const response = await fetch(url);
     apiCollection = await response.json();
     state[stateKey] = apiCollection;
+    if (apiCollection.next) {
+      $nextBtn.disabled = !apiCollection.next;
+      console.log(apiCollection.next);
+    } else {
+      $nextBtn.disabled = true;
+    }
+    if (apiCollection.previous) {
+      $prevtBtn.disabled = !apiCollection.previous;
+    } else {
+      $prevtBtn.disabled = true;
+    }
     console.log({ state });
   } catch (error) {
     console.log("Wystąpił błąd: " + error);
@@ -116,19 +142,31 @@ async function buttonClick(event) {
   const buttonValue = event.target.innerHTML;
   state.ActiveBtn = buttonValue;
   const { api } = state;
-  const { ActiveBtn } = state;
+  const { ActiveBtn, itemsNumberOnPage } = state;
   await fetchData(api[buttonValue], ActiveBtn);
   await createClass(ActiveBtn, state[ActiveBtn]);
   document.querySelector(".overlay").classList.remove("active");
+  state.used = 0;
+  state.pageNmb = 1;
+  $pageNumberInput.value = state.pageNmb;
+  const valueMax = Math.ceil(state[ActiveBtn].count / itemsNumberOnPage);
+  $maxPageNmbr.innerHTML = valueMax;
 }
 const endpointSearcher = async () => {
+  if (state.idToDetail != 0) {
+    state.idToDetail = 0;
+    $tableWithData.childNodes[1].remove();
+  }
   await fetchData(
     `${BASE_URL}${state.endpointSelected}?search=${state.endpointInput}`,
     state.endpointSelected
   );
   document.querySelector(".overlay").classList.remove("active");
   const { endpointSelected } = state;
+  state.pageNmb = 1;
   createClass(endpointSelected, state[endpointSelected]);
+  state.used = 1;
+  $pagination.style.display = "none";
 };
 async function createClass(instanceValue, dataCollection) {
   let instance;
@@ -267,13 +305,25 @@ function createOriginalTB(data, tableName) {
 }
 const createDetailTable = (event) => {
   const idToDetail = event.target.parentElement.id.split("-")[1];
+  let indexNumber = idToDetail;
+  if (Number(idToDetail) > 10) {
+    indexNumber = idToDetail % 10;
+  }
   const $detailTabel = document.createElement("table");
   state.idToDetail = Number(idToDetail);
   $tableWithData.appendChild($detailTabel);
   const $detailTbody = document.createElement("tbody");
-  const { ActiveBtn } = state;
-  createTH(state[ActiveBtn].results, $detailTabel);
-  createDataCells(state[ActiveBtn].results, $detailTbody, idToDetail, idToDetail - 1);
+  const { ActiveBtn, used, endpointSelected } = state;
+  if (ActiveBtn != 0) {
+    createTH(state[ActiveBtn].results, $detailTabel);
+    createDataCells(state[ActiveBtn].results, $detailTbody, idToDetail, indexNumber - 1);
+    state.used = 0;
+  }
+  if (used != 0) {
+    createTH(state[endpointSelected].results, $detailTabel);
+    createDataCells(state[endpointSelected].results, $detailTbody, idToDetail, indexNumber - 1);
+    state.ActiveBtn = 0;
+  }
   $detailTabel.appendChild($detailTbody);
   const $closeBtn = document.createElement("button");
   $closeBtn.innerHTML = "Close";
@@ -318,4 +368,54 @@ function createDataCells(data, tbodyName, number, dataIndex) {
     createBtnAndInput(lpIndex, number, $tr);
   }
   tbodyName.appendChild($tr);
+  $pagination.style.display = "block";
+  $SearchThrouTable.style.display = "block";
 }
+const nextPage = async () => {
+  const { ActiveBtn } = state;
+  const nextPageUrl = state[ActiveBtn].next;
+  state.pageNmb++;
+  $pageNumberInput.value = state.pageNmb;
+  await fetchData(nextPageUrl, ActiveBtn);
+  await createClass(ActiveBtn, state[ActiveBtn]);
+  document.querySelector(".overlay").classList.remove("active");
+};
+const prevPage = async () => {
+  const { ActiveBtn } = state;
+  const prevPageUrl = state[ActiveBtn].previous;
+  state.pageNmb--;
+  $pageNumberInput.value = state.pageNmb;
+  await fetchData(prevPageUrl, ActiveBtn);
+  await createClass(ActiveBtn, state[ActiveBtn]);
+  document.querySelector(".overlay").classList.remove("active");
+};
+const choosePage = async () => {
+  const { ActiveBtn, pageNmb } = state;
+  await fetchData(`${BASE_URL}${ActiveBtn}?page=${pageNmb}`, ActiveBtn);
+  await createClass(ActiveBtn, state[ActiveBtn]);
+  document.querySelector(".overlay").classList.remove("active");
+};
+$searchedValue.addEventListener(
+  "input",
+  debounce((e) => {
+    const value = e.target.value.toLowerCase();
+    state.searchValue = value;
+  }),
+  300
+);
+const searchResult = () => {
+  $ShowAll.disabled = false;
+  const children = $tableWithData.childNodes[0].childNodes[1].childNodes;
+  if (state.searchValue === "power") {
+    window.open("https://www.youtube.com/watch?v=kNS4t5UCBfI");
+  }
+  children.forEach((value) => {
+    if (!value.innerText.toLowerCase().includes(state.searchValue)) {
+      value.classList.add("hideRow");
+    }
+  });
+};
+const showAllRows = () => {
+  const children = $tableWithData.childNodes[0].childNodes[1].childNodes;
+  children.forEach((value) => value.classList.remove("hideRow"));
+};

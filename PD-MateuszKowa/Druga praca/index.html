@@ -30,19 +30,23 @@
         <div>
             <button id="deleteManyRows">DELETE MANY ROWS</button>
         </div>
-        <!-- <div id="pagination">
-            <button id="prevBtn" disabled>PREV</button>
-            <input type="number" id="pageNumber" value="1">
-            <button id="nextBtn">NEXT</button>
-            <button id="search">SEARCH</button>
-
-            <button id="deleteFewRows">DELETE SELECTED</button>
-        </div>
-        <div id="find">
+        <div id="SearchThrouTable">
             <span>WHAT ARE YOU LOOKING FOR</span>
-            <input type="searchValue" name="searchValue" id="searchValue">
-            <button id="szukaj">Szukaj</button>
-        </div> -->
+            <input type="searchedValue" name="searchedValue" id="searchedValue">
+            <button id="searchInTable">Search in table </button>
+            <button id="ShowAll" disabled>Show All </button>
+        </div>
+        <div id="pagination">
+            <button id="prevBtn" disabled>PREV</button>
+            <button id="nextBtn" disabled>NEXT</button>
+            <input type="number" id="pageNumber" value="1">
+            <span>
+                <span>/</span>
+                <span id="maxPageNmbr"></span>
+                <span>PAGES</span>
+            </span>
+            <button id="choosePage">CHOOSE PAGE TO SHOW</button>
+        </div>
         <div id=deleteCnf>
             <span>"Are you sure"</span>
             <button id="confirmBtn">YES</button>

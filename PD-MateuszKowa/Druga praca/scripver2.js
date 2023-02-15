@@ -1,8 +1,7 @@
 export const divTable = document.getElementById("table");
 const pageNumberInput = document.getElementById("pageNumber");
 export const confMessage = document.getElementById("deleteCnf");
-const nextBtn = document.getElementById("nextBtn");
-const prevtBtn = document.getElementById("prevBtn");
+
 const pagination = document.getElementById("pagination");
 const multiDelete = document.getElementById("deleteFewRows");
 const find = document.getElementById("find");
@@ -11,11 +10,6 @@ const searchBtn = document.getElementById("search");
 const szukaj = document.getElementById("szukaj");
 
 const endpointInput = document.createElement("input");
-
-searchValue.addEventListener("input", (e) => {
-  const value = e.target.value.toLowerCase();
-  state.searchValue = value;
-});
 
 async function app() {
   try {
