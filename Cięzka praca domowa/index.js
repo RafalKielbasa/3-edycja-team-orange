@@ -21,8 +21,10 @@ const fetchData = async () => {
   return data;
 };
 
-const fetchUrls = async (item, btn) => {
-  const response = await fetch(`${item}/?page=${state.currentPage}`);
+const fetchUrls = async (btn) => {
+  const response = await fetch(
+    `${state.urls[state.activeBtn]}/?page=${state.currentPage}`
+  );
   const data = await response.json();
   state.data = {
     ...state.data,
@@ -42,14 +44,14 @@ const buttons = (data) => {
     const button = document.createElement('button');
     button.innerText = key;
     $header.appendChild(button);
-    headerButtonEvent(button, button.innerText, value);
+    headerButtonEvent(button, button.innerText);
   });
 };
 
-const headerButtonEvent = async (btn, textBtn, data) => {
+const headerButtonEvent = async (btn, textBtn) => {
   btn.addEventListener('click', async () => {
     state.activeBtn = textBtn;
-    await fetchUrls(data, textBtn);
+    await fetchUrls(textBtn);
     createTable(textBtn);
     createPagination();
     $details.innerHTML = '';
