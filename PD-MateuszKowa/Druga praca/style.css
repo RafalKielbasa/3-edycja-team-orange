@@ -51,7 +51,33 @@
   justify-content: center;
   align-items: center;
 }
+#detailTabel {
+  width: 50%;
+  display: flex;
+}
+#detailTabel > thead > tr {
+  display: flex;
+  flex-direction: column;
+}
+#detailTabel > tbody > tr {
+  display: flex;
+  flex-direction: column;
+}
+td,
+th {
+  border: 2px solid whitesmoke;
+  margin-bottom: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.delDetBtn {
+  width: 100px;
+  font-size: 18px;
+}
 #find {
+  display: none;
+}
+.details {
   display: none;
 }
 #pagination {
@@ -63,27 +89,16 @@
 .hideRow {
   display: none;
 }
+.details.active {
+  display: inline-block;
+}
 body {
   background-image: url("WallpaperDog-966390.jpg");
   background-color: #cccccc;
   color: white;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 button {
-  font-size: 22px;
+  font-size: 20px;
 }
-/* #table > table > thead > tr > th {
-  border: 3px solid black;
-  padding-right: 24px;
-  padding-left: 24px;
-  padding-right: 10px;
-}
-#table > table > tbody > tr > td {
-  border: 3px solid black;
-  padding-right: 24px;
-  padding-left: 24px;
-  padding-right: 10px;
-  padding-bottom: 24px;
-}
-

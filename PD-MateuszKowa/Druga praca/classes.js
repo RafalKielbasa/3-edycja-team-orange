@@ -1,3 +1,4 @@
+import { $detailResult, $detailStart, $detailStop } from "/script.js";
 export class original {
   constructor(created, edited, url) {
     this.created = changeDate(created);
@@ -15,11 +16,18 @@ export class person extends original {
   }
 }
 export class planet extends original {
-  constructor({ created, edited, url, climate, population, name }) {
+  constructor({ created, edited, url, diameter, climate, population, name }) {
     super(created, edited, url);
+    this.diameter = diameter;
     this.climate = climate;
     this.population = population;
     this.name = name;
+  }
+  compareToEarth() {
+    this.eartsDiam = 12742;
+    this.proportion = Math.round((this.diameter / this.eartsDiam) * 100);
+    const text = this.proportion;
+    $detailResult.innerHTML = `Średnica ${this.name} stanowi ${text}% średnicy Ziemi`;
   }
 }
 export class film extends original {
@@ -52,6 +60,18 @@ export class starship extends original {
     this.max_atmosphering_speed = max_atmosphering_speed;
     this.model = model;
     this.name = name;
+  }
+  drive() {
+    this.km = 0;
+    this.isDriving = null;
+    this.isDriving = setInterval(() => {
+      this.km += +this.max_atmosphering_speed;
+    }, 500);
+  }
+  stop() {
+    clearInterval(this.isDriving);
+    const text = `W sumie przeleciałeś ${this.km} Km`;
+    $detailResult.innerHTML = text;
   }
 }
 function changeDate(data) {

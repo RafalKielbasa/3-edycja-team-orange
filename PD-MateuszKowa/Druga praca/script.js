@@ -34,6 +34,11 @@ const $SearchThrouTable = document.getElementById("SearchThrouTable");
 const $searchedValue = document.getElementById("searchedValue");
 const $searchInTable = document.getElementById("searchInTable");
 const $ShowAll = document.getElementById("ShowAll");
+const $details = document.getElementById("details");
+export const $detailStart = document.getElementById("detailStart");
+export const $detailStop = document.getElementById("detailStop");
+export const $detailResult = document.getElementById("detailResult");
+const $detailsActiveBtnValues = document.getElementById("detailsActiveBtnValues");
 async function app() {
   try {
     await fetchData(BASE_URL, "api");
@@ -150,6 +155,7 @@ async function buttonClick(event) {
   state.pageNmb = 1;
   $pageNumberInput.value = state.pageNmb;
   const valueMax = Math.ceil(state[ActiveBtn].count / itemsNumberOnPage);
+  state.maxPgNmb = valueMax;
   $maxPageNmbr.innerHTML = valueMax;
 }
 const endpointSearcher = async () => {
@@ -193,7 +199,39 @@ async function createClass(instanceValue, dataCollection) {
     default:
       console.log(`Sorry value has no collection`);
   }
+  state.changedToClass = instance;
+  const { ActiveBtn } = state;
   createAndShowTable(instance);
+  $details.classList.add("active");
+  const objectToGetNames = Object.values(instance);
+  if (ActiveBtn) {
+    removeOptions($detailsActiveBtnValues);
+    $detailResult.innerHTML = "";
+  }
+  objectToGetNames.forEach((value) => {
+    const $optiontElement = document.createElement("option");
+    $optiontElement.innerHTML = value.name;
+    $optiontElement.value = value.name;
+    $detailsActiveBtnValues.appendChild($optiontElement);
+  });
+  switch (ActiveBtn) {
+    case "starships": {
+      $detailStart.onclick = () => state.changedToClass[0].drive();
+      $detailStop.onclick = () => state.changedToClass[0].stop();
+      break;
+    }
+    case "planets": {
+      $detailStart.onclick = () => state.changedToClass[0].compareToEarth();
+      $detailStop.classList.add("details");
+      break;
+    }
+  }
+}
+function removeOptions(selectElement) {
+  const L = selectElement.options.length - 1;
+  for (let i = L; i >= 0; i--) {
+    selectElement.remove(i);
+  }
 }
 function createAndShowTable(dataToShow) {
   if ($tableWithData.firstChild) {
@@ -275,8 +313,10 @@ function createTH(data, tableName) {
 function createBtnAndInput(index, number, row) {
   const $deleteBtn = document.createElement("button");
   $deleteBtn.innerHTML = "DELETE";
+  $deleteBtn.classList.add("delDetBtn");
   const $detailsBtn = document.createElement("button");
   $detailsBtn.innerHTML = "DETAILS";
+  $detailsBtn.classList.add("delDetBtn");
   const $checkInput = document.createElement("INPUT");
   $checkInput.setAttribute("type", "checkbox");
   $checkInput.id = `${index[4]}-${number}-checkInput`;
@@ -304,6 +344,10 @@ function createOriginalTB(data, tableName) {
   tableName.appendChild($tbody);
 }
 const createDetailTable = (event) => {
+  if (state.idToDetail != 0) {
+    const previousTable = document.getElementById("detailTabel");
+    previousTable.remove();
+  }
   const idToDetail = event.target.parentElement.id.split("-")[1];
   let indexNumber = idToDetail;
   if (Number(idToDetail) > 10) {
@@ -333,6 +377,7 @@ const createDetailTable = (event) => {
     state.idToDetail = 0;
     $detailTabel.remove();
   }
+  $detailTabel.id = "detailTabel";
   console.log({ state });
 };
 function createDataCells(data, tbodyName, number, dataIndex) {
@@ -390,7 +435,13 @@ const prevPage = async () => {
   document.querySelector(".overlay").classList.remove("active");
 };
 const choosePage = async () => {
-  const { ActiveBtn, pageNmb } = state;
+  const { ActiveBtn, maxPgNmb } = state;
+  let { pageNmb } = state;
+  if (pageNmb > maxPgNmb) {
+    pageNmb = maxPgNmb;
+    $pageNumberInput.value = maxPgNmb;
+  }
+
   await fetchData(`${BASE_URL}${ActiveBtn}?page=${pageNmb}`, ActiveBtn);
   await createClass(ActiveBtn, state[ActiveBtn]);
   document.querySelector(".overlay").classList.remove("active");
