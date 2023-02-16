@@ -6,13 +6,11 @@ const $details = document.getElementById('details');
 const $popup = document.getElementById('popup');
 const $pagination = document.getElementById('pagination');
 const state = {
+  info: {},
   activeBtn: null,
   urls: null,
   data: {},
   classes: {},
-  nextPage: null,
-  previousPage: null,
-  count: null,
   currentPage: 1,
 };
 
@@ -27,6 +25,7 @@ const fetchUrls = async (btn) => {
     `${state.urls[state.activeBtn]}/?page=${state.currentPage}`
   );
   const data = await response.json();
+  state.info = data;
   state.data = {
     ...state.data,
     [btn]: data.results,
@@ -34,10 +33,9 @@ const fetchUrls = async (btn) => {
   state.classes = {
     [btn]: createClasses(btn, state.data[btn]),
   };
-  state.nextPage = data.next;
-  state.previousPage = data.previous;
-  state.count = data.count;
-  console.log(data);
+
+  console.log('data', state.info);
+  console.log('next page', state.info.next);
 };
 
 const buttons = (data) => {
@@ -45,6 +43,15 @@ const buttons = (data) => {
   Object.entries(data).forEach(([key, value]) => {
     const button = document.createElement('button');
     button.innerText = key;
+    button.addEventListener('click', function () {
+      state.currentPage = 1;
+      state.activeBtn = button.innerText;
+      $details.innerHTML = '';
+      $popup.style.display = 'none';
+      $contentContainer.style.justifyContent = 'center';
+      soundEffect();
+    });
+
     $header.appendChild(button);
     headerButtonEvent(button, button.innerText);
   });
@@ -52,15 +59,9 @@ const buttons = (data) => {
 
 const headerButtonEvent = async (btn, textBtn) => {
   btn.addEventListener('click', async () => {
-    state.activeBtn = textBtn;
     await fetchUrls(textBtn);
     createTable(textBtn);
-
-    $details.innerHTML = '';
-    $popup.style.display = 'none';
-    $contentContainer.style.justifyContent = 'center';
-    console.log(state.nextPage);
-    console.log(state.data[state.activeBtn]);
+    console.log('state data from active btn => ', state.data[state.activeBtn]);
   });
 };
 
@@ -243,6 +244,8 @@ const createPagination = () => {
   const input = document.createElement('input');
   input.style.width = '20px';
 
+  inputChoosePage(input);
+
   const nextButton = document.createElement('button');
   nextButton.innerHTML = 'NEXT';
   nextButtonEvent(nextButton);
@@ -252,32 +255,55 @@ const createPagination = () => {
 
   prevButtonEvent(prevButton);
 
+  const pageCounter = document.createElement('span');
+  pageCounter.innerHTML = `${state.currentPage}/${Math.ceil(
+    state.info.count / 10
+  )}`;
+
   paginationDiv.appendChild(prevButton);
   paginationDiv.appendChild(nextButton);
   paginationDiv.appendChild(input);
+  paginationDiv.appendChild(pageCounter);
+};
+
+const inputChoosePage = (input) => {
+  input.addEventListener('keypress', async function (key) {
+    if (key.key === 'Enter') {
+      state.currentPage = input.value;
+
+      await fetchUrls(state.activeBtn);
+      createTable();
+
+      console.log('current Page', state.currentPage);
+    }
+  });
 };
 
 const nextButtonEvent = (btn) => {
-  btn.addEventListener('click', async function () {
-    if (state.currentPage < Math.ceil(state.count / 10)) {
+  if (state.info.next) {
+    btn.addEventListener('click', async function () {
+      state.currentPage++;
       await fetchUrls(state.activeBtn);
       createTable();
-      state.currentPage++;
-    }
-
-    console.log(state.currentPage);
-  });
+      console.log('page => ', state.currentPage);
+      console.log('next', state.info.next);
+    });
+  } else {
+    btn.disabled = true;
+  }
 };
 
 const prevButtonEvent = (btn) => {
-  btn.addEventListener('click', async function () {
-    if (state.currentPage > 1) {
+  if (state.currentPage > 1) {
+    btn.addEventListener('click', async function () {
+      state.currentPage--;
       await fetchUrls(state.activeBtn);
       createTable();
-      state.currentPage--;
-    }
-    console.log(state.currentPage);
-  });
+      console.log('page => ', state.currentPage);
+    });
+  } else {
+    btn.disabled = true;
+  }
 };
 
 const createSelect = (urls) => {
@@ -290,6 +316,12 @@ const createSelect = (urls) => {
     select.appendChild(option);
   });
   return select;
+};
+const soundEffect = () => {
+  const sound = new Audio();
+  sound.src = './Quadlaser turret fire.mp3';
+  sound.volume = 0.01;
+  sound.play();
 };
 
 const createClasses = (btn, data) => {
@@ -321,7 +353,7 @@ const main = async () => {
   state.urls = await fetchData();
   buttons(state.urls);
 
-  console.log(state.urls);
+  console.log('urls', state.urls);
 };
 main();
 
