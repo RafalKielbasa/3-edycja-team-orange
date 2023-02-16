@@ -9,7 +9,6 @@ let mainData = {
   responce: null,
   outcome: [],
 };
-console.log(mainData.category);
 async function getMainData() {
   const data = await fetch(URL);
   const responce = await data.json();
@@ -77,8 +76,6 @@ function validation(event) {
   const serchedPage = document.getElementById("searchPage").value;
   document.getElementById(`searchPage`).value = "";
   pageNumber = Number(serchedPage);
-  console.log({ pageNumber });
-  console.log({ maxPageNumber });
   document.getElementById("pageNumber").value = pageNumber;
   getData();
 }
@@ -193,15 +190,45 @@ function printTable() {
         const detailsButton = document.createElement(`button`);
         detailsButton.className = "details";
         detailsButton.innerText = `DETAILS`;
+        detailsButton.addEventListener(`click`, function () {
+          printDetailsTable();
+        });
         return detailsButton;
       }
+      function printDetailsTable() {
+        if (mainData.results) {
+          let detailsTable = document.getElementById("details");
+          let detailsHeaderRow = document.createElement("tr");
 
+          let detailsHeaderText = [...Object.keys(mainData.results[index])];
+          // console.log(...Object.keys(mainData.results[index]));
+          detailsHeaderText.forEach((detailsHeaderOutcome) => {
+            // console.log({ detailsHeaderOutcome });
+            let detailsHeader = document.createElement("th");
+            let detailsTextNode = document.createTextNode(detailsHeaderOutcome);
+            detailsHeader.appendChild(detailsTextNode);
+            detailsHeaderRow.appendChild(detailsHeader);
+          });
+          detailsTable.appendChild(detailsHeaderRow);
+
+          let detailsRow = document.createElement("tr");
+          let detailsTableBody = [...Object.values(mainData.results[index])];
+
+          detailsTableBody.forEach((detailsItem) => {
+            let detailsCell = document.createElement("td");
+            let detailsTextNode = document.createTextNode(detailsItem);
+            detailsCell.appendChild(detailsTextNode);
+            detailsRow.appendChild(detailsCell);
+          });
+          detailsHeaderRow.appendChild(detailsRow);
+        }
+      }
       table.addEventListener(`click`, function showModal(event) {
-        const modal = document.getElementById("id01");
-        modal.style.display = "block";
         if (!event.target.classList.contains(`delete`)) {
           return;
         }
+        const modal = document.getElementById("id01");
+        modal.style.display = "block";
         modalClose = document.getElementById("modalClose");
         modalClose.addEventListener(`click`, function () {
           event = null;
@@ -222,7 +249,6 @@ function printTable() {
     });
   }
 }
-
 class people {
   constructor({ name, height, mass, hair_color }) {
     this.name = name;

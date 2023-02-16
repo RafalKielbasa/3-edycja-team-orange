@@ -76,19 +76,6 @@ button {
 #slash {
   font-size: 22px;
 }
-/* .btn {
-  border: none;
-  outline: none;
-  padding: 10px 16px;
-  background-color: #f1f1f1;
-  cursor: pointer;
-  font-size: 18px;
-}
-.active,
-.btn:hover {
-  background-color: #666;
-  color: white;
-} */
 #pageNumber,
 #maxPageNumber {
   text-align: center;
@@ -102,9 +89,20 @@ button {
   width: 40px;
   height: 23px;
 }
-
 #tablediv {
   display: flex;
+  text-align: center;
+  justify-content: center;
+  color: #24292e;
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 20px;
+}
+#details {
+  display: flex;
+  flex-direction: column;
   text-align: center;
   justify-content: center;
   color: #24292e;
@@ -161,15 +159,6 @@ p {
   color: #f44336;
   cursor: pointer;
 }
-
-/* .clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-/* button:hover {
-  opacity: 1;
-} */
 #modalCancelBtn,
 #modalDeleteBtn {
   width: 40%;
