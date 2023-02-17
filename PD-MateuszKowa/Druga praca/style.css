@@ -1,3 +1,6 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700italic);
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap");
+
 .overlay {
   position: absolute;
   top: 0;
@@ -80,25 +83,108 @@ th {
 .details {
   display: none;
 }
-#pagination {
+.pagination {
   display: none;
 }
-#SearchThrouTable {
+.SearchThrouTable {
   display: none;
 }
 .hideRow {
   display: none;
 }
 .details.active {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.details.active > select {
+  font-size: 20px;
 }
 body {
   background-image: url("WallpaperDog-966390.jpg");
   background-color: #cccccc;
   color: white;
   font-size: 20px;
+  font-family: "Open Sans", sans-serif;
 }
 
 button {
+  font-size: 20px;
+}
+#header {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+  margin-top: 30px;
+}
+#searcherByEndpoints {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+  font-size: 25px;
+}
+#endpointsSelector {
+  font-size: 23px;
+  opacity: 0.85;
+}
+#searcherByEndpoints > input {
+  font-size: 20px;
+}
+.mainAppBtn {
+  position: relative;
+  background-color: darkblue;
+  color: antiquewhite;
+  font-size: 28px;
+  border: none;
+  text-align: center;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  font-family: "Quicksand";
+}
+.mainAppBtn.active {
+  background-color: #fff;
+  box-shadow: 0px 2px 10px 5px #97b1bf;
+  color: #000;
+}
+#buttons > button:hover {
+  background: #fff;
+  box-shadow: 0px 2px 10px 5px #97b1bf;
+  color: #000;
+}
+
+.SearchThrouTable.visible {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 15px;
+  gap: 10px;
+  font-size: 25px;
+}
+.SearchThrouTable.visible > input {
+  font-size: 23px;
+}
+input {
+  background-color: lightskyblue;
+}
+.pagination.visible {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 15px;
+  gap: 10px;
+  font-size: 25px;
+}
+.pagination.visible > input {
+  width: 40px;
   font-size: 20px;
 }

@@ -2,7 +2,7 @@ window.onload = app;
 import { person, planet, film, specie, vehicle, starship } from "./classes.js";
 let BASE_URL = "https://swapi.dev/api/";
 let apiCollection;
-let state = {
+export let state = {
   pageNmb: 1,
   rowsToDelete: [],
   itemsNumberOnPage: 10,
@@ -10,6 +10,8 @@ let state = {
   idToDetail: 0,
   used: 0,
   ActiveBtn: 0,
+  prevActBtn: null,
+  clicked: 0,
 };
 const $buttons = document.getElementById("buttons");
 const $itemsNumberOnPage = document.getElementById("itemsNumberOnPage");
@@ -46,6 +48,8 @@ async function app() {
       const $button = document.createElement("button");
       $button.onclick = buttonClick;
       $button.innerHTML = key;
+      $button.id = key;
+      $button.classList.add("mainAppBtn");
       $buttons.appendChild($button);
       const $option = document.createElement("option");
       $option.innerHTML = key;
@@ -143,8 +147,17 @@ async function buttonClick(event) {
     state.idToDetail = 0;
     $tableWithData.childNodes[1].remove();
   }
+  if (state.clicked > 0) {
+    state.prevActBtn = state.ActiveBtn;
+    const { prevActBtn } = state;
+    const prevBtntoHide = document.getElementById(prevActBtn);
+    prevBtntoHide.classList.remove("active");
+  }
+
   $deleteManyRows.style.display = "none";
   const buttonValue = event.target.innerHTML;
+  const activeBtnShow = document.getElementById(buttonValue);
+  activeBtnShow.classList.add("active");
   state.ActiveBtn = buttonValue;
   const { api } = state;
   const { ActiveBtn, itemsNumberOnPage } = state;
@@ -157,6 +170,7 @@ async function buttonClick(event) {
   const valueMax = Math.ceil(state[ActiveBtn].count / itemsNumberOnPage);
   state.maxPgNmb = valueMax;
   $maxPageNmbr.innerHTML = valueMax;
+  state.clicked++;
 }
 const endpointSearcher = async () => {
   if (state.idToDetail != 0) {
@@ -172,7 +186,7 @@ const endpointSearcher = async () => {
   state.pageNmb = 1;
   createClass(endpointSelected, state[endpointSelected]);
   state.used = 1;
-  $pagination.style.display = "none";
+  $pagination.classList.remove("active");
 };
 async function createClass(instanceValue, dataCollection) {
   let instance;
@@ -210,8 +224,13 @@ async function createClass(instanceValue, dataCollection) {
   }
   objectToGetNames.forEach((value) => {
     const $optiontElement = document.createElement("option");
-    $optiontElement.innerHTML = value.name;
-    $optiontElement.value = value.name;
+    if (ActiveBtn == "films") {
+      $optiontElement.innerHTML = value.title;
+      $optiontElement.value = value.title;
+    } else {
+      $optiontElement.innerHTML = value.name;
+      $optiontElement.value = value.name;
+    }
     $detailsActiveBtnValues.appendChild($optiontElement);
   });
   switch (ActiveBtn) {
@@ -222,6 +241,21 @@ async function createClass(instanceValue, dataCollection) {
     }
     case "planets": {
       $detailStart.onclick = () => state.changedToClass[0].compareToEarth();
+      $detailStop.classList.add("details");
+      break;
+    }
+    case "species": {
+      $detailStart.onclick = () => state.changedToClass[0].HowLongYouWillLive();
+      $detailStop.classList.add("details");
+      break;
+    }
+    case "films": {
+      $detailStart.onclick = () => state.changedToClass[0].showOpening();
+      $detailStop.classList.add("details");
+      break;
+    }
+    case "people": {
+      $detailStart.onclick = () => state.changedToClass[0].yourBMI();
       $detailStop.classList.add("details");
       break;
     }
@@ -413,8 +447,8 @@ function createDataCells(data, tbodyName, number, dataIndex) {
     createBtnAndInput(lpIndex, number, $tr);
   }
   tbodyName.appendChild($tr);
-  $pagination.style.display = "block";
-  $SearchThrouTable.style.display = "block";
+  $pagination.classList.add("visible");
+  $SearchThrouTable.classList.add("visible");
 }
 const nextPage = async () => {
   const { ActiveBtn } = state;
@@ -455,6 +489,7 @@ $searchedValue.addEventListener(
   300
 );
 const searchResult = () => {
+  $searchedValue.value = "";
   $ShowAll.disabled = false;
   const children = $tableWithData.childNodes[0].childNodes[1].childNodes;
   if (state.searchValue === "power") {

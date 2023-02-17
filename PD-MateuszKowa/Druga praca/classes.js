@@ -1,4 +1,4 @@
-import { $detailResult, $detailStart, $detailStop } from "/script.js";
+import { $detailResult, $detailStart, $detailStop, state } from "/script.js";
 export class original {
   constructor(created, edited, url) {
     this.created = changeDate(created);
@@ -13,6 +13,10 @@ export class person extends original {
     this.height = height;
     this.mass = mass;
     this.name = name;
+  }
+  yourBMI() {
+    const BMI = Math.round(this.mass / Math.pow(this.height / 100, 2));
+    $detailResult.innerHTML = `Twój Body Mass Index wynosi ${BMI} `;
   }
 }
 export class planet extends original {
@@ -37,13 +41,30 @@ export class film extends original {
     this.release_date = release_date;
     this.title = title;
   }
+  showOpening() {
+    $detailResult.innerHTML = state.films.results[0].opening_crawl;
+  }
 }
 export class specie extends original {
-  constructor({ created, edited, url, language, designation, name }) {
+  constructor({ created, edited, url, language, average_lifespan, designation, name }) {
     super(created, edited, url);
     this.language = language;
+    this.average_lifespan = average_lifespan;
     this.designation = designation;
     this.name = name;
+  }
+  HowLongYouWillLive() {
+    this.humanLife = 120;
+    const compareToHuman = this.average_lifespan - this.humanLife;
+    if (compareToHuman > 0) {
+      $detailResult.innerHTML = `${this.name} żyją dłużej niż ludzie o ${compareToHuman}`;
+    }
+    if (compareToHuman === 0) {
+      $detailResult.innerHTML = `${this.name} jesteś człowiekiem lub żyjesz tyle co ludzie`;
+    }
+    if (compareToHuman < 0) {
+      $detailResult.innerHTML = `${this.name} żyją krócej niże ludzie o ${compareToHuman}`;
+    }
   }
 }
 export class vehicle extends original {
