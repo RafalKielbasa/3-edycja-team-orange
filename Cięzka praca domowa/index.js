@@ -152,9 +152,9 @@ const searchPeople = (input) => {
       );
       const data = await response.json();
 
-      console.log('search data', data[0]);
+      console.log('search data', data.results);
 
-      createDetailsTable(data);
+      createDetailsTable(data.results[0]);
     }
   });
 };
@@ -167,7 +167,7 @@ const handleCheckbox = (box, tr, btn) => {
   });
 };
 
-const createDetailsTable = (index) => {
+const createDetailsTable = (data) => {
   $detailsTable.innerHTML = '';
   const detailsTable = document.createElement('table');
 
@@ -175,9 +175,9 @@ const createDetailsTable = (index) => {
   closeBtn.innerHTML = '&larr;';
   $detailsTable.appendChild(closeBtn);
 
-  createDetailsThead(detailsTable, index);
+  createDetailsThead(detailsTable, data);
   $detailsTable.appendChild(detailsTable);
-  createDetailsTbody(detailsTable, index);
+  createDetailsTbody(detailsTable, data);
   closeButtonEventOnDetails(closeBtn, detailsTable);
 };
 
@@ -196,13 +196,13 @@ const createDetailsThead = (table) => {
   });
 };
 
-const createDetailsTbody = (table, index) => {
+const createDetailsTbody = (table, item) => {
   const detailsTbody = document.createElement('tbody');
   table.appendChild(detailsTbody);
 
   const detailrTrbody = document.createElement('tr');
 
-  Object.values(state.data[state.activeBtn][index]).forEach((value) => {
+  Object.values(item).forEach((value) => {
     const detailsTd = document.createElement('td');
 
     const checkArray = Array.isArray(value);
@@ -226,7 +226,9 @@ const detailsButtonEvent = (btn, index) => {
   btn.addEventListener('click', function () {
     $contentContainer.style.justifyContent = 'start';
 
-    createDetailsTable(index);
+    console.log('test', state.data[state.activeBtn]);
+
+    createDetailsTable(state.data[state.activeBtn][index]);
   });
 };
 
