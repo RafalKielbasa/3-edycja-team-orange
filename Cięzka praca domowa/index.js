@@ -2,9 +2,9 @@ const BASE_URL = `https://swapi.dev/api/`;
 const $container = document.getElementById('container');
 const $dataTable = document.getElementById('table');
 const $contentContainer = document.getElementById('contentContainer');
-const $details = document.getElementById('details');
 const $popup = document.getElementById('popup');
 const $pagination = document.getElementById('pagination');
+const $detailsTable = document.getElementById('details');
 const state = {
   info: {},
   activeBtn: null,
@@ -12,6 +12,7 @@ const state = {
   data: {},
   classes: {},
   currentPage: 1,
+  checkedEl: {},
 };
 
 const fetchData = async () => {
@@ -46,7 +47,7 @@ const buttons = (data) => {
     button.addEventListener('click', function () {
       state.currentPage = 1;
       state.activeBtn = button.innerText;
-      $details.innerHTML = '';
+      $detailsTable.innerHTML = '';
       $popup.style.display = 'none';
       $contentContainer.style.justifyContent = 'center';
       soundEffect();
@@ -90,16 +91,24 @@ const createThead = (item) => {
   lpHead.innerHTML = 'lp';
   trHead.append(lpHead);
 
+  const searchInput = document.createElement('input');
+  searchPeople(searchInput);
+
   Object.keys(state.classes[state.activeBtn][1]).forEach((key) => {
     const th = document.createElement('th');
     th.innerHTML = key;
     trHead.appendChild(th);
+    trHead.append(searchInput);
   });
 };
 
-const createTbody = (item) => {
+const createTbody = (table) => {
   const tbody = document.createElement('tbody');
-  item.appendChild(tbody);
+  table.appendChild(tbody);
+
+  const checkboxDeleteButton = document.createElement('button');
+  checkboxDeleteButton.innerHTML = 'delete checked';
+  $dataTable.append(checkboxDeleteButton);
 
   state.classes[state.activeBtn].forEach((item, index) => {
     const detailsBtn = document.createElement('button');
@@ -108,10 +117,16 @@ const createTbody = (item) => {
     const deleteBtn = document.createElement('button');
     deleteBtn.innerHTML = 'delete';
 
+    const deleteCheckbox = document.createElement('input');
+    deleteCheckbox.setAttribute('type', 'checkbox');
+
     const trbody = document.createElement('tr');
+
     const lpBody = document.createElement('td');
+
     trbody.appendChild(lpBody);
     deleteBtnEvent(deleteBtn, trbody);
+    handleCheckbox(deleteCheckbox, trbody, checkboxDeleteButton);
 
     Object.values(item).forEach((value) => {
       lpBody.innerHTML = index + 1;
@@ -121,28 +136,97 @@ const createTbody = (item) => {
       trbody.appendChild(td);
       trbody.append(detailsBtn);
       trbody.append(deleteBtn);
+      trbody.append(deleteCheckbox);
     });
 
     tbody.appendChild(trbody);
   });
 };
 
+const searchPeople = (input) => {
+  input.addEventListener('keypress', async function (key) {
+    if (key.key === 'Enter') {
+      const inputValue = input.value;
+      const response = await fetch(
+        `${BASE_URL}${state.activeBtn}/?search=${inputValue}`
+      );
+      const data = await response.json();
+
+      console.log('search data', data[0]);
+
+      createDetailsTable(data);
+    }
+  });
+};
+
+const handleCheckbox = (box, tr, btn) => {
+  btn.addEventListener('click', function () {
+    if (box.checked == true) {
+      tr.remove();
+    }
+  });
+};
+
+const createDetailsTable = (index) => {
+  $detailsTable.innerHTML = '';
+  const detailsTable = document.createElement('table');
+
+  const closeBtn = document.createElement('button');
+  closeBtn.innerHTML = '&larr;';
+  $detailsTable.appendChild(closeBtn);
+
+  createDetailsThead(detailsTable, index);
+  $detailsTable.appendChild(detailsTable);
+  createDetailsTbody(detailsTable, index);
+  closeButtonEventOnDetails(closeBtn, detailsTable);
+};
+
+const createDetailsThead = (table) => {
+  const detailsThead = document.createElement('thead');
+  table.appendChild(detailsThead);
+
+  const detailsTr = document.createElement('tr');
+  detailsThead.appendChild(detailsTr);
+
+  Object.keys(state.data[state.activeBtn][1]).forEach((key) => {
+    const detailsTh = document.createElement('th');
+
+    detailsTh.innerHTML = key;
+    detailsTr.appendChild(detailsTh);
+  });
+};
+
+const createDetailsTbody = (table, index) => {
+  const detailsTbody = document.createElement('tbody');
+  table.appendChild(detailsTbody);
+
+  const detailrTrbody = document.createElement('tr');
+
+  Object.values(state.data[state.activeBtn][index]).forEach((value) => {
+    const detailsTd = document.createElement('td');
+
+    const checkArray = Array.isArray(value);
+
+    if (!checkArray) {
+      detailsTd.innerHTML = value;
+    } else if (value.length == 0) {
+      detailsTd.innerHTML = 'N/A';
+    } else {
+      const select = createSelect(value);
+      detailsTd.appendChild(select);
+    }
+
+    detailrTrbody.appendChild(detailsTd);
+  });
+
+  detailsTbody.appendChild(detailrTrbody);
+};
+
 const detailsButtonEvent = (btn, index) => {
   btn.addEventListener('click', function () {
-    const closeBtn = document.createElement('button');
-    closeBtn.innerHTML = '&larr;';
-
     $contentContainer.style.justifyContent = 'start';
-    const $detailsTable = document.getElementById('details');
-    $detailsTable.innerHTML = '';
-    const detailsTable = document.createElement('table');
-    $detailsTable.appendChild(closeBtn);
 
-    createDetailsThead(detailsTable, index);
-    $detailsTable.appendChild(detailsTable);
-    createDetailsTbody(detailsTable, index);
-
-    closeButtonEventOnDetails(closeBtn, detailsTable);
+    createDetailsTable(index);
   });
 };
 
@@ -191,47 +275,6 @@ const deleteBtnEvent = (btn, tr) => {
     createModal(tr);
     $popup.style.display = 'flex';
   });
-};
-
-const createDetailsThead = (table) => {
-  const detailsThead = document.createElement('thead');
-  table.appendChild(detailsThead);
-
-  const detailsTr = document.createElement('tr');
-  detailsThead.appendChild(detailsTr);
-
-  Object.keys(state.data[state.activeBtn][1]).forEach((key) => {
-    const detailsTh = document.createElement('th');
-
-    detailsTh.innerHTML = key;
-    detailsTr.appendChild(detailsTh);
-  });
-};
-
-const createDetailsTbody = (table, index) => {
-  const detailsTbody = document.createElement('tbody');
-  table.appendChild(detailsTbody);
-
-  const detailrTrbody = document.createElement('tr');
-
-  Object.values(state.data[state.activeBtn][index]).forEach((value) => {
-    const detailsTd = document.createElement('td');
-
-    const checkArray = Array.isArray(value);
-
-    if (!checkArray) {
-      detailsTd.innerHTML = value;
-    } else if (value.length == 0) {
-      detailsTd.innerHTML = 'N/A';
-    } else {
-      const select = createSelect(value);
-      detailsTd.appendChild(select);
-    }
-
-    detailrTrbody.appendChild(detailsTd);
-  });
-
-  detailsTbody.appendChild(detailrTrbody);
 };
 
 const createPagination = () => {
@@ -317,6 +360,7 @@ const createSelect = (urls) => {
   });
   return select;
 };
+
 const soundEffect = () => {
   const sound = new Audio();
   sound.src = './Quadlaser turret fire.mp3';
