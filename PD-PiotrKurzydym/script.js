@@ -1,5 +1,6 @@
 const URL = `https://swapi.dev/api/`;
 let newURL;
+btnAct = [];
 
 let mainData = {
   data: null,
@@ -9,8 +10,6 @@ let mainData = {
   responce: null,
   outcome: [],
 };
-// x = [];
-// let y;
 
 async function getMainData() {
   const data = await fetch(URL);
@@ -20,7 +19,7 @@ async function getMainData() {
 function printButtons() {
   if (mainData.data) {
     const $buttonsList = document.getElementById("buttons");
-    Object.entries(mainData.data).forEach((item, index, array) => {
+    Object.entries(mainData.data).forEach((item) => {
       const $buttons = document.createElement("button");
       $buttons.innerText = item[0].toUpperCase();
       $buttonsList.appendChild($buttons);
@@ -30,16 +29,12 @@ function printButtons() {
       nextButton.disabled = true;
       searchButton = document.getElementById("searchBtn");
       searchButton.disabled = true;
+      btnAct.push($buttons);
 
       $buttons.addEventListener("click", () => {
-        // if ($buttons.innerText === "y") {
-        //   $buttons.classList.remove("active");
-        //   $buttons.classList.add("header");
-        // }
-        // x.push($buttons.innerText);
-        // console.log(x);
-        // y = x[x.length - 2];
-        // console.log(`y`, y);
+        btnAct.forEach((item) => {
+          item.classList.remove("active");
+        });
         $buttons.classList.toggle("active");
         previousButton.disabled = false;
         nextButton.disabled = false;
@@ -52,17 +47,7 @@ function printButtons() {
     });
   }
 }
-// console.log(x);
-
 async function getData() {
-  // x.push($buttons.innerText);
-  // console.log(x);
-  // y = x[x.length - 2];
-  // console.log(`y`, y);
-  // if ($buttons.innerText === "y") {
-  //   $buttons.classList.remove("active");
-  // }
-
   document.getElementById("myTable").innerHTML = "";
   mainData.results = null;
   mainData.outcome.splice(0, mainData.outcome.length);
