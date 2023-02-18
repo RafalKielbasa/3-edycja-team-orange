@@ -9,6 +9,9 @@ let mainData = {
   responce: null,
   outcome: [],
 };
+// x = [];
+// let y;
+
 async function getMainData() {
   const data = await fetch(URL);
   const responce = await data.json();
@@ -17,7 +20,7 @@ async function getMainData() {
 function printButtons() {
   if (mainData.data) {
     const $buttonsList = document.getElementById("buttons");
-    Object.entries(mainData.data).forEach((item) => {
+    Object.entries(mainData.data).forEach((item, index, array) => {
       const $buttons = document.createElement("button");
       $buttons.innerText = item[0].toUpperCase();
       $buttonsList.appendChild($buttons);
@@ -28,7 +31,16 @@ function printButtons() {
       searchButton = document.getElementById("searchBtn");
       searchButton.disabled = true;
 
-      $buttons.addEventListener("click", async () => {
+      $buttons.addEventListener("click", () => {
+        // if ($buttons.innerText === "y") {
+        //   $buttons.classList.remove("active");
+        //   $buttons.classList.add("header");
+        // }
+        // x.push($buttons.innerText);
+        // console.log(x);
+        // y = x[x.length - 2];
+        // console.log(`y`, y);
+        $buttons.classList.toggle("active");
         previousButton.disabled = false;
         nextButton.disabled = false;
         searchButton.disabled = false;
@@ -40,7 +52,17 @@ function printButtons() {
     });
   }
 }
+// console.log(x);
+
 async function getData() {
+  // x.push($buttons.innerText);
+  // console.log(x);
+  // y = x[x.length - 2];
+  // console.log(`y`, y);
+  // if ($buttons.innerText === "y") {
+  //   $buttons.classList.remove("active");
+  // }
+
   document.getElementById("myTable").innerHTML = "";
   mainData.results = null;
   mainData.outcome.splice(0, mainData.outcome.length);
@@ -79,7 +101,6 @@ function validation(event) {
   document.getElementById("pageNumber").value = pageNumber;
   getData();
 }
-
 function printResults() {
   if (mainData.results) {
     mainData.results.forEach((result) => {
@@ -197,13 +218,17 @@ function printTable() {
       }
       function printDetailsTable() {
         if (mainData.results) {
+          let closeDetailsButton = document.getElementById("close");
           let detailsTable = document.getElementById("details");
           let detailsHeaderRow = document.createElement("tr");
+          let detailsRow = document.createElement("tr");
+
+          detailsTable.style.display = "block";
+          table.style.display = "none";
+          closeDetailsButton.style.display = "block";
 
           let detailsHeaderText = [...Object.keys(mainData.results[index])];
-          // console.log(...Object.keys(mainData.results[index]));
           detailsHeaderText.forEach((detailsHeaderOutcome) => {
-            // console.log({ detailsHeaderOutcome });
             let detailsHeader = document.createElement("th");
             let detailsTextNode = document.createTextNode(detailsHeaderOutcome);
             detailsHeader.appendChild(detailsTextNode);
@@ -211,7 +236,6 @@ function printTable() {
           });
           detailsTable.appendChild(detailsHeaderRow);
 
-          let detailsRow = document.createElement("tr");
           let detailsTableBody = [...Object.values(mainData.results[index])];
 
           detailsTableBody.forEach((detailsItem) => {
@@ -220,7 +244,15 @@ function printTable() {
             detailsCell.appendChild(detailsTextNode);
             detailsRow.appendChild(detailsCell);
           });
-          detailsHeaderRow.appendChild(detailsRow);
+          detailsTable.appendChild(detailsRow);
+
+          closeDetailsButton.addEventListener(`click`, function () {
+            detailsTable.style.display = "none";
+            closeDetailsButton.style.display = "none";
+            table.style.display = "block";
+            detailsHeaderRow.remove();
+            detailsRow.remove();
+          });
         }
       }
       table.addEventListener(`click`, function showModal(event) {

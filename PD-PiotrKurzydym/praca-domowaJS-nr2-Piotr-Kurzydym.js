@@ -31,7 +31,7 @@ g) Na podstawie stworzonych obiektów wyświetl tabelkę, w której
     - kliknięcie DELETE wyświetla modal: "Are you sure", z przyciskami YES i NO, po kliknięciu YES usuwamy element z listy, po kliknięciu NO zamykamy modal
 h) do tabelki dodaj paginację
     - poprzednia strona (z zablokowaniem < 1)
-    - następna strona (oblicz ilość stron na podstawie ilosci wynikow i ilosci wyswietlonych elementow na 1 stronie)
+    - następna strona (oblicz ilość  stron na podstawie ilosci wynikow i ilosci wyswietlonych elementow na 1 stronie)
     - input, w którym możemy wpisać do której strony chcemy przejść (walidacja)
     - select, w którym możemy zmienić ilość elementów wyświetlanych na stronie
 *i) widok każdego modelu, powinen zawierać unikalną funkcję zaimplementowaną na klasie danego modelu
