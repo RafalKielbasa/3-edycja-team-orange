@@ -142,6 +142,56 @@ $pageNumberInput?.addEventListener("input", (e) => {
   const value = e.target.value;
   state.pageNmb = value;
 });
+$detailsActiveBtnValues.addEventListener("change", (e) => {
+  const value = e.target.value;
+  state.detailsActiveBtnValues = value;
+  const { ActiveBtn, changedToClass, detailsActiveBtnValues } = state;
+  uniqueFuncs(ActiveBtn, changedToClass, detailsActiveBtnValues);
+});
+function uniqueFuncs(actvBTN, array, value) {
+  switch (actvBTN) {
+    case "starships": {
+      const valueToUseWithClass = array.filter((lookFor) => lookFor.name == value);
+      console.log({ valueToUseWithClass });
+      $detailStart.onclick = () => valueToUseWithClass[0].drive();
+      $detailStop.onclick = () => valueToUseWithClass[0].stop();
+      $detailStop.classList.remove("details");
+      break;
+    }
+    case "planets": {
+      const valueToUseWithClass = array.filter((lookFor) => lookFor.name == value);
+      $detailStart.onclick = () => valueToUseWithClass[0].compareToEarth();
+      $detailStop.classList.add("details");
+      break;
+    }
+    case "species": {
+      const valueToUseWithClass = array.filter((lookFor) => lookFor.name == value);
+      $detailStart.onclick = () => valueToUseWithClass[0].HowLongYouWillLive();
+      $detailStop.classList.add("details");
+      break;
+    }
+    case "films": {
+      const valueToUseWithClass = array.filter((lookFor) => lookFor.title == value);
+      $detailStart.onclick = () => valueToUseWithClass[0].showOpening();
+      $detailStop.classList.add("details");
+      break;
+    }
+    case "people": {
+      const valueToUseWithClass = array.filter((lookFor) => lookFor.name == value);
+      $detailStart.onclick = () => valueToUseWithClass[0].yourBMI();
+      $detailStop.classList.add("details");
+      break;
+    }
+    case "vehicles": {
+      const valueToUseWithClass = array.filter((lookFor) => lookFor.name == value);
+      $detailStart.onclick = () => valueToUseWithClass[0].costOnCrew();
+      $detailStop.classList.add("details");
+      break;
+    }
+    default:
+      $detailResult.innerHTML = "Ups coś nie pykło";
+  }
+}
 async function buttonClick(event) {
   if (state.idToDetail != 0) {
     state.idToDetail = 0;
@@ -217,12 +267,11 @@ async function createClass(instanceValue, dataCollection) {
   const { ActiveBtn } = state;
   createAndShowTable(instance);
   $details.classList.add("active");
-  const objectToGetNames = Object.values(instance);
   if (ActiveBtn) {
     removeOptions($detailsActiveBtnValues);
     $detailResult.innerHTML = "";
   }
-  objectToGetNames.forEach((value) => {
+  instance.forEach((value) => {
     const $optiontElement = document.createElement("option");
     if (ActiveBtn == "films") {
       $optiontElement.innerHTML = value.title;
@@ -232,34 +281,10 @@ async function createClass(instanceValue, dataCollection) {
       $optiontElement.value = value.name;
     }
     $detailsActiveBtnValues.appendChild($optiontElement);
+    state.detailsActiveBtnValues = $detailsActiveBtnValues.value;
   });
-  switch (ActiveBtn) {
-    case "starships": {
-      $detailStart.onclick = () => state.changedToClass[0].drive();
-      $detailStop.onclick = () => state.changedToClass[0].stop();
-      break;
-    }
-    case "planets": {
-      $detailStart.onclick = () => state.changedToClass[0].compareToEarth();
-      $detailStop.classList.add("details");
-      break;
-    }
-    case "species": {
-      $detailStart.onclick = () => state.changedToClass[0].HowLongYouWillLive();
-      $detailStop.classList.add("details");
-      break;
-    }
-    case "films": {
-      $detailStart.onclick = () => state.changedToClass[0].showOpening();
-      $detailStop.classList.add("details");
-      break;
-    }
-    case "people": {
-      $detailStart.onclick = () => state.changedToClass[0].yourBMI();
-      $detailStop.classList.add("details");
-      break;
-    }
-  }
+  const { detailsActiveBtnValues } = state;
+  uniqueFuncs(ActiveBtn, instance, detailsActiveBtnValues);
 }
 function removeOptions(selectElement) {
   const L = selectElement.options.length - 1;
@@ -351,6 +376,7 @@ function createBtnAndInput(index, number, row) {
   const $detailsBtn = document.createElement("button");
   $detailsBtn.innerHTML = "DETAILS";
   $detailsBtn.classList.add("delDetBtn");
+  $detailsBtn.id = "detailsBtn";
   const $checkInput = document.createElement("INPUT");
   $checkInput.setAttribute("type", "checkbox");
   $checkInput.id = `${index[4]}-${number}-checkInput`;

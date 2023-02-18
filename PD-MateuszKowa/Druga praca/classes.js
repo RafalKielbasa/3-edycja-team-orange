@@ -42,7 +42,8 @@ export class film extends original {
     this.title = title;
   }
   showOpening() {
-    $detailResult.innerHTML = state.films.results[0].opening_crawl;
+    const searchedOpening = state.films.results.filter((value) => value.title === this.title);
+    $detailResult.innerHTML = searchedOpening[0].opening_crawl;
   }
 }
 export class specie extends original {
@@ -57,22 +58,39 @@ export class specie extends original {
     this.humanLife = 120;
     const compareToHuman = this.average_lifespan - this.humanLife;
     if (compareToHuman > 0) {
-      $detailResult.innerHTML = `${this.name} żyją dłużej niż ludzie o ${compareToHuman}`;
+      $detailResult.innerHTML = `${this.name} żyją dłużej niż ludzie średnio o ${compareToHuman}`;
     }
     if (compareToHuman === 0) {
       $detailResult.innerHTML = `${this.name} jesteś człowiekiem lub żyjesz tyle co ludzie`;
     }
     if (compareToHuman < 0) {
-      $detailResult.innerHTML = `${this.name} żyją krócej niże ludzie o ${compareToHuman}`;
+      $detailResult.innerHTML = `${this.name} żyją krócej niż ludzie średnio o ${Math.abs(
+        compareToHuman
+      )}`;
+    }
+    if (this.average_lifespan === "indefinite") {
+      $detailResult.innerHTML = `Będziesz żyć lub działać wiecznie`;
+    }
+    if (this.average_lifespan === "unknown") {
+      $detailResult.innerHTML = `Nie da się ustalić kto żyje dłużej`;
     }
   }
 }
 export class vehicle extends original {
-  constructor({ created, edited, url, crew, model, name }) {
+  constructor({ created, edited, url, cost_in_credits, crew, model, name }) {
     super(created, edited, url);
     this.crew = crew;
     this.model = model;
+    this.cost_in_credits = cost_in_credits;
     this.name = name;
+  }
+  costOnCrew() {
+    const cost = Math.round(this.cost_in_credits / this.crew);
+    if (isNaN(cost)) {
+      $detailResult.innerHTML = `Brak danych potrzebnych do przeliczenia kosztu produkcji na 1 osobę z załogi`;
+    } else {
+      $detailResult.innerHTML = `Koszujesz w przeliczeniu na 1 os załogi  ${cost} kredytów`;
+    }
   }
 }
 export class starship extends original {
@@ -88,6 +106,7 @@ export class starship extends original {
     this.isDriving = setInterval(() => {
       this.km += +this.max_atmosphering_speed;
     }, 500);
+    $detailResult.innerHTML = "Lecisz...";
   }
   stop() {
     clearInterval(this.isDriving);
