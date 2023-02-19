@@ -10,6 +10,29 @@ const people = [
   },
 ];
 
+function createNickname(person) {
+  //a)
+  let firstPart = person.firstName.slice(0, 3).split("").reverse().join("");
+  //b) part 1
+  let secondPart = person.lastName.slice(-3).split("").reverse().join("");
+  //d)
+  if (person.lastName.length < 3) {
+    secondPart = person.lastName;
+  }
+  //b)part 2
+  let nickname = firstPart + secondPart;
+  // c*)
+  nickname = nickname.charAt(0).toUpperCase() + nickname.slice(1).toLowerCase();
+  return nickname;
+}
+// funkcja mapPeople zwraca tablicę obiektów zawierających właściwość nickname, która jest mapowana z tablicy people uzywając funkcji createNickname
+function mapPeople(people) {
+  return people.map(createNickname);
+}
+//przypisujamy zmienną peopleWithNicknames do wyniku funkcji mapPeople z argumentem tablicą people. Logujemy w konsoli wartość peopleWithNicknames.
+const peopleWithNicknames = mapPeople(people);
+console.log(peopleWithNicknames);
+
 /* 
     1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
     a) pobierze 3 pierwsze litery imienia, odwróci ich kolejność i zapisze do zmiennej
@@ -40,14 +63,28 @@ const people = [
 */
 
 //  DANE WEJŚCIOWE
-const people = [
+const people2 = [
   {
     firstName: "Bartolomeo",
     lastName: "Lozano",
     nickname: "Rabona",
+    // Metoda introduceYourself jest właściwością pierwszego obiektu w tablicy people2. Gdy jest wywoływana loguje w konsoli wiadomość skonstruowaną ze właściwości obiektu oraz stringa zapisanego za pomocą template literals oraz słówka this które jest uzwane aby uzyskać dostęp do właściwości obiektu.
+    introduceYourself: function () {
+      console.log(
+        `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie ${this.nickname}`
+      );
+    },
   },
 ];
+//a)
+//wywołujemy metodę introduceYourself uzywając notacji kropkowej z pierwszego obiektu z indexem 0 tablicy people2
+people2[0].introduceYourself();
 
+//b)
+//uzywając metody forEach skanujemy tablicę people2 i wywołujemy metodę introduceYourself dla kazdego elementu tablicy ktorym jest w tym przypadku jeden obiekt reprezentujacy osobę.
+people2.forEach(function (person) {
+  person.introduceYourself();
+});
 
 /* 
     2. 
@@ -76,16 +113,42 @@ const people = [
 */
 
 //  DANE WEJŚCIOWE
-const people = [
+
+const people3 = [
   {
     firstName: "Bartolomeo",
     lastName: "Lozano",
     nickname: "Rabona",
-    introduceYourself: "", // funkcja zamiast pustego stringa
+    // a) d) W przypadku wywołania funkcji bez parametru ustawiamy domyślny parametr = 5.
+    getFavouriteColor: function (number = 5) {
+      if (number < 1) {
+        console.log(
+          "podałeś za małą liczbę, liczba nie może być mniejsza niż 1"
+        );
+        //c) jeśli liczba jest mniejsze niz 1 zatrzymujemy funkcję uzwając pustego komunikatu return
+        return;
+      } else if (number > 30) {
+        console.log(
+          "podałeś za dużą liczbę, liczba nie może być większa niż 30"
+        );
+        return;
+      }
+      //
+      //e)Zapisujemy do zmiennej namesSum sumę długości trzech właściwości tego obiektu.
+      let namesSum =
+        this.firstName.length + this.lastName.length + this.nickname.length;
+
+      //e) Wyliczamy index koloru z tablicy colours na podstawie reszty z dzielenia róznicy wartości absolutnej, namesSum oraz liczby podanej w parametrze z długością tablicy colours.
+      let index = Math.abs(namesSum - number) % colors.length;
+      //Wywołujemy odpowiednia pozycję z tablicy
+      console.log(colors[index]);
+    },
   },
 ];
 
 const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
+
+people3[0].getFavouriteColor(4);
 
 /*
     3. 
@@ -110,6 +173,35 @@ const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
     - w funkcji musicie użyć słówka this, parametru i tablicy, która jest na zewnątrz, tablica z kolorami może mieć
     dowoloną ilość kolorów
 */
+
+const people4 = [
+  {
+    firstName: "Bartolomeo",
+    lastName: "Lozano",
+    nickname: "Rabona",
+  },
+];
+
+function getFavouriteColor(person, number = 5) {
+  if (number < 1) {
+    console.log("podałeś za małą liczbę, liczba nie może być mniejsza niż 1");
+    return;
+  } else if (number > 30) {
+    console.log("podałeś za dużą liczbę, liczba nie może być większa niż 30");
+    return;
+  }
+  let namesSum =
+    this.firstName.length + this.lastName.length + this.nickname.length;
+  let index = Math.abs(namesSum - number) % colors.length;
+  console.log(colors[index]);
+
+  for (const person of persons) {
+    console.log(`${person.firstName} ${person.lastName}'s favourite color is`);
+    getFavouriteColor(person);
+  }
+}
+
+const colors2 = ["red", "green", "yellow", "blue", "pink", "orange"];
 
 /*
     4. Napisz funkcję analogiczną do funkcji z zadania 3, ale nie dodawaj jej w obiekcie.
@@ -177,6 +269,7 @@ const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
      Na przykład 'Kamil Bartek'
     INPUT:
 */
+
 const nestedObject = {
   name: "Kamil",
   children: [
