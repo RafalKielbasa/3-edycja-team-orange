@@ -174,6 +174,35 @@ people3[0].getFavouriteColor(4);
     dowoloną ilość kolorów
 */
 
+const people4 = [
+  {
+    firstName: "Bartolomeo",
+    lastName: "Lozano",
+    nickname: "Rabona",
+  },
+];
+
+function getFavouriteColor(person, number = 5) {
+  if (number < 1) {
+    console.log("podałeś za małą liczbę, liczba nie może być mniejsza niż 1");
+    return;
+  } else if (number > 30) {
+    console.log("podałeś za dużą liczbę, liczba nie może być większa niż 30");
+    return;
+  }
+  let namesSum =
+    this.firstName.length + this.lastName.length + this.nickname.length;
+  let index = Math.abs(namesSum - number) % colors.length;
+  console.log(colors[index]);
+
+  for (const person of persons) {
+    console.log(`${person.firstName} ${person.lastName}'s favourite color is`);
+    getFavouriteColor(person);
+  }
+}
+
+const colors2 = ["red", "green", "yellow", "blue", "pink", "orange"];
+
 /*
     4. Napisz funkcję analogiczną do funkcji z zadania 3, ale nie dodawaj jej w obiekcie.
     a) funkcja powinna przyjąć 2 parametry (obiekt osoby i liczbę z zakresu 1 - 30)
@@ -240,6 +269,7 @@ people3[0].getFavouriteColor(4);
      Na przykład 'Kamil Bartek'
     INPUT:
 */
+
 const nestedObject = {
   name: "Kamil",
   children: [
