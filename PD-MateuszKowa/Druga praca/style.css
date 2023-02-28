@@ -1,0 +1,370 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700italic);
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap");
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: hsla(0, 0%, 0%, 0.8);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.overlay.active {
+  display: flex;
+  cursor: wait;
+}
+.loading {
+  font-size: 5rem;
+  color: white;
+  text-transform: uppercase;
+  animation-name: pulse;
+  animation-duration: 1s;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+}
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.bn53 {
+  padding: 7px;
+  width: 100px;
+}
+
+@keyframes bn53bounce {
+  5%,
+  50% {
+    transform: scale(1);
+  }
+
+  10% {
+    transform: scale(1);
+  }
+
+  15% {
+    transform: scale(1);
+  }
+
+  20% {
+    transform: scale(1) rotate(-5deg);
+  }
+
+  25% {
+    transform: scale(1) rotate(5deg);
+  }
+
+  30% {
+    transform: scale(1) rotate(-3deg);
+  }
+
+  35% {
+    transform: scale(1) rotate(2deg);
+  }
+
+  40% {
+    transform: scale(1) rotate(0);
+  }
+}
+#deleteManyRows {
+  display: none;
+}
+#deleteCnf {
+  background-color: gold;
+  font-size: 48px;
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.defaultTable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#detailTabel {
+  width: 50%;
+  display: flex;
+}
+#detailTabel > thead > tr {
+  display: flex;
+  flex-direction: column;
+}
+#detailTabel > tbody > tr {
+  display: flex;
+  flex-direction: column;
+}
+td,
+th {
+  border: 2px solid whitesmoke;
+  margin-bottom: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  text-align: center;
+}
+.delDetBtn {
+  background-color: #b81515;
+  width: 100px;
+  font-size: 18px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  cursor: pointer;
+}
+#detailsBtn {
+  background-color: green;
+  color: gold;
+  width: 100px;
+  font-size: 18px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  animation: bn53bounce 4s infinite;
+  cursor: pointer;
+}
+#find {
+  display: none;
+}
+.details {
+  display: none;
+}
+.pagination {
+  display: none;
+}
+.SearchThrouTable {
+  display: none;
+}
+.hideRow {
+  display: none;
+}
+.details.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+.details.active > select {
+  font-size: 20px;
+}
+body {
+  background-image: url("WallpaperDog-966390.jpg");
+  background-color: #cccccc;
+  color: white;
+  font-size: 20px;
+  font-family: "Open Sans", sans-serif;
+}
+
+button {
+  font-size: 20px;
+}
+#header {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+  margin-top: 30px;
+}
+#searcherByEndpoints {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+  font-size: 25px;
+}
+#endpointsSelector {
+  font-size: 23px;
+  opacity: 0.85;
+}
+#searcherByEndpoints > input {
+  font-size: 20px;
+}
+.mainAppBtn {
+  position: relative;
+  background-color: darkblue;
+  color: antiquewhite;
+  font-size: 28px;
+  border: none;
+  text-align: center;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  font-family: "Quicksand";
+}
+.mainAppBtn.active {
+  background-color: #fff;
+  box-shadow: 0px 2px 10px 5px #97b1bf;
+  color: #000;
+}
+#buttons > button:hover {
+  background: #fff;
+  box-shadow: 0px 2px 10px 5px #97b1bf;
+  color: #000;
+}
+
+.SearchThrouTable.visible {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 15px;
+  gap: 10px;
+  font-size: 25px;
+}
+.SearchThrouTable.visible > input {
+  font-size: 23px;
+}
+input {
+  background-color: lightskyblue;
+}
+.pagination.visible {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 15px;
+  gap: 10px;
+  font-size: 25px;
+}
+.pagination.visible > input {
+  width: 40px;
+  font-size: 20px;
+}
+.detailResult {
+  display: flex;
+  flex-wrap: wrap;
+}
+.pagBtn {
+  background-image: linear-gradient(to right, #006175 0%, #00a950 100%);
+  border-radius: 40px;
+  box-sizing: border-box;
+  color: wheat;
+  display: block;
+  height: 50px;
+  font-size: 20px;
+}
+@media only screen and (max-width: 1200px) {
+  .defaultTable {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  tr > button {
+    display: block;
+  }
+}
+@media only screen and (max-width: 768px) {
+  #detailsBtn {
+    width: 60px;
+    font-size: 11px;
+  }
+  .defaultTable {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  tr > button {
+    display: block;
+  }
+  .mainAppBtn {
+    font-size: 15px;
+  }
+  body {
+    font-size: 10px;
+  }
+  #searcherByEndpoints > span {
+    font-size: 13px;
+  }
+  .delDetBtn {
+    width: 60px;
+    font-size: 11px;
+  }
+  #endpointsSelector {
+    font-size: 15px;
+    opacity: 0.85;
+  }
+  button {
+    font-size: 12px;
+  }
+  .details.active > select {
+    font-size: 12px;
+  }
+  .SearchThrouTable.visible {
+    font-size: 12px;
+  }
+  .SearchThrouTable.visible > input {
+    font-size: 12px;
+  }
+  .pagination.visible {
+    font-size: 12px;
+  }
+  .pagination.visible > input {
+    width: 25px;
+    font-size: 12px;
+  }
+  #searcherByEndpoints > input {
+    font-size: 15px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .defaultTable {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  tr > button {
+    display: block;
+  }
+  .mainAppBtn {
+    font-size: 11px;
+  }
+  body {
+    font-size: 7px;
+  }
+  #searcherByEndpoints > span {
+    font-size: 10px;
+  }
+  #searcherByEndpoints > input {
+    font-size: 10px;
+  }
+  .delDetBtn {
+    width: 55px;
+    font-size: 10px;
+  }
+  #endpointsSelector {
+    font-size: 10px;
+    opacity: 0.85;
+  }
+  button {
+    font-size: 10px;
+  }
+  .details.active > select {
+    font-size: 10px;
+  }
+  .SearchThrouTable.visible {
+    font-size: 10px;
+  }
+  .SearchThrouTable.visible > input {
+    font-size: 10px;
+  }
+  .pagination.visible {
+    font-size: 10px;
+  }
+  .pagination.visible > input {
+    width: 25px;
+    font-size: 10px;
+  }
+}

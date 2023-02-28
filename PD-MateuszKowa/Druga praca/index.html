@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+        <div id="header">
+            <span id="buttons"></span>
+            <span>Number of items to display</span>
+            <select name="itemsNumber" id="itemsNumberOnPage">
+                <option value="5">5</option>
+                <option selected="selected" value="10">10</option>
+            </select>
+        </div>
+        <div id="searcherByEndpoints">
+            <span>If you wish search by <span id="availableSearchFields">name</span> in <select
+                    id="endpointsSelector"></select>
+            </span>
+            <input type="text" id="endpointInput">
+            <button id="endpointSearchBtn" disabled="true">SEARCH</button>
+        </div>
+        <div id=tableWithData></div>
+        <div>
+            <button id="deleteManyRows">DELETE MANY ROWS</button>
+        </div>
+        <div id="details" class="details">
+            <select name="detailsActiveBtnValues" id="detailsActiveBtnValues"></select>
+            <button id="detailStart">Start</button>
+            <button id="detailStop">Stop</button>
+            <span id="detailResult" class="detailResult"></span>
+        </div>
+        <div id="SearchThrouTable" class="SearchThrouTable">
+            <span>WHAT ARE YOU LOOKING FOR</span>
+            <input type="searchedValue" name="searchedValue" id="searchedValue">
+            <button id="searchInTable">Search in table </button>
+            <button id="ShowAll" disabled>Show All </button>
+        </div>
+        <div id="pagination" class="pagination">
+            <button id="prevBtn" class='pagBtn' disabled>PREV</button>
+            <button id="nextBtn" class='pagBtn' disabled>NEXT</button>
+            <input type="number" id="pageNumber" value="1">
+            <span>
+                <span>/</span>
+                <span id="maxPageNmbr"></span>
+                <span>PAGES</span>
+            </span>
+            <button id="choosePage" class='pagBtn'>CHOOSE PAGE TO SHOW</button>
+        </div>
+        <div id=deleteCnf>
+            <span>"Are you sure"</span>
+            <button id="confirmBtn">YES</button>
+            <button id="backBtn">NO</button>
+        </div>
+        <div class="overlay">
+            <div class="loading">loading</div>
+        </div>
+    </div>
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>
