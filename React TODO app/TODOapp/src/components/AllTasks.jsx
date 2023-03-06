@@ -23,25 +23,29 @@ export default function AllTasks({ items, setItems }) {
     setItems(newItems);
   };
 
-  return items.map((item) => (
-    <li key={item.id}>
-      <div>
-        <span className={item.isCompleted ? 'text-strike' : null}>
-          {item.value}
-        </span>
-        <CheckIcon onClick={() => markAsCompleted(item.id)} />
-        <DeleteIcon onClick={() => deleteTask(item.id)} />
-        <GetDate></GetDate>
-        <span>
-          <select
-            onChange={(event) => setPriority(item.id, event.target.value)}
-          >
-            <option value={'low'}>Low</option>
-            <option value={'medium'}>medium </option>
-            <option value={'high'}>high </option>
-          </select>
-        </span>
-      </div>
-    </li>
-  ));
+  return (
+    <div>
+      {items.map((item) => (
+        <li key={item.id}>
+          <div>
+            <span className={item.isCompleted ? 'text-strike' : null}>
+              {item.value}
+            </span>
+            <CheckIcon onClick={() => markAsCompleted(item.id)} />
+            <DeleteIcon onClick={() => deleteTask(item.id)} />
+            <GetDate></GetDate>
+            <span>
+              <select
+                onChange={(event) => setPriority(item.id, event.target.value)}
+              >
+                <option value={'low'}>Low</option>
+                <option value={'medium'}>medium </option>
+                <option value={'high'}>high </option>
+              </select>
+            </span>
+          </div>
+        </li>
+      ))}
+    </div>
+  );
 }
