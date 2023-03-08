@@ -3,7 +3,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import GetDate from './GetDate';
 import PrioritySelect from './PrioritySelect';
 
-export default function AllTasks({ items, setItems }) {
+export default function AllTasks({
+  items,
+  setItems,
+  highPriorityItems,
+  setHighPriorityItems,
+}) {
   const markAsCompleted = (id) => {
     const index = items.findIndex((item) => item.id === id);
     const newItem = {
@@ -33,7 +38,12 @@ export default function AllTasks({ items, setItems }) {
         <CheckIcon onClick={() => markAsCompleted(item.id)} />
         <DeleteIcon onClick={() => deleteTask(item.id)} />
         <GetDate></GetDate>
-        {/* <PrioritySelect></PrioritySelect> */}
+        <PrioritySelect
+          items={items}
+          setItems={setItems}
+          highPriorityItems={highPriorityItems}
+          setHighPriorityItems={setHighPriorityItems}
+        ></PrioritySelect>
       </div>
     </li>
   ));

@@ -35,15 +35,25 @@ function App() {
       <input onChange={handleChange} value={value}></input>
       <button onClick={handleAddTaskBtn}>Add task</button>
       <div>
-        <List>
-          <AllTasks items={items} setItems={setItems}></AllTasks>
-        </List>
+        <List
+          Children={
+            <AllTasks
+              items={items}
+              setItems={setItems}
+              highPriorityItems={highPriorityItems}
+              setHighPriorityItems={setHighPriorityItems}
+            ></AllTasks>
+          }
+        ></List>
 
         <TaskCounter items={items}></TaskCounter>
-        <HighPriorityList
-          highPriorityItems={highPriorityItems}
-          setHighPriorityItems={setHighPriorityItems}
-        ></HighPriorityList>
+        <List
+          Children={
+            <HighPriorityList
+              highPriorityItems={highPriorityItems}
+            ></HighPriorityList>
+          }
+        ></List>
       </div>
     </div>
   );
