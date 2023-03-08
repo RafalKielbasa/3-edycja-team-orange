@@ -1,10 +1,17 @@
 export default function Table({ data }) {
+  const fetchData = data.length > 0 ? data[0] : []
+
+  const headers = Object.keys(fetchData)?.filter((_, index) => index < 8)
+  console.log(headers)
+
+  console.log()
+
   return (
     <table>
       <thead>
         <tr>
-          {data.map((item) => {
-            return <th>{Object.keys(item)}</th>;
+          {headers?.map((item) => {
+            return <th>{item}</th>
           })}
         </tr>
       </thead>
@@ -12,11 +19,13 @@ export default function Table({ data }) {
         {data.map((item) => {
           return (
             <tr>
-              <td>{Object.values(item)}</td>
+              {headers.map((name) => (
+                <td>{item[name]}</td>
+              ))}
             </tr>
-          );
+          )
         })}
       </tbody>
     </table>
-  );
+  )
 }
