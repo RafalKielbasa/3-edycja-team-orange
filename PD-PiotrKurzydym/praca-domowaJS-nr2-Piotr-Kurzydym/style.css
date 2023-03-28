@@ -1,0 +1,190 @@
+body {
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Star_wars2.svg/2560px-Star_wars2.svg.png");
+}
+
+.active,
+.btn:hover {
+  background-color: #666;
+  color: white;
+}
+#category {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  color: #24292e;
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 16px;
+  font-weight: 500;
+}
+#search {
+  position: absolute;
+  right: 5%;
+}
+.header,
+#tablediv {
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 10px;
+  /* appearance: none; */
+  background-color: #fafbfc;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0,
+    rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  box-sizing: border-box;
+  color: #24292e;
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  padding: 8px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  word-wrap: break-word;
+}
+.buttons {
+  margin-right: 3%;
+  margin-bottom: 2%;
+}
+button {
+  background-color: #fafbfc;
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0,
+    rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  box-sizing: border-box;
+  color: #24292e;
+  cursor: pointer;
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  padding: 6px 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  word-wrap: break-word;
+}
+#slash {
+  font-size: 22px;
+}
+#pageNumber,
+#maxPageNumber {
+  text-align: center;
+  margin: 2px;
+  width: 23px;
+  height: 23px;
+}
+#searchPage {
+  text-align: center;
+  margin: 2px;
+  width: 40px;
+  height: 23px;
+}
+/* #tablediv {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  color: #24292e; */
+/* background-color: #fafbfc; */
+/* font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 20px;
+  z-index: 1;
+} */
+/* #details {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  color: #24292e;
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 20px;
+} */
+#closeDetails {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+#close {
+  display: none;
+  margin-top: 50px;
+}
+th,
+td {
+  border: 2px solid black;
+  /* margin-top: 15px; */
+}
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+p {
+  font-size: 24px;
+}
+#id01 {
+  display: none;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  z-index: 1;
+  top: 25%;
+  width: 400px;
+  height: 215px;
+  overflow: auto;
+  background-color: white;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #888;
+}
+.modal-content {
+  background-color: white;
+  margin: 5% auto 5% auto;
+  border: 1px solid white;
+  width: 90%;
+  height: 80%;
+}
+.close {
+  position: absolute;
+  right: 5px;
+  top: 0px;
+  font-size: 40px;
+  font-weight: bold;
+  color: black;
+}
+.close:hover,
+.close:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+#modalCancelBtn,
+#modalDeleteBtn {
+  width: 40%;
+  margin-top: 10px;
+}
+
+#modalCancelBtn {
+  float: left;
+  background-color: #ccc;
+  color: black;
+}
+#modalDeleteBtn {
+  float: right;
+  background-color: #f44336;
+}

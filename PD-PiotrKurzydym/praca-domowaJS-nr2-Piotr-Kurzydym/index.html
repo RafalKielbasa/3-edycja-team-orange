@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css"
+  </head>
+  <body>
+    <div id="category">
+      <div>SELECT A CATEGORY:</div>    
+      <div id="search">
+        <form onsubmit="validation(event)">
+          <label for="">Enter a page number:</label>
+          <input id="searchPage" type="number" name="searchPage" min="1" max="9"/>
+          <button id="searchBtn">Search</button>
+         </form>
+      </div> 
+    </div>
+    <div id="header" class="header">
+      <div id="buttons" class="buttons"></div>
+      <button id="previous">Prev</button>
+      <input id="pageNumber" type="text"></input>
+      <span id="slash">/</span>
+      <input id="maxPageNumber" type="text"></input>
+      <button id="next">Next</button>
+    </div>
+    <div id="closeDetails">
+      <button id="close">Close</button>
+    </div>
+    <span id="tablediv">
+      <table id="myTable"></table>
+      <table id="details"></table>
+    </span>
+
+    <div id="id01" class="modal" data-toggle="modal">
+      <span id="modalClose" class="close" title="Close Modal">×</span>
+      <form class="modal-content" action="/action_page.php">
+        <div class="container">
+          <h1>Delete a row of data</h1>
+          <p>Are you sure ?</p>
+          <button id="modalCancelBtn" type="button" class="cancelbtn">
+            No
+          </button>
+          <button id="modalDeleteBtn" type="button" class="deletebtn">
+            Yes
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+
+<!-- <div><form method="POST" onsubmit="onRegister(event)"></form></div> -->
